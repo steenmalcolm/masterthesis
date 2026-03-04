@@ -683,53 +683,33 @@ consider the term
 which depends solely on the difference between the bulk compositions of the two
 coexisting phases.
 
-Close to the critical point, the volume fractions in the dense $(+)$ and dilute $(-)$
+Close to the critical point, the volume fractions in the dense and dilute
 phases can be written as small deviations from the critical composition
 $\phi_{i,c}$,
 \[
-    \phi_i^{(\pm)} = \phi_{i,c} \pm\tfrac{1}{2} \Delta \phi_i,
+    \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2} \Delta \phi_i, \quad \phi_i^{(2)} = \phi_{i,c} - \tfrac{1}{2} \Delta \phi_i,
 \]
 where $\Delta \phi_i$ parameterizes the displacement of the coexisting phases along
 the tie line in composition space.
-% The difference between the two phases is then
-% \[
-%     \Delta \phi_i
-%     =
-%     \phi_i^{(+)} - \phi_i^{(-)}
-%     =
-%     2\,\delta \phi_i.
-% \]
-
-% Substituting this expression into the quadratic form yields
-% \[
-%     \tfrac{1}{2}\,\Delta \phi_i \,\kappa_{ij}\, \Delta \phi_j
-%     =
-%     2\, \delta \phi_i \,\kappa_{ij}\, \delta \phi_j.
-% \]
-% Thus, the scaling of this term near criticality is entirely determined by the
-% magnitude of the composition deviation $\delta \boldsymbol{\phi}$ from the critical
-% point.
 
 
 Expanding the chemical potentials in the two coexisting phases about the critical
 point yields
 \begin{equation}
-    \boldsymbol{\mu}^{(\pm)} - \boldsymbol{\mu}_c
+    \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
     =
-    \boldsymbol{H}\,\Delta\boldsymbol{\phi}^{(\pm)}
-    + \mathcal{O}(\Delta \phi^2),
+    \boldsymbol{H}\,\Delta\boldsymbol{\phi}^{(1/2)} + \mathcal{O}(\Delta \phi^2),
 \end{equation}
 where $\boldsymbol{H}$ denotes the Hessian of the local free-energy density evaluated
 at the critical composition, and
-$\Delta\boldsymbol{\phi}^{(\pm)} = \boldsymbol{\phi}^{(\pm)} - \boldsymbol{\phi}_c$.
-
+$\Delta\boldsymbol{\phi}^{(1/2)} = \boldsymbol{\phi}^{(1/2)} - \boldsymbol{\phi}_c$.
 At coexistence, the chemical potentials in the two phases must be equal,
-$\boldsymbol{\mu}^{(+)}=\boldsymbol{\mu}^{(-)}$. Subtracting the two expansions and
+$\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$. Subtracting the two expansions and
 defining
 \[
     \Delta \boldsymbol{\phi}
     =
-    \Delta \boldsymbol{\phi}^{(+)} - \Delta \boldsymbol{\phi}^{(-)},
+    \Delta \boldsymbol{\phi}^{(1)} - \Delta \boldsymbol{\phi}^{(2)},
 \]
 we obtain, to leading order,
 \begin{equation}
@@ -740,7 +720,7 @@ phases lies in the null space of the Hessian at the critical point.
 
 Furthermore, in the immediate vicinity of the critical point, the binodal is
 approximately linear. Consequently, the deviations
-$\Delta \boldsymbol{\phi}^{(\pm)}$ are parallel to $\Delta \boldsymbol{\phi}$ and
+$\Delta \boldsymbol{\phi}^{(1)}$ and $\Delta \boldsymbol{\phi}^{(2)}$ are parallel to $\Delta \boldsymbol{\phi}$ and
 thus also belong to the null space of $\boldsymbol{H}$. As a result, the linear term
 in the Taylor expansion of the chemical potentials vanishes along the coexistence
 direction, and higher-order terms control the leading behavior near criticality.
@@ -749,10 +729,10 @@ direction, and higher-order terms control the leading behavior near criticality.
 We now turn to the leading nonvanishing contribution in the Taylor expansion of the
 chemical potential about the critical point. Expanding to second order yields
 \begin{equation}
-    \boldsymbol{\mu}^{(\pm)} - \boldsymbol{\mu}_c
+ \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
     =
     \frac{1}{2}
-    \left(\alpha^{(\pm)}\right)^2
+    \left(\alpha^{(1/2)}\right)^2
     \left[
         \frac{\partial^2 \mu_i}{\partial \phi_j \partial \phi_k}
         \,\Delta \phi_j \Delta \phi_k
@@ -763,25 +743,28 @@ chemical potential about the critical point. Expanding to second order yields
 where all derivatives are evaluated at the critical composition, and we have
 introduced
 \[
-    \alpha^{(\pm)}
+    \alpha^{(1)}
     =
-    \frac{\lvert \Delta \boldsymbol{\phi}^{(\pm)} \rvert}
+    \frac{\lvert \Delta \boldsymbol{\phi}^{(1)} \rvert}
+         {\lvert \Delta \boldsymbol{\phi} \rvert}, \quad \alpha^{(2)}
+    =
+    \frac{\lvert \Delta \boldsymbol{\phi}^{(2)} \rvert}
          {\lvert \Delta \boldsymbol{\phi} \rvert}.
 \]
 
 Since the chemical potentials must be equal in the two coexisting phases,
-$\boldsymbol{\mu}^{(+)}=\boldsymbol{\mu}^{(-)}$, the prefactors must satisfy
-$\left(\alpha^{(+)}\right)^2=\left(\alpha^{(-)}\right)^2$. The two phases are
-distinguished by opposite displacements along the tie line, which implies
+$\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$, the prefactors must satisfy
+$\left(\alpha^{(1)}\right)^2=\left(\alpha^{(2)}\right)^2$. Additionally the two phases 
+must have displacements with opposite sign along the tie line, which implies
 \[
-    \Delta \boldsymbol{\phi}^{(+)}
+    \Delta \boldsymbol{\phi}^{(1)}
     =
-    -\,\Delta \boldsymbol{\phi}^{(-)}
+    -\,\Delta \boldsymbol{\phi}^{(2)}
     =
     \tfrac{1}{2}\,\Delta \boldsymbol{\phi}.
 \]
 
-The tensor contraction in brackets in Eq.~\eqref{eq:second_order} is generically
+The terms inside of the brackets in Eq.~\eqref{eq:second_order} is generically
 nonzero. Consequently, the leading dependence of the chemical potential deviation on
 the distance from the critical point is
 \[
@@ -809,8 +792,8 @@ We now turn to the second factor in the expression for the surface tension,
     + \Pi
     =
     f(\bar{\boldsymbol{\phi}})
-    - f(\boldsymbol{\phi}^{(+)})
-    + \mu_i \bigl(\phi_i^{(+)} - \bar{\phi}_i\bigr),
+    - f(\boldsymbol{\phi}^{(1)})
+    + \mu_i \bigl(\phi_i^{(1)} - \bar{\phi}_i\bigr),
     \label{eq:second_product}
 \end{equation}
 where, in the first equality, we have used the conservation relation
@@ -818,24 +801,24 @@ Eq.~\eqref{eq:invariant_quantity}.
 
 Close to the critical point, the dense-phase composition can be written as
 \[
-    \phi_i^{(+)} = \phi_{i,c} + \tfrac{1}{2}\,\Delta \phi_i ,
+    \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2}\,\Delta \phi_i ,
 \]
 while the midpoint composition satisfies
 \[
     \bar{\phi}_i
     =
-    \tfrac{1}{2}\bigl(\phi_i^{(+)} + \phi_i^{(-)}\bigr)
+    \tfrac{1}{2}\bigl(\phi_i^{(1)} + \phi_i^{(2)}\bigr)
     =
     \phi_{i,c},
 \]
 where the last equality follows from the symmetry
-$\Delta \boldsymbol{\phi}^{(+)} = -\Delta \boldsymbol{\phi}^{(-)}$.
+$\Delta \boldsymbol{\phi}^{(1)} = -\Delta \boldsymbol{\phi}^{(2)}$.
 
 We now expand the local free-energy density about the critical composition
 $\boldsymbol{\phi}_c$. Using Einstein summation convention, we obtain
 \begin{equation}
     \begin{split}
-        f(\boldsymbol{\phi}^{(+)})
+        f(\boldsymbol{\phi}^{(1)})
         &=
         f(\boldsymbol{\phi}_c)
         + \frac{1}{2}\,\mu_{i,c}\,\Delta \phi_i
@@ -1004,16 +987,12 @@ Which diverges at the critical point, as expected.
 \end{figure}
 
 Taken together, these results provide a direct connection between the bulk
-thermodynamic framework developed in the previous chapter and the interfacial
-properties analyzed here. The critical exponents
-$\gamma \sim |\mu-\mu_c|^{3/2}$ and $w \sim |\mu-\mu_c|^{-1/2}$ arise naturally from
-the mean-field structure of the Flory-Huggins free energy, in which the critical
-point is characterized by a vanishing curvature of the bulk free-energy
-along the coexistence direction. In this sense the
-effective interfacial model does not introduce new critical behavior, but rather
-demonstrate how the bulk critical scaling discussed earlier manifests itself in
-interfacial observables such as the surface tension and the interface width.
-
+thermodynamic quantities introduced in the previous chapter and the interfacial
+properties analyzed here. The critical scaling of the interfacial width $w \sim |\mu-\mu_c|^{-1/2}$ agrees with the 
+diverging interfacial width observed in the numerical results, while the critical exponent of the surface tension $\gamma \sim |\mu-\mu_c|^{3/2}$ is consistent
+with previous work on critical interfacial behavior in mean-field models (cite work here).
+In this sense the effective interfacial model does not introduce new critical behavior, but rather
+implies that near the critical point the interfacial properties do not matter so much on the profile shape as they do on the bulk thermodynamics.
 % \begin{itemize}
 %     \item Expand two terms for \(\mu_2-\mu_{2,c}\ll1\) and collect to find critical scaling behavior
 % \end{itemize}
