@@ -394,17 +394,15 @@ satisfies
 Depending on interaction parameters and initialization, this criterion is reached
 after $10^3$--$10^4$ iterations.
 
-We continue equilibrating the system for increased mean regulator concentrations until the critical point beyond which two-phase coexistence no longer is feasible.
+We continue equilibrating the system for increased mean concentrations of the second species until the critical point beyond which two-phase coexistence no longer is feasible.
 
-At equilibrium, the droplet-solvent interface exhibits a smooth, sigmoid-like transition in each component.
-The regulator typically accumulates at the interface, consistent with its role in reducing the energetic penalty of direct droplet-solvent
-contacts (i.e.\ screening the strongest repulsive interactions).
-Interestingly the degree of absorption at the interface increases as the repulsive interactions between regulator and the other two components increases and can even lead to the formation of three-phase coexistence.
-For a symmetric case \(\chi_{dr} = \chi_{rs}\), the regulator profile
-is symmetric about the interface. In this regime, Huang and Olvera de la Cruz showed
+At equilibrium, the interface exhibits a smooth, sigmoid-like transition in each component.
+One the species with the weakest repulsive interactions with the other two components (i.e.\ the strongest effective attraction) is enriched at the interface, thus effectively screening the strongest repulsive interactions.
+Interestingly the degree of absorption at the interface increases as the interactions with the other two components becomes more repulsive and can even lead to a third phase.
+For a symmetric case \(\chi_{01} = \chi_{02}\), the zeroth species
+is symmetric about the interface. In this regime, Huang and Olvera de la Cruz have shown
 that the interfacial adsorption scales linearly with the ratio
-$\chi_{\mathrm{dr}}/\chi_{\mathrm{ds}}$, which is consistent with the trends observed
-in our simulations.
+$\chi_{\mathrm{01}}/\chi_{\mathrm{12}}$, matching our simulation data.
 
 % \begin{itemize}
 %     \item equilibrate using fixed point iteration
@@ -422,9 +420,9 @@ As the system approaches the critical point, the interface continuously vanishes
 
 Close to criticality, we observe a clear power-law dependence of the surface
 tension on the distance from the critical point, which we quantify by the chemical
-potential difference $\mu_R-\mu_{R,c}$:
+potential difference $\mu_2-\mu_{2,c}$:
 \[
-\gamma \sim (\mu_R-\mu_{R,c})^{\delta}.
+\gamma \sim (\mu_2-\mu_{2,c})^{\delta}.
 \]
 This scaling is observed for a wide range of interaction parameters. By fitting
 the numerical data, we extract the corresponding critical exponent $\delta$ for
@@ -438,7 +436,7 @@ is not universal and varies substantially with the choice of interaction
 parameters, reflecting non-universal microscopic details of the system.
 
 Remarkably, the observed power-law behavior persists over a broad range of
-$\mu_R-\mu_{R,c}$ values.
+$\mu_2-\mu_{2,c}$ values.
 
 
 % \begin{itemize}
@@ -453,7 +451,7 @@ $\mu_R-\mu_{R,c}$ values.
 While the critical scaling of the surface tension near the critical point provides
 important physical insight, obtaining a closed-form expression for $\gamma$ from
 the full ternary Flory-Huggins free energy is generally intractable. Consequently,
-for each choice of interaction parameters and mean regulator concentration, the surface
+for each choice of interaction parameters and mean concentration of the second species, the surface
 tension must be computed by solving the full numerical interfacial problem.
 
 To avoid this computational cost, we now introduce an analytical approximation that
@@ -800,7 +798,7 @@ critical point, the leading nontrivial contribution to the dot product
 $(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is equal to the
 third derivative of the free energy. This quantity vanishes exactly at the critical
 point, implying that $\boldsymbol{\mu}-\boldsymbol{\mu}_c$ is orthogonal to the tie
-lines in $(\phi_D,\phi_R)$ composition space.
+lines in $(\phi_1,\phi_2)$ composition space.
 
 We now turn to the second factor in the expression for the surface tension,
 \begin{equation}
@@ -916,7 +914,7 @@ finite.
 % Moreover, because \(\Delta \boldsymbol{\phi}\) lies in the null space of the Hessian, one can identify the third derivative of the free energy as being proportional to 
 % \((\boldsymbol{\mu} - \boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}\). 
 % This expression vanishes at the critical point, which implies that 
-% \(\boldsymbol{\mu} - \boldsymbol{\mu}_c\) is orthogonal to the tie lines in \(\phi_D\)–\(\phi_R\) space.
+% \(\boldsymbol{\mu} - \boldsymbol{\mu}_c\) is orthogonal to the tie lines in \(\phi_1\)–\(\phi_2\) space.
 
 % ################################
 % Next we consider the second factor, 
@@ -1017,7 +1015,7 @@ demonstrate how the bulk critical scaling discussed earlier manifests itself in
 interfacial observables such as the surface tension and the interface width.
 
 % \begin{itemize}
-%     \item Expand two terms for \(\mu_R-\mu_{R,c}\ll1\) and collect to find critical scaling behavior
+%     \item Expand two terms for \(\mu_2-\mu_{2,c}\ll1\) and collect to find critical scaling behavior
 % \end{itemize}
 
 \subsubsection{Sources of error and limitations}
@@ -1029,7 +1027,7 @@ assumes that all species share a common interfacial width, thereby neglecting
 preferential adsorption.
 
 As shown in Fig.~\ref{fig:surface_tension}, the approximation performs best far from
-the critical point, where the mean regulator concentration becomes small and the
+the critical point, where the mean concentration of one of the species nearly vanishes and the
 system effectively reduces to a binary mixture. In this regime, the two remaining
 components indeed exhibit nearly identical interfacial widths, and the dominant
 source of error arises from the simplified functional form of the profile. If one
@@ -1046,32 +1044,18 @@ profile of the form
     \tanh\!\left(\frac{x - x_0}{w}\right)
     + \bar{\phi}
 \]
-to the numerical equilibrium profiles of both the droplet and solvent components.
+to the numerical equilibrium profiles of both component 1 and component 0.
 The difference between the fitted interface positions $x_0$ for the two species then
 provides a direct measure of the deviation from the equal-width assumption and thus
 of the degree of interfacial adsorption.
 
-% \subsubsection{Sources of error and limitations}
-% There are two main discrepancies between the piecewise linear approximation to the true interfacial profiles. 
-% The first is the simplified functional form (linear vs.~the actual smooth variation), and the second is the assumption that all species share the same interfacial width. 
-
-% From Fig.~\ref{fig:surface_tension} we observe that the approximation performs best far from the critical point, where the mean regulator concentration becomes small and the system effectively reduces to the binary case. 
-% In this limit, the two species indeed exhibit the same interfacial width and thus the simplified shape is the main driver of error.
-% If one assumes that this source of error does not vary much in phase space, this imply mean that the assumption of equal interfacial width is the main source of error.
-
-% To quantify the importance of absorption, we fit a hyperbolic tangent profile of the form
-% \[
-%     \phi(x) = \frac{\Delta \phi}{2} \, \tanh\!\left(\frac{x - x_0}{w}\right) + \bar{\phi}
-% \]
-% to the numerical solutions for both the droplet and solvent species. 
-% The difference between the fitted values \(x_0\) of the two profiles then provides a direct measure of the deviation from the equal-width assumption.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\linewidth]{figures/displacement.png}
-    \caption{Displacement between the centers of the droplet and solvent profiles (red) and the relative error 
-    \(\,2(\gamma_\text{approx}-\gamma_\text{exact})/(\gamma_\text{approx}+\gamma_\text{exact})\,\) (blue) as a function of the regulator chemical potential, 
-    for \(\chi_{DR}=1.3\) and \(\chi_{DS}=2.3\).}
+    \caption{Displacement between the centers of the profiles of component 1 and component 0 (red) and the relative error 
+    \(\,2(\gamma_\text{approx}-\gamma_\text{exact})/(\gamma_\text{approx}+\gamma_\text{exact})\,\) (blue) as a function of the chemical potential, 
+    for \(\chi_{12}=1.3\) and \(\chi_{02}=2.3\).}
     \label{fig:displacement}
 \end{figure}
 % The results are shown in Fig.~\ref{fig:displacement}, together with the relative error of the surface tension approximation. 
@@ -1080,7 +1064,7 @@ of the degree of interfacial adsorption.
 
 The results are shown in Fig.~\ref{fig:displacement}, together with the relative error
 of the surface-tension approximation. A clear correlation is observed between the
-relative error and the displacement between the centers of the droplet and solvent
+relative error and the displacement between the centers of the profiles of the first two components.
 profiles. Importantly, this correlation is not restricted to the specific interaction
 parameters shown in Fig.~\ref{fig:displacement}, but persists across a broad range of
 interaction strengths. This indicates that interfacial adsorption, rather than the
