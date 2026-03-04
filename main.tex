@@ -1010,11 +1010,11 @@ the critical point, where the mean concentration of one of the species nearly va
 system effectively reduces to a binary mixture. In this regime, the two remaining
 components indeed exhibit nearly identical interfacial widths, and the dominant
 source of error arises from the simplified functional form of the profile. If one
-assumes that this contribution varies only weakly across phase space, this
-observation suggests that deviations from the equal-width assumption constitute the
-primary source of error closer to criticality.
+assumes that the error due to the wrong functional form varies only weakly across phase space, this
+suggests that the deviations from the equal-width assumption make up the
+primary source of error closer, in particular as one approache the critical point.
 
-To quantify the importance of interfacial adsorption, we fit a hyperbolic tangent
+To quantify the importance of species dependent interfacial widths, we fit a hyperbolic tangent
 profile of the form
 \[
     \phi(x)
@@ -1028,7 +1028,6 @@ The difference between the fitted interface positions $x_0$ for the two species 
 provides a direct measure of the deviation from the equal-width assumption and thus
 of the degree of interfacial adsorption.
 
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\linewidth]{figures/displacement.png}
@@ -1037,9 +1036,6 @@ of the degree of interfacial adsorption.
     for \(\chi_{12}=1.3\) and \(\chi_{02}=2.3\).}
     \label{fig:displacement}
 \end{figure}
-% The results are shown in Fig.~\ref{fig:displacement}, together with the relative error of the surface tension approximation. 
-% The close correspondence between the relative error and the displacement of the profiles provides strong evidence that the assumption of equal interfacial widths is indeed the dominant source of error in the approximation. 
-% This correlation is not limited to the particular parameter set shown here, but is also observed across a range of interaction parameters.\
 
 The results are shown in Fig.~\ref{fig:displacement}, together with the relative error
 of the surface-tension approximation. A clear correlation is observed between the
@@ -1051,11 +1047,6 @@ simplified functional form of the profile, is the primary limitation of the
 piecewise-linear model.
 
 
-% \begin{itemize}
-%     \item Source 1: Piecewise linear approximation neglects curvature of interface profile. This is a small source of error
-%     \item Source 2: No displacement of profiles. This is a large source of error and can be quantified by fiting tanh and extracting fitting parameters.
-%     \item Approximation does not work when system phase separates into three phases.
-% \end{itemize}
 
 \subsubsection{Outlook and extensions}
 
