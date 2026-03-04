@@ -35,10 +35,6 @@ where \(\bar{\boldsymbol\phi} = \lambda \boldsymbol\phi^{(1)} + (1-\lambda) \bol
 Note that this only works for systems where the interface region between the phases is much smaller than the bulk phases, otherwise the interfacial energy needs to be taken into account.
 Since the spinodal is given by one condition it defines one or multiple lines in the \((\phi_1, \phi_2)\) plane and separates locally stable from unstable regions.
 
-\begin{itemize}
-    \item Spinodal Decomposition $|H|=0$. Visualization with concave free energy
-    \item Critical Point condition; third order derivative vanishes; showcase example where system with one minima transitions to system with two minimia and one maxima
-\end{itemize}
 \[1 + x(1-x)\chi_{xx} + y(1-y)\chi_{yy} -2 xy \chi_{xy} + xy(1-x-y)|\chi| \]
 
 
@@ -75,11 +71,6 @@ Going the other way around is not necessarily true, since a system can be locall
 For biological systems this means that in order to reach the global minimum the system needs to overcome an energy barrier. This can happen in the presence of thermal fluctuations, which can push the system over the barrier. This process is called nucleation but we will not discuss it further in this text.
 When analysing properties of a system one can use the binodal and spinodal lines to approximate an upper and lower bound. As an example nucleation rates are bounded from below at the spinodal and from above at the binodal.
 
-\begin{itemize}
-    \item Free energy for sharp interface limit and two phases
-    \item Common-tangent construction
-    \item Explain qualitative difference between spinodal and binodal and the role of noise
-\end{itemize}
 \subsection{Mean-field approximation of lattice interactions}
 In the previous sections we have discussed properties of the free energy and how these properties can drive phase separation. In this section we will focus on the exact form of the free energy.
 \textcolor{red}{I could add the explicit FH free energy density here}
@@ -146,10 +137,6 @@ We will not go into detail here since we assume all components to have the same 
 
 
 
-\begin{itemize}
-    \item Flory-Huggins free Energy
-    \item Introduction of system quantitites $\phi_i, N_i, \nu_i, w_i, \chi_{ij}, V_\text{sys}, \Omega_i$
-\end{itemize}
 
 \subsubsection{Interface stability}
 Unlike the previous sections the free energy Eq.~\ref{eq:fh_free_energy} contains gradient terms. These terms penalize sharp interfaces and lead to stable interface profiles between coexisting phases.
@@ -209,10 +196,6 @@ Inserting Eq.~\ref{eq:flux_mobility} into the continuity equation Eq.~\ref{eq:co
 where in general the mobility matrix can depend on the local volume fractions.
 
 
-\begin{itemize}
-    \item Conservation equations for each component $\rightarrow$ Continuity equation; define center of mass velocity field and relative fluxes and argue why we can neglect the former (low Peclet number)
-    \item Show $j \propto -\nabla \mu$ from positive entropy production
-\end{itemize}
 \subsection{Surfacetension}
 The surfacetension is a thermodynamic quantity which is related to the energy per area of the interface between two coexisting phases. It plays an important role when considering hydrodynamic effects or nucleation phenomena.
 In order to compute the surface tension one must first set the interface profile between the two phases. For a binary system this is straightforward if one defines the inflection point of the profile as the interface location.
@@ -245,13 +228,7 @@ if we now consider a process where we increase the area for constant temperature
 where \(\Gamma_i = N_i-N_i^{(1)} - N_i^{(2)}\) is the excess particle number.
 Therefore the main difference between the ternary and the binary case is that in the ternary case we need to consider the excess particle number in addition to the excess free energy. As a matter of fact the expression for the binary case is recovered when we select an interface location such that the excess particle number vanishes for all species, which in general is not possible to find for a ternary system.
 
-\begin{itemize}
-    \item Derive surface tension from grand potential; show relationship between surface tension, excess energy and free energy density
-\end{itemize}
 \subsubsection{Mechanical derivation}
-\begin{itemize}
-    \item Identify stress tensor from total variation of free energy functional. Insert in definition of surface tension in terms of stress tensor
-\end{itemize}
 \subsection{Numerical methods}
 \subsubsection{Euler-Lagrange formalism}
 In the previous sections we have derived the kinetics of phase separation from the general continuity equations and thermodynamic arguments. The resulting Cahn-Hilliard equations yield the equilibrium profiles by construction, but solving them numerically can be quite challenging due to the presence of fourth order derivatives.
@@ -370,12 +347,6 @@ $40$ grid points. The total domain size is $256$ grid points such that the field
 their bulk values well before the domain edges.
 
 
-% \begin{itemize}
-%     \item Select interaction parameter and thus gradient coefficient matrix
-%     \item Find coexisting phases from coexistence conditions
-%     \item Start with step function profile between two coexisting phases
-%     \item Mention simulation parameters (grid size, time step, convergence criteria)
-% \end{itemize}
 
 \subsubsection{Equilibration dynamics and interfacial structure}
 
@@ -404,11 +375,6 @@ is symmetric about the interface. In this regime, Huang and Olvera de la Cruz ha
 that the interfacial adsorption scales linearly with the ratio
 $\chi_{\mathrm{01}}/\chi_{\mathrm{12}}$, matching our simulation data.
 
-% \begin{itemize}
-%     \item equilibrate using fixed point iteration
-%     \item mention difference between initial and final profile
-%     \item analyze impact of interaction parameters on interface profile, in particular interface shape, width and displacement w.r.t. other species
-% \end{itemize}
 
 \subsubsection{Critical scaling of the surface tension}
 Once the equilibrium profiles are obtained, the surface tension is
@@ -439,12 +405,6 @@ Remarkably, the observed power-law behavior persists over a broad range of
 $\mu_2-\mu_{2,c}$ values.
 
 
-% \begin{itemize}
-%     \item compute surfacetension from equilibrium profiles
-%     \item show surfacetension as function of chemical potential difference from critical point (this follows power law near critical point)
-%     \item fit power law and extract critical exponent for grid in interaction parameter space
-%     \item show universality of critical exponent but not prefactor
-% \end{itemize}
 
 \subsection{An effective interfacial model to approximate the surface tension}
 
@@ -460,9 +420,6 @@ phases and the interaction parameters. The approximation remains
 quantitatively accurate over a broad range of interacrtion parameters and has
 the correct scaling near the critical point, as we will demonstrate later.
 
-% \begin{itemize}
-%     \item briefly mention motivation for analytical approximation
-% \end{itemize}
 \subsubsection{Derivation of a piecewise-linear interface}
 As shown in the previous sections, interfacial profiles in ternary mixtures can be
 highly nontrivial. To make progress, we approximate the interface by a
@@ -614,12 +571,6 @@ parameters through $\kappa_{ij}$. Importantly, the closed-form nature of
 Eq.~\eqref{eq:surface_tension_approximation} allows derivatives of the surface
 tension with respect to order parameters to be evaluated analytically.
 
-% \begin{itemize}
-%     \item Explain approximation; piecewise linear function connecting the two bulk phases, interface width is the same for all species
-%     \item Start by stating the invarient quantity and reordering it to relate the gradient term to the local terms
-%     \item Rewrite the interface width in terms of the bulk difference and gradient term and instert invariant quantity
-%     \item Insert into surfacetension definition and simplify to final expression; Final expression only depends on bulk volume fractions
-% \end{itemize}
 \subsubsection{Comparison between analytical approximation and numerical results}
 \begin{figure}[h]
     \centering
@@ -659,11 +610,6 @@ overestimation observed in the analytical approximation is thus a direct
 consequence of the underlying variational principle.
 
 
-\begin{itemize}
-    \item Compare analytical approximation to simulation results for various interaction parameters
-    \item ST is similar to action in that it is minimized by the equilibrium profile
-    \item Analytical approximation is always larger but the power law scaling is good
-\end{itemize}
 
 \subsubsection{Asymptotic critical scaling}
 \textcolor{red}{Either use +/- or 1/2 for dense/dilute phase but not both. Also the derivation would benefit from a schematic figure showing the tie line, critical point and deviations in phi space.}
@@ -846,96 +792,6 @@ Eq.~\eqref{eq:second_product} arises from the quartic term, which is generically
 finite.
 
 
-% ######################
-% Expanding the chemical potentials in both phases around the critical point gives
-% \begin{equation}
-%     \boldsymbol{\mu}^{(+)} - \boldsymbol{\mu}_c 
-%     = \boldsymbol{H}\,\Delta\boldsymbol{\phi}^{(+)} + \mathcal{O}(\Delta \phi^2)
-%     = \boldsymbol{H}\,\Delta\boldsymbol{\phi}^{(-)} + \mathcal{O}(\Delta \phi^2)
-%     = \boldsymbol{\mu}^{(-)} - \boldsymbol{\mu}_c ,
-% \end{equation}
-% where we have used the fact that the chemical potentials must be equal in the two coexisting phases, and where \(\boldsymbol{H}\) is the Hessian of the free energy evaluated at the critical point.
-
-% Subtracting the two chemical potentials and introducing 
-% \(\Delta \boldsymbol{\phi} = \Delta \boldsymbol{\phi}^{(+)} - \Delta \boldsymbol{\phi}^{(-)}\), 
-% we obtain
-% \begin{equation}
-%     \boldsymbol{H}\,\Delta \boldsymbol{\phi} = 0 .
-% \end{equation}
-% This shows that the difference in volume fractions lies in the null space of the Hessian at the critical point. 
-
-% Moreover, since the binodal is approximately straight in the vicinity of the critical point, the individual deviations 
-% \(\Delta \boldsymbol{\phi}^{(\pm)}\) are parallel to \(\Delta \boldsymbol{\phi}\). 
-% They are therefore also elements of the null space of \(\boldsymbol{H}\) and consequently, the linear contribution in the Taylor expansion vanishes near the critical point.
-% 
-% #####################################
-% We now turn to the second-order term in the Taylor expansion of the chemical potential. Expanding around the critical point yields
-% \begin{equation}
-%     \boldsymbol{\mu}^{(\pm)} - \boldsymbol{\mu}_c 
-%     = \frac{\big(\alpha^{(\pm)}\big)^2}{2} 
-%       \left[ \frac{\delta^2 \mu_i}{\delta \phi_j \delta \phi_k}\, 
-%              \Delta \phi_j \Delta \phi_k \right] \boldsymbol{e}_i
-%       + \mathcal{O}(\Delta \phi^3) ,
-%     \label{eq:second_order}
-% \end{equation}
-% where the derivatives are evaluated at the critical point and 
-% \(\alpha^{(\pm)} = \tfrac{|\Delta \boldsymbol{\phi}^{(\pm)}|}{|\Delta \boldsymbol{\phi}|}\). 
-
-% Since the chemical potentials in the coexisting phases must be equal, we infer that \(\alpha^{(+)} = -\alpha^{(-)}\). 
-% The negative sign is required to describe two distinct phases. 
-% As a result,
-% \[
-%     \Delta \boldsymbol{\phi}^{(+)} = -\,\Delta \boldsymbol{\phi}^{(-)} = \tfrac{1}{2}\,\Delta \boldsymbol{\phi}.
-% \]
-
-% The bracketed term in Eq.~\eqref{eq:second_order} is in general nonzero, and therefore we conclude that
-% \[
-%     |\boldsymbol{\mu} - \boldsymbol{\mu}_c| \sim |\Delta \boldsymbol{\phi}|^2 .
-% \]
-% \footnote{The chemical potential remains constant along the tie line, hence it depends only on the magnitude \(|\Delta \boldsymbol{\phi}|\) and not on its phase.}
-
-% Moreover, because \(\Delta \boldsymbol{\phi}\) lies in the null space of the Hessian, one can identify the third derivative of the free energy as being proportional to 
-% \((\boldsymbol{\mu} - \boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}\). 
-% This expression vanishes at the critical point, which implies that 
-% \(\boldsymbol{\mu} - \boldsymbol{\mu}_c\) is orthogonal to the tie lines in \(\phi_1\)–\(\phi_2\) space.
-
-% ################################
-% Next we consider the second factor, 
-% \begin{equation}
-%     \nabla \bar{\phi}_i \,\tilde{\kappa}_{ij}\, \nabla \bar{\phi}_j
-%     = f(\bar{\boldsymbol{\phi}}) - \mu_i \bar{\phi}_i + \Pi
-%     = f(\bar{\boldsymbol{\phi}}) - f(\boldsymbol{\phi}^{(+)}) + \mu_i \big(\phi_i^{(+)} - \bar{\phi}_i\big) ,
-%     \label{eq:second_product}
-% \end{equation}
-% where in the first equality we have used the conservation relation from Eq.~\eqref{eq:conservation}.  
-
-% Close to the critical point, we can write
-% \[
-%     \phi_i^{(+)} = \phi_{i,c} + \tfrac{1}{2}\,\Delta \phi_i, 
-%     \qquad 
-%     \bar{\phi}_i = \tfrac{\phi_i^{(+)} + \phi_i^{(-)}}{2} 
-%                  = \phi_{i,c} + \tfrac{\alpha^{(+)} + \alpha^{(-)}}{2}\,\Delta \phi_i 
-%                  = \phi_{i,c} ,
-% \]
-% where the last step follows from \(\alpha^{(+)} = -\alpha^{(-)}\).  
-% We can therefore expand the free energy around the critical composition:  
-% \begin{equation}
-%     \begin{split}
-%         f(\boldsymbol{\phi}^{(+)}) 
-%         &= f(\boldsymbol{\phi}_c) 
-%         + \frac{1}{2}\,\mu_{i,c}\,\Delta \phi_i
-%         + \frac{1}{2^2 \cdot 2!}\, \Delta \phi_i \underbrace{H_{ij}\,\Delta \phi_j}_{=\,0} \\
-%         &\quad + \frac{1}{2^3 \cdot 3!}\, \underbrace{\frac{\delta^3 f}{\delta \phi_i \delta \phi_j \delta \phi_k}\,
-%               \Delta \phi_i \Delta \phi_j \Delta \phi_k}_{=\,0} \\
-%         &\quad + \frac{1}{2^4 \cdot 4!}\,
-%               \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
-%               \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
-%         + \mathcal{O}(\Delta \phi^5) .
-%     \end{split}
-% \end{equation}
-
-% Here the quadratic term vanishes because \(\Delta \boldsymbol{\phi}\) lies in the null space of the Hessian, and the cubic term vanishes because the third derivative of the free energy vanishes at the critical point. 
-% Thus, as we will see later, the leading nonzero contribution in the second product is the quartic term, which in general is finite.\\
 
 Finally, we revisit the higher-order expansion of the chemical potential. 
 As shown earlier, the first-order contribution vanishes, and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\)
@@ -993,9 +849,6 @@ diverging interfacial width observed in the numerical results, while the critica
 with previous work on critical interfacial behavior in mean-field models (cite work here).
 In this sense the effective interfacial model does not introduce new critical behavior, but rather
 implies that near the critical point the interfacial properties do not matter so much on the profile shape as they do on the bulk thermodynamics.
-% \begin{itemize}
-%     \item Expand two terms for \(\mu_2-\mu_{2,c}\ll1\) and collect to find critical scaling behavior
-% \end{itemize}
 
 \subsubsection{Sources of error and limitations}
 
@@ -1051,10 +904,6 @@ piecewise-linear model.
 \subsubsection{Outlook and extensions}
 
 
-\begin{itemize}
-    \item Examine efficacy on higher component mixtures
-    \item Add surfectant term to free energy functional
-\end{itemize}
 
 \section{Expanding ternary interfacial profile}
 For interaction matrix
