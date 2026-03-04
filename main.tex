@@ -166,7 +166,7 @@ The null-void interaction matrix is given by:
 \]
 It is easy to see that \(\chi_{10} > 0\) and \(\chi_{20} > 0\) are required for \(\chi_{11} < 0\) and \(\chi_{22} < 0\). The last condition \(|\chi| < 0\) translates to \[\chi_{12} \in [(\sqrt{\chi_{10}}-\sqrt{\chi_{20}})^2,(\sqrt{\chi_{10}}+\sqrt{\chi_{20}})^2]\]
 Thus all interaction parameter need to be positive, which may come as a surprise since negative interaction parameters are often used to model attractive interactions.
-One way to interpret this result is to look at the relative difference between interaction parameters. For example if \(\chi_{10}\) and \(\chi_{20}\) are large compared to \(\chi_{12}\) component \(1\) and \(2\) will effectively attract each other since they both repel the solvent strongly.
+One way to interpret this result is to look at the relative difference between interaction parameters. For example if \(\chi_{10}\) and \(\chi_{20}\) are large compared to \(\chi_{12}\) component \(1\) and \(2\) will effectively attract each other since they both repel component \(0\) strongly.
 Additionally we will see that in our systems phase separation only occurs once the interaction parameter are above \(2\) such that the condition \(\chi_{ij}>0\) still allows for homogenous mixtures.
 \subsection{Dynamics of phase separation}
 In this section we will derive the laws that govern the dynamics of phase separation in ternary mixtures. We will start with the most general case and then make simplifications that are valid for the systems we are interested in.
@@ -330,7 +330,7 @@ From this we can see that high wavevector modes are supressed since \(\frac{1}{1
 Note that for \(h \rightarrow 0\) the semi-implicit scheme reduces to the explicit scheme.
 
 \section{Surface tension of phase interfaces in ternary mixtures}
-In this chapter we will 
+In this chapter, we investigate the surface tension of interfaces in ternary mixtures composed of three distinct components (labeled 0, 1, and 2). Among these, component 2 serves as an interfacial modulator, characterized by the weakest repulsive interactions with the other two species. This property allows component 2 to preferentially accumulate at phase interfaces, effectively mediating the interactions between components 0 and 1. We systematically vary the mean concentration of component 2 from a nearly binary limit to the critical point, examining how this modulation affects interfacial properties. We solve the interfacial problem numerically using the computational framework established in the previous section and additionally develop an analytical approximation that captures the essential physics. We then compare the analytical results to the numerical solutions to assess the accuracy and limitations of our theoretical approach. Finally, we derive the critical scaling behavior of the surface tension near the critical point.
 
 \subsection{Determening the interfacial profiles and surface tension numerically}
 \subsubsection{Model setup and numerical scheme}
