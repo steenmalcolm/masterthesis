@@ -905,30 +905,34 @@ piecewise-linear model.
 
 
 
-\section{Expanding ternary interfacial profile}
-For interaction matrix
+\subsection{Expanding ternary interfacial profile}
+Although an analytical solution for the interfacial profile is generally not available, it is possible to derive an implicit expressions for the profile properties,
+for the symmetric case i.e. \(\chi_{01} = \chi_{02}\) and \(\phi_0^{(1)} = \phi_0^{(2)}\).
+The interaction matrix of the reduced two-component system is then given by:
 \[
     \begin{pmatrix}
          \chi_d & \chi_o \\
         \chi_o & \chi_d
     \end{pmatrix}
 \]
-and \(\kappa_{ij} = -\chi_{ij}\) we have EL equations
+where \(\chi_d, \chi_o\) are the diagonal and off-diagonal elements, respectively.
+and \(\kappa_{ij} = -\chi_{ij}\).
+The profiles are then given by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\ref{eq:fh_free_energy} leads to the following Euler–Lagrange equations:
 \[
 \begin{aligned}
-    &-\chi_d\Delta \phi_1 - \chi_o \Delta \phi_2 = \chi_d \phi_1 + \chi_o \phi_2 + \ln(\phi_1) - \ln(1-\phi_1-\phi_2)-\mu_1\\
-    &-\chi_o\Delta \phi_1 - \chi_d \Delta \phi_2 = \chi_o \phi_1 + \chi_d \phi_2 + \ln(\phi_2) - \ln(1-\phi_1-\phi_2)-\mu_2\\
+    &-\chi_d \phi_1''(x) - \chi_o \phi_2''(x) = \chi_d \phi_1 + \chi_o \phi_2 + \ln(\phi_1) - \ln(1-\phi_1-\phi_2)-\mu_1\\
+    &-\chi_o \phi_1''(x) - \chi_d  \phi_2''(x) = \chi_o \phi_1 + \chi_d \phi_2 + \ln(\phi_2) - \ln(1-\phi_1-\phi_2)-\mu_2\\
 \end{aligned}
 \]
 Where \(\mu_1=\mu_2=\mu=\chi_d\phi_1^{(1)} + \chi_o \phi_2^{(1)} + \ln(\phi_1^{(1)}) - \ln(\phi_0^{(1)})\) is the chemical potential of the coexisting phases.
-Define \(\phi_\pm = \tfrac{1}{2}(\phi_1 \pm \phi_2)\) such that we can rewrite the EL equations as
+The EL equations  can be rewritten in terms of the eigenmodes of the interaction matrix \(\phi_\pm = \tfrac{1}{2}(\phi_1 \pm \phi_2)\):
 \[
 \begin{aligned}
-    &\frac{2}{\bar\phi^*}\Delta \phi_+ = -\frac{2}{\bar\phi^*}\phi_+ + \ln(\phi_+ + \phi_-)+\ln(\phi_+ - \phi_-) -2 \ln(1-2\phi_+) - 2\mu \\
-    &\frac{2}{\bar\phi_c}\Delta \phi_- = -\frac{2}{\bar\phi_c}\phi_- + \ln(\phi_+ + \phi_-)-\ln(\phi_+ - \phi_-)\\
+    &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + \ln(\phi_+ + \phi_-)+\ln(\phi_+ - \phi_-) -2 \ln(1-2\phi_+) - 2\mu \\
+    &\frac{2}{\bar\phi_c} \phi_-''(x)- = -\frac{2}{\bar\phi_c}\phi_- + \ln(\phi_+ + \phi_-)-\ln(\phi_+ - \phi_-)\\
 \end{aligned}
 \]
-Where we use \(\chi_o - \chi_d = 1/\bar\phi_c\) and \(\chi_o+\chi_d = -1/\bar\phi^*\).\\
+Where we define \(\chi_o - \chi_d \eqcolon 1/\bar\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
 The chemical potential can be rewritten in terms of the mean volume fraction \(\bar\phi=(\phi_1^{(1)}+\phi_2^{(2)})/2\) and the difference 
 \(\Delta\phi = (\phi_1^{(1)}-\phi_2^{(2)})/2\)
 \[\mu=-\bar\phi/\phi^* - \Delta\phi/\phi_c+\ln(\bar\phi+\Delta\phi)-\ln(1-2\bar\phi)\].
@@ -938,14 +942,14 @@ Then we get the implicit equation for the bulk value of \(\phi_-(x\rightarrow\in
 \begin{equation}
 \begin{aligned}
     &-\frac{2}{\bar\phi_c}\Delta \phi + \ln(\bar\phi + \Delta\phi)-\ln(\bar\phi - \Delta\phi) = 0\\
-    \Rightarrow\quad&\Delta\delta \phi = \bar\phi\tanh\left(\frac{\Delta\phi}{\phi_c}\right)\\
+    \Rightarrow\quad&\Delta \phi = \bar\phi\tanh\left(\frac{\Delta\phi}{\phi_c}\right)\\
 \end{aligned}
 \end{equation}
 Next we will look at the EL equation for \(\phi_+\) at the interface. Due to anti-symmetry of \(\phi_-\) around the interface center we have \(\phi_-(x=0)=0\) and therefore
 \[
 \begin{aligned}
-    &\frac{2}{\bar\phi^*}\Delta \phi_+ = -\frac{2}{\bar\phi^*}\phi_+ + 2\ln(\phi_+) - 2 \ln(1-2\phi_+) - 2\mu \\
-    \Rightarrow\quad&\frac{\Delta \phi_+}{\bar\phi^*} = -\frac{\delta\phi_+}{\bar\phi^*} + \frac{\Delta\phi}{\phi_c} + \ln\left(\frac{\bar\phi+\delta\phi_+}{\bar\phi+\Delta\phi}\right)+\ln\left(\frac{1-2\bar\phi}{1-2(\bar\phi+\delta\phi_+}\right) \\
+    &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + 2\ln(\phi_+) - 2 \ln(1-2\phi_+) - 2\mu \\
+    \Rightarrow\quad&\frac{ \phi_+''(x)}{\phi_s} = -\frac{\delta\phi_+}{\phi_s} + \frac{\Delta\phi}{\phi_c} + \ln\left(\frac{\bar\phi+\delta\phi_+}{\bar\phi+\Delta\phi}\right)+\ln\left(\frac{1-2\bar\phi}{1-2(\bar\phi+\delta\phi_+)}\right) \\
 \end{aligned}
 \]
 Where we have defined \(\delta\phi_+ = \phi_+ - \bar\phi\).
@@ -956,14 +960,22 @@ Now we can rearrange this to the implicit equation for \(\delta\phi_+\):
     % \delta \phi_+ = \frac{1-2\bar\phi}{2}\frac{-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}=\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
 Where we have defined 
 \begin{equation}
-    \Pi = \exp\left(\frac{\delta \phi_+}{\bar\phi^*}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
+    \Pi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
 \end{equation}
-Here \(a_2 = \Delta\delta\phi_+/\delta\phi_+\) is the curvature of \(\phi_+\) at the interface center.
-If we assume \(a_2\ll1\) we can solve this equation self-consistently for \(\delta\phi_+\) after having solved for \(\Delta\phi\).
-This assumption is correct near the critical point as here the interface width diverges 
+where \(a_2 = \delta\phi_+''(x)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface center.
+Near the critical point the interface width \(w\) diverges.
+Consequently the order parameter varies only over the large length scale \(w\).
+Dimensional analysis then implies
 \[
-\Delta \delta\phi_+ \approx \frac{\delta\phi_+(\epsilon) - 2\delta\phi_+(0) + \delta\phi_+(-\epsilon)}{\epsilon^2} \sim \frac{\delta\phi_+(0)}{w^2} \ll \delta\phi_+
+\phi_+''(x) \sim \frac{\delta\phi_+}{w^2} 
+\] Since \(w\rightarrow \infty\) as the critical point is approached, the ratio
+\[
+a_2 = \frac{\phi_+''(x)}{\delta\phi_+} \sim \frac{1}{w^2}
 \]
+vanishes in this limit. The curvature term therefore becomes parametrically small compared to the local terms in the Euler–Lagrange equation, justifying the approximation 
+\(a_2 \ll 1\).
+Under this assumption the equation for \(\delta\phi_+\) can be solved self-consistently
+once \(\Delta \phi\) is known.
 The results can be seen in figure~\ref{fig:phi_plus_minus_comparison}.
 \begin{figure}[h]
     \centering
@@ -974,11 +986,11 @@ The results can be seen in figure~\ref{fig:phi_plus_minus_comparison}.
 Next we can look at the interface width, \(w = \Delta \phi / \nabla \phi_{-,IF}\), where \(\nabla \phi_{-,IF}\) is the gradient of \(\phi_-\) at the interface center.
 At the interface we have \(\phi_- = \nabla\phi_+ = 0\). We can use the conserved quantity from Eq.~\ref{eq:invariant_quantity} to rewrite this as
 \[
-    f - 2\mu \phi_+ + \Pi = 2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\bar\phi^*}-2\mu\phi_++\Pi=\frac{(\nabla\phi_-)^2}{\bar\phi_c}
+    f - 2\mu \phi_+ + \Pi = 2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi=\frac{(\nabla\phi_-)^2}{\bar\phi_c}
 \]
 and thus:
 \begin{equation}
-    w = \sqrt{\frac{\bar\phi_c (\Delta \phi)^2}{2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\bar\phi^*}-2\mu\phi_++\Pi}}
+    w = \sqrt{\frac{\bar\phi_c (\Delta \phi)^2}{2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi}}
 \end{equation}
 The analytical approximation for the interface width can be seen in figure~\ref{fig:interface_width_comparison}.
 Here we can see that including the absorption yields a much better agreement with the numerical results.
@@ -989,112 +1001,6 @@ Here we can see that including the absorption yields a much better agreement wit
     \label{fig:interface_width_comparison}
     
 \end{figure}
-
-\subsection{Finding \(\phi_-\)}
-In order to get \(\phi_-\) we can expand the logarithms for \(\phi_+ = \bar \phi + \delta \phi_+\), where \(\delta \phi_+, \phi_- \ll \bar\phi\).
-\[
-    \begin{aligned}
-    \ln(\phi_+ \pm \phi_-) &= \ln(\bar\phi) + \frac{\delta \phi_+}{\bar\phi} \pm \frac{\phi_-}{\bar\phi} - \frac{\phi_-^2}{2\bar\phi^2} \mp \frac{\delta \phi_+ \phi_-}{\bar\phi^2}-\frac{(\delta\phi_+)^2}{2\bar\phi^2}\\
-        &+\frac{\delta\phi_+(\phi_-)^2}{\bar\phi^3} \pm \frac{\phi_-^3}{3\bar\phi^3}+\frac{\phi_-^4}{4\bar\phi^4} + \mathcal{O}((a+m)^5)
-    \end{aligned}
-\]
-and therefore:
-\[
-    \ln(\phi_+ + \phi_-)-\ln(\phi_+ - \phi_-) \approx  2\left(\frac{ \phi_-}{\bar\phi} - \frac{\delta \phi_+\phi_-}{\bar\phi^2} +\frac{\phi_-^3}{3\bar\phi^3} \right)
-\]
-Inserting this into the EL for \(\phi_-\) yields:
-\[
-\begin{aligned}
-    &\frac{2\Delta \phi_-}{\bar\phi_c} = -\frac{2}{\bar\phi_c} \phi_- +  \frac{ 2}{\bar\phi} \phi_- - \frac{2}{\bar\phi^2}\delta \phi_+ \phi_- + \frac{2}{3\bar\phi^3}\phi_-^3 \\
-    \Rightarrow\quad&\Delta \phi_- =  \left(\frac{\bar\phi_c}{\bar\phi} - 1\right) \phi_- - \frac{\bar\phi_c}{\bar\phi^2}\delta \phi_+ \phi_- + \frac{\bar\phi_c}{3\bar\phi^3}\phi_-^3 \\
-\end{aligned}
-\]
-The laplacian of \(\phi_- = a \tanh(kx)\) is given by
-\[
-    \Delta \phi_- = -2 k^2 a\tanh(kx) + 2 k^2 a \tanh^3(kx)
-\]
-On the other hand if we insert the ansatz in the right hand side we get
-\[
-\begin{aligned}
-    &\left(\frac{\bar\phi_c}{\bar\phi} - 1\right) a \tanh(kx) - \frac{\bar\phi_c}{\bar\phi^2} m \sech^2(kx) a \tanh(kx)\\
-    & + \frac{\bar\phi_c}{3\bar\phi^3} a^3 \tanh^3(kx) \\
-    =&\left(\frac{\bar\phi_c}{\bar\phi} - 1 - \frac{\bar\phi_c}{\bar\phi^2} m \right) a \tanh(kx) + \left(\frac{\bar\phi_c}{\bar\phi^2}m +\frac{\bar\phi_c}{3\bar\phi^3} a^2\right) a\tanh^3(kx) \\
-\end{aligned}
-\]
-By comparing the LHS and RHS we get the relationships
-\[
-    \begin{aligned}
-    &2k^2 = -\frac{\bar\phi_c}{\bar\phi} + 1 + \frac{\bar\phi_c}{\bar\phi^2} m = \frac{\bar\phi_c}{\bar\phi^2}m +\frac{\bar\phi_c}{3\bar\phi^3} a^2\\
-    \Rightarrow\quad&a = \sqrt{\frac{3\bar\phi}{\bar\phi_c}(\bar\phi-\bar\phi_c)}
-    \end{aligned}
-\]
-\subsection{Finding \(\phi_+\)}
-Next we will investigate the equation for \(\phi_+\). For this we expand the logarithms as before:
-\[
-    \begin{aligned}
-    \ln(\phi_+ \pm \phi_-) &= \ln(\bar\phi) + \frac{\delta \phi_+}{\bar\phi} \pm \frac{\phi_-}{\bar\phi} - \frac{(\delta \phi_+)^2}{2\bar\phi^2} - \frac{\phi_-^2}{2\bar\phi^2} \mp \frac{\delta \phi_+ \phi_-}{\bar\phi^2}\\
-        &+\frac{(\delta\phi_+)^3}{3\bar\phi^3}+\frac{\delta\phi_+(\phi_-)^2}{\bar\phi^3}\pm\frac{(\delta \phi_+)^2\phi_-}{\bar\phi^3} \pm \frac{\phi_-^3}{3\bar\phi^3} + \mathcal{O}((\delta \phi_+ + \phi_-)^4)
-    \end{aligned}
-\]
-
-\[
-    \ln(\phi_+ + \phi_-)+\ln(\phi_+ - \phi_-) = 2\ln(\bar\phi) + \frac{2\delta \phi_+}{\bar\phi} - \frac{(\delta \phi_+)^2}{\bar\phi^2} - \frac{\phi_-^2}{\bar\phi^2}+\frac{2\delta\phi_+(\phi_-)^2}{\bar\phi^3}-\frac{\phi_-^4}{2\bar\phi^4}  \mathcal{O}((\delta \phi_+\pm \phi_-)^4)
-\]
-We can expand also \(\ln(1-2\phi_+)\) around \(\bar\phi\):
-\[
-    -2\ln(1-2\phi_+) = -2\ln(1-2\bar\phi) + \frac{4}{1-2\bar\phi}\delta \phi_+ + \frac{4}{(1-2\bar\phi)^2}(\delta \phi_+)^2  + \mathcal{O}((\delta \phi_+)^3)
-\]
-Here we already drop the \(\delta\phi_+^3\) terms since we will project onto \(\sech^2,\sech^4\)-space later on. 
-Inserting this into the EL equation for \(\phi_+\) yields:
-\[
-\begin{aligned}
-    &\frac{2}{\bar\phi^*}\Delta \delta \phi_+ =2\left(\ln\bar\phi - \ln(1-2\bar\phi)-\mu\right) -\frac{2}{\bar\phi^*} \delta \phi_+ +  2\left(\frac{1}{\bar\phi}+\frac{2}{1-2\bar\phi}\right) \delta \phi_+ \\
-    &- \left(\frac{1}{\bar\phi^2} - \frac{4}{(1-2\bar\phi)^2}\right)(\delta \phi_+)^2 - \frac{1}{\bar\phi^2}\phi_-^2 + \frac{2}{\bar\phi^3}\delta\phi_+(\phi_-)^2-\frac{1}{2\bar\phi^4}\phi_-^4\\
-    \Rightarrow\quad&\Delta \delta \phi_+ = \left(\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}-1\right) \delta \phi_+ - \left(\frac{\bar\phi^*(1-4\bar\phi)}{2\bar\phi^2(1-2\bar\phi)^2}\right)(\delta \phi_+)^2\\
-    &- \frac{\bar\phi^*}{2\bar\phi^2}\phi_-^2 + \frac{\bar\phi^*}{\bar\phi^3}\delta\phi_+(\phi_-)^2-\frac{\bar\phi^*}{4\bar\phi^4}\phi_-^4\\
-\end{aligned}
-\]
-Note that we ignore constants as they cancel with the chemical potential constants \(\mu_1+\mu+2\). Also we drop the \(\sech^6\)-term from the last term since it will not contribute to the final result.
-Again inserting the ansatze for \(\delta \phi_+\) and \(\phi_-\) we get for the LHS:
-\[
-    \Delta \delta \phi_+ = 4k^2m \sech^2(kx) - 6 k^2 m \sech^4(kx)
-\]
-For the RHS we get
-\[
-   \begin{aligned}
-    &\left(\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}-1\right) m \sech^2(kx) - \left(\frac{\bar\phi^*(1-4\bar\phi)}{2\bar\phi^2(1-2\bar\phi)^2}\right)m^2 \sech^4(kx) \\
-    &- \frac{\bar\phi^*}{2\bar\phi^2} a^2 (1-\sech^2(kx)) + \frac{\bar\phi^*}{\bar\phi^3} m a^2 \sech^2(kx) (1-\sech^2(kx))\\
-    &- \frac{\bar\phi^*}{4\bar\phi^4}a^4 (1-\sech^2(kx))^2 \\
-    =&-\frac{\bar\phi^*a^2}{2\bar\phi^2}\left(1+\frac{a^2}{\bar\phi^2}\right)+\left[\left(\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}-1\right)m +\frac{\bar\phi^*}{2\bar\phi^2}a^2 + \frac{\bar\phi^*}{\bar\phi^3} m a^2 +\frac{\bar\phi^*}{2\bar\phi^4}a^4 \right] \sech^2(kx) \\
-    &- \left( \frac{\bar\phi^*(1-4\bar\phi)}{2\bar\phi^2(1-2\bar\phi)^2}m^2 + \frac{\bar\phi^*}{\bar\phi^3} ma^2+\frac{\bar\phi^*}{4\bar\phi^4}a^4 \right)\sech^4(kx)
-   \end{aligned}
-\]
-Comparing the coefficients we get:
-\[
-\begin{aligned}
-    4k^2m &= \left(\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}-1\right)m +\frac{\bar\phi^*}{2\bar\phi^2}a^2 + \frac{\bar\phi^*}{\bar\phi^3} m a^2 +\frac{\bar\phi^*}{2\bar\phi^4}a^4\\
-    &=  \frac{\bar\phi^*(1-4\bar\phi)}{3\bar\phi^2(1-2\bar\phi)^2}m^2 + \frac{2\bar\phi^*}{3\bar\phi^3} ma^2+\frac{\bar\phi^*}{6\bar\phi^4}a^4\\
-\end{aligned}
-\]
-Inserting the definition for \(a\) and rearranging in orders of \(m\) yields:
-\[
-    \begin{aligned}
-        & m^2\frac{\bar\phi^*(1-4\bar\phi)}{3\bar\phi^2(1-2\bar\phi)^2}+m\left[-\frac{\bar\phi^*}{3\bar\phi^3}a^2+1-\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}\right] - \frac{\bar\phi^*}{2\bar\phi^2}a^2\left(1+\frac{2a^2}{3\bar\phi^2}\right)\\
-        =&m^2\frac{\bar\phi^*(1-4\bar\phi)}{3\bar\phi^2(1-2\bar\phi)^2}+m\left[-\frac{\bar\phi^*}{\bar\phi_c\bar\phi}(\bar\phi-\bar\phi_c)+1-\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}\right] - \frac{3\bar\phi^*}{2\bar\phi_c}(\bar\phi-\bar\phi_c)\left(1+\frac{2}{\bar\phi_c}(\bar\phi-\bar\phi_c)\right)\\
-    \end{aligned}
-\]
-Lastly we will compute the residual 
-\[
-    \begin{aligned}
-        R =& \text{LHS} - \text{RHS} = \left[4k^2m-\left(\frac{\bar\phi^*}{\bar\phi(1-2\bar\phi)}-1\right)m +\frac{\bar\phi^*}{2\bar\phi^2}a^2 + \frac{\bar\phi^*}{\bar\phi^3} m a^2 \right]\sech^2(kx)\\
-        -\left(6k^2m +\frac{\bar\phi^*(1-4\bar\phi)}{2\bar\phi^2(1-2\bar\phi)^2}m^2 + \frac{\bar\phi^*}{\bar\phi^3} ma^2 \right)
-    \end{aligned}
-\]
-and set its dot product with \(\sech^2(kx)\).
-\[
-\int_{-\infty}^{\infty} R \sech^2(kx) dx = 0
-\]
-\textbf{Idea: look at EL equation at inflection point of \(\phi_+\)}
 
 
 \section{Future Ideas}
