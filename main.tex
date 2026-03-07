@@ -5,6 +5,20 @@
 \DeclareMathOperator{\sech}{sech}
 
 \usepackage{amsmath, amssymb}
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{numvaluesbox}{
+    colback=blue!8,
+    colframe=blue!45!black,
+    boxrule=0.6pt,
+    arc=2.5mm,
+    left=1.5mm,
+    right=1.5mm,
+    top=1mm,
+    bottom=1mm,
+    title={Numerical Values},
+    fonttitle=\bfseries
+}
 
 \begin{document}
 \tableofcontents
@@ -31,11 +45,10 @@ In general a concave function \(f\) satisfies the property
 \[ f(\lambda x_1 + (1-\lambda) x_2) \geq \lambda f(x_1) + (1-\lambda) f(x_2) \quad \text{for } \lambda \in [0,1] \]
 For a system inside of the spinodal region the free energy density is concave in some direction in the \((\phi_1, \phi_2)\) plane, which implies
 \[f(\bar{\boldsymbol\phi}) \geq \lambda f(\boldsymbol\phi^{(1)}) + (1-\lambda) f(\boldsymbol\phi^{(2)})\]
-where \(\bar{\boldsymbol\phi} = \lambda \boldsymbol\phi^{(1)} + (1-\lambda) \boldsymbol\phi^{(2)}\) and \(\boldsymbol\phi^{(1)}, \boldsymbol\phi^{(2)}\ll1\). This means that the system can lower its free energy by separating into two phases with volume fractions \(\boldsymbol\phi^{(1)}\) and \(\boldsymbol\phi^{(2)}\) and relative volumes \(\lambda\) and \(1-\lambda\).
+where we use the vector notation \(\boldsymbol{\phi} = (\phi_1, \phi_2)^T\) and we have defined the average volume fraction \(\bar{\boldsymbol\phi} = \lambda \boldsymbol\phi^{(1)} + (1-\lambda) \boldsymbol\phi^{(2)}\) . This means that the system can lower its free energy by separating into two phases with volume fractions \(\boldsymbol\phi^{(1)}\) and \(\boldsymbol\phi^{(2)}\) and relative volumes \(\lambda\) and \(1-\lambda\).
 Note that this only works for systems where the interface region between the phases is much smaller than the bulk phases, otherwise the interfacial energy needs to be taken into account.
 Since the spinodal is given by one condition it defines one or multiple lines in the \((\phi_1, \phi_2)\) plane and separates locally stable from unstable regions.
 
-\[1 + x(1-x)\chi_{xx} + y(1-y)\chi_{yy} -2 xy \chi_{xy} + xy(1-x-y)|\chi| \]
 
 
 \subsubsection{Global stability analysis}
@@ -70,6 +83,51 @@ In general the spinodal will always be enclosed by the binodal, since local inst
 Going the other way around is not necessarily true, since a system can be locally stable but globally unstable. This region between the binodal and spinodal lines is called metastable region.
 For biological systems this means that in order to reach the global minimum the system needs to overcome an energy barrier. This can happen in the presence of thermal fluctuations, which can push the system over the barrier. This process is called nucleation but we will not discuss it further in this text.
 When analysing properties of a system one can use the binodal and spinodal lines to approximate an upper and lower bound. As an example nucleation rates are bounded from below at the spinodal and from above at the binodal.
+
+\subsubsection{Critical point}
+
+The critical point is the endpoint of the binodal curve at which the two
+coexisting phases become identical. At this point the difference between the
+two equilibrium compositions vanishes continuously and the tie line shrinks to
+a single point in composition space. Consequently, the binodal and spinodal
+curves intersect at the critical point.
+
+Since the critical point lies on the spinodal, the free
+energy must satisfy the same stability condition. In particular, the determinant of the Hessian vanishes,
+\begin{equation}
+\det\!\left(\frac{\partial^2 f}{\partial \phi_i \partial \phi_j}\right)=0.
+\end{equation}
+
+Geometrically, the critical point marks the transition between first- and
+second-order phase transition behavior along the coexistence curve.
+Away from the critical point, crossing the binodal leads to a discontinuous
+change in the equilibrium composition. The system separates into two phases
+with finite differences in their volume fractions. This discontinuous change
+is characteristic of a first-order phase transition.
+
+At the critical point, however, the difference between the coexisting phase
+compositions arises continuously. In this sense, the critical point represents
+a second-order phase transition in composition space.
+
+ Mathematically, the emergence of two minima from a single minimum in the free
+energy occurs precisely when the third derivative of the free energy vanishes
+along the unstable direction. Denoting by $v_i$ the eigenvector corresponding
+to the vanishing eigenvalue of the Hessian, this condition can be written as
+\begin{equation}
+\sum_{i,j,k} v_i v_j v_k
+\frac{\partial^3 f}{\partial \phi_i \partial \phi_j \partial \phi_k}=0.
+\label{eq:third_derivative}
+\end{equation}
+
+
+Close to the critical point, the system exhibits universal scaling behavior 
+that is independent of the microscopic details of the model. In particular,
+the difference between the coexisting phase compositions and other
+thermodynamic quantities follow power-law relations controlled by universal
+critical exponents. These scaling relations will be derived in the next
+chapter.
+
+\textcolor{red}{Add schematic figure of FH energy for binary system for \(chi<2\), \(chi>2\) and at the critical point \(chi=2\)}
 
 \subsection{Mean-field approximation of lattice interactions}
 In the previous sections we have discussed properties of the free energy and how these properties can drive phase separation. In this section we will focus on the exact form of the free energy.
@@ -905,9 +963,10 @@ piecewise-linear model.
 
 
 
-\subsection{Expanding ternary interfacial profile}
+\subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}
 Although an analytical solution for the interfacial profile is generally not available, it is possible to derive an implicit expressions for the profile properties,
 for the symmetric case i.e. \(\chi_{01} = \chi_{02}\) and \(\phi_0^{(1)} = \phi_0^{(2)}\).
+\subsubsection{Implicit expression for the bulk phase compositions}
 The interaction matrix of the reduced two-component system is then given by:
 \[
     \begin{pmatrix}
@@ -933,8 +992,8 @@ The EL equations  can be rewritten in terms of the eigenmodes of the interaction
 \end{aligned}
 \]
 Where we define \(\chi_o - \chi_d \eqcolon 1/\bar\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
-The chemical potential can be rewritten in terms of the mean volume fraction \(\bar\phi=(\phi_1^{(1)}+\phi_2^{(2)})/2\) and the difference 
-\(\Delta\phi = (\phi_1^{(1)}-\phi_2^{(2)})/2\)
+The chemical potential can be rewritten in terms of the mean volume fraction \(\bar\phi=(\phi_1^{(1)}+\phi_2^{(1)})/2\) and the difference 
+\(\Delta\phi = (\phi_1^{(1)}-\phi_2^{(1)})/2\)
 \[\mu=-\bar\phi/\phi^* - \Delta\phi/\phi_c+\ln(\bar\phi+\Delta\phi)-\ln(1-2\bar\phi)\].
 First we will focus on the EL equation for \(\phi_-\).
 For this we can look at the equation in the bulk where the laplacian is zero and \(\phi_+ = \bar\phi\) is constant.
@@ -945,6 +1004,7 @@ Then we get the implicit equation for the bulk value of \(\phi_-(x\rightarrow\in
     \Rightarrow\quad&\Delta \phi = \bar\phi\tanh\left(\frac{\Delta\phi}{\phi_c}\right)\\
 \end{aligned}
 \end{equation}
+\subsubsection{Implicit expression for the interfacial absorption}
 Next we will look at the EL equation for \(\phi_+\) at the interface. Due to anti-symmetry of \(\phi_-\) around the interface center we have \(\phi_-(x=0)=0\) and therefore
 \[
 \begin{aligned}
@@ -983,11 +1043,37 @@ The results can be seen in figure~\ref{fig:phi_plus_minus_comparison}.
     \caption{Comparison between numerical solution of EL equations (solid lines) and analytical approximation (dashed lines) for \(\chi_{12}=2.3\).}
     \label{fig:phi_plus_minus_comparison}
 \end{figure}
+\subsubsection{Surface tension approximation with interfacial absorption}
 Next we can look at the interface width, \(w = \Delta \phi / \nabla \phi_{-,IF}\), where \(\nabla \phi_{-,IF}\) is the gradient of \(\phi_-\) at the interface center.
 At the interface we have \(\phi_- = \nabla\phi_+ = 0\). We can use the conserved quantity from Eq.~\ref{eq:invariant_quantity} to rewrite this as
 \[
     f - 2\mu \phi_+ + \Pi = 2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi=\frac{(\nabla\phi_-)^2}{\bar\phi_c}
 \]
+\begin{equation}
+\begin{aligned}
+\phi_-'(0) =
+\Bigg\{
+\bar\phi_c \Big[
+&2\phi_{+,0}\ln(\phi_{+,0})
++(1-2\phi_{+,0})\ln(1-2\phi_{+,0})
+-\frac{\phi_{+,0}^2}{\phi_s} \\
+&-(\bar\phi+\Delta\phi)\ln(\bar\phi+\Delta\phi)
+-(\bar\phi-\Delta\phi)\ln(\bar\phi-\Delta\phi) \\
+&-(1-2\bar\phi)\ln(1-2\bar\phi)
++\frac{\bar\phi^2}{\phi_s}
++\frac{\Delta\phi^2}{\bar\phi_c} \\
+&-2(\phi_{+,0}-\bar\phi)
+\left(
+-\frac{\bar\phi}{\phi_s}
+-\frac{\Delta\phi}{\bar\phi_c}
++\ln(\bar\phi+\Delta\phi)
+-\ln(1-2\bar\phi)
+\right)
+\Big]
+\Bigg\}^{1/2}
+\end{aligned}
+\end{equation}
+
 and thus:
 \begin{equation}
     w = \sqrt{\frac{\bar\phi_c (\Delta \phi)^2}{2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi}}
@@ -1002,6 +1088,253 @@ Here we can see that including the absorption yields a much better agreement wit
     
 \end{figure}
 
+
+
+
+\clearpage
+
+\section{Fast Binodal Construction}
+In the previous chapter, we investigated the interfacial profiles of ternary systems. 
+For faster convergence of the equilibrium profiles, we initialized the system using knowledge of the bulk compositions of the coexisting phases.
+These compositions can be obtained in a timely manner using the flory python package. 
+This was initially the method of choice. However, after optimizing the numerical schemes for the interfacial profiles
+precomputing the bulk compositions of the coexisting phases became the bottleneck of the entire procedure.
+Since we are interested in systems for ever increasing mean volume fraction, we are essentially asking for the binodal curve
+Since the system is equilibrated iteratively for ever increasing mean volume fraction of the second species, one
+can ask the question of using information of the prior iteration to converge faster to the next bulk compositions.
+In this section we will present a method which allows for a rapid computation of the binodal in phase space for the ternary system.
+
+\subsection{Tracing out the binodal curve in phase space}
+\textcolor{red}{Add a schematic figure showing the binodal curve with points on it representing previous iterations and the step along the curve (tangential step) and a projection step to the binodal.
+Should this schematic be for dilute and dense phase or just one of them?}
+In order to better understand this algorithm it is helpful to first think about the number of degrees of freedom and the number of constraints that define the binodal curve in phase space.
+For two distinct phases in the ternary incompressible system, we have four degrees of freedom, which are the two independent volume fractions in each of the two phases.
+On the other hand, the coexistence conditions impose three constraints.
+This means that we have one degree of freedom left, which implies that the binodal curve is a one-dimensional manifold in the four-dimensional space of phase compositions.
+
+\subsubsection{Coexistence conditions}
+
+% \begin{itemize}
+%     \item The coexistence conditions for a two-phase system are given by the equality of the chemical potentials and osmotic pressure in the two phases which are three equalities
+%     \item Explicitly show the coexistence conditions for Flory-Huggins
+%     \item The number of unknowns is four, the volume fractions of the two species in the two phases, so we have one degree of freedom and thus a curve of coexisting phases in phase space, which is the binodal curve.
+% \end{itemize}
+Given two phases in a ternary system a point on the binodal is uniquely given by the coordinates in phase space:
+\[\boldsymbol\phi = (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})^T\]
+, where the superscript denotes the phase and the subscript denotes the species.
+These points are not arbitrary but are constrained by the coexistence conditions, which require that the chemical potentials and osmotic pressure of the two phases are equal.
+\[
+\begin{aligned}
+    \mu_i(\phi_1^{(1)}, \phi_2^{(1)}) &= \mu_i(\phi_1^{(2)}, \phi_2^{(2)})\\
+    \Pi(\phi_1^{(1)}, \phi_2^{(1)}) &= \Pi(\phi_1^{(2)}, \phi_2^{(2)})
+\end{aligned}
+\]
+For the Flory-Huggins free energy, the chemical potentials and osmotic pressure can be expressed as
+\[
+\begin{aligned}
+    \mu_i(\phi_1, \phi_2) &= \frac{\partial f}{\partial \phi_i} = \ln(\phi_i) - \ln(\phi_0) + \sum_{j=1}^2 \chi_{ij} \phi_j\\
+    \Pi(\phi_1, \phi_2) &= -f + \sum_i \mu_i \phi_i =  -\ln(\phi_0) +\tfrac{1}{2}\sum_{i,j=1}^2 \phi_i\chi_{ij}  \phi_j
+\end{aligned}
+\]
+The algorithm we will present in the next sections relies on the fact that we start with a point on the binodal, i.e. a point that satisfies the coexistence conditions.
+\subsubsection{Tangential step along the binodal}
+
+Given that we know the bulk compositions of the coexisting phases for a given point in phase space,
+can we move a small step in phase space and remain on the binodal curve?
+For a step that is small enough, we can expand the coexistance conditions to first order in the step size \(\delta\boldsymbol\phi = (\delta\phi_1^{(1)}, \delta\phi_2^{(1)}, \delta\phi_1^{(2)}, \delta\phi_2^{(2)})^T\):
+
+\begin{equation}
+\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi}) = \boldsymbol{E}(\boldsymbol{\phi}) + \boldsymbol{J}\,\delta\boldsymbol{\phi} + \mathcal{O}(\delta\boldsymbol{\phi}^2) = \boldsymbol{0}
+\label{eq:binodal_step}
+\end{equation}
+Where \(\boldsymbol{E} = (\mu_1^{(1)}-\mu_1^{(2)}, \mu_2^{(1)}-\mu_2^{(2)}, \Pi^{(1)}-\Pi^{(2)})^T\) and \(\boldsymbol{J}\) is the Jacobian matrix of the system:
+\[
+\boldsymbol{J} = \begin{pmatrix}
+\frac{\partial \mu_1^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \mu_1^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \mu_1^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \mu_1^{(2)}}{\partial \phi_2^{(2)}}\\
+\frac{\partial \mu_2^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \mu_2^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \mu_2^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \mu_2^{(2)}}{\partial \phi_2^{(2)}}\\
+\frac{\partial \Pi^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \Pi^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \Pi^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \Pi^{(2)}}{\partial \phi_2^{(2)}}
+\end{pmatrix}
+\]
+The first term on the right-hand side of Eq.~\ref{eq:binodal_step} vanishes since \(\boldsymbol{\phi}\) is a point on the binodal.
+In order to remain on the binodal, we must therefore have \(\boldsymbol{J}\,\delta\boldsymbol{\phi} = \boldsymbol{0}\).
+This means that the step along the binodal curve is proportional to the null space of the Jacobian matrix \(\delta \boldsymbol{\phi} \propto \text{null}(\boldsymbol{J})\).
+
+\subsubsection{Projecting back onto the coexistence manifold}
+Even though this is a good start it still introduces an error of order \(\delta\boldsymbol{\phi}^2\) which is propagated across iterations
+and can lead to a significant deviation from the binodal curve after many iterations.
+Although one can reduce this error by taking smaller steps, this also increases the number of iterations required to trace out the binodal curve, which is not ideal.
+Instead we can ask a slightly different question:
+given that we are close but not exactly on the binodal, in which direction should we step in order be at the binodal?
+Mathematically, this can be expressed the same as  Eq.~\ref{eq:binodal_step}, but now the first term on the right-hand side does not vanish and we need to solve for \(\delta\boldsymbol{\phi}\) such that the entire right-hand side vanishes.
+This can be written as
+\[
+\boldsymbol{J}\,\delta\boldsymbol{\phi} + \boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}
+\]
+It is easy to see that the soltution to this equation is given by the pseudo-inverse of the Jacobian:
+\[
+\delta\boldsymbol{\phi} = -\boldsymbol{J}^+\boldsymbol{E}(\boldsymbol{\phi})
+\]
+where \(\boldsymbol{J}^+ = \boldsymbol{J}^T(\boldsymbol{J}^T\boldsymbol{J})^{-1}\).
+The Eq.~\ref{eq:binodal_step} is invariant under translations of \(\delta\boldsymbol{\phi}\) along the null space of the Jacobian. Since the pseudo-inverse solution is orthogonal to the null space it minimizes the step size,
+by which we ensure that the tangential step and the projection step are independent and do not interfere with each other. This will become important when during algorithmic implementation we need 
+to define a step size for the tangential step, which is not well defined if the projection step also moves tangentially along the binodal curve.
+
+The pseudo-inverse is easy to compute using singular value decomposition (SVD) of the Jacobian
+\[
+\boldsymbol{J} = \boldsymbol{U}\,\boldsymbol{\Sigma}\,\boldsymbol{V}^T
+\]
+where \(\boldsymbol{U}\) and \(\boldsymbol{V}\) are orthogonal matrices and \(\boldsymbol{\Sigma}\) is a diagonal matrix containing the singular values of the Jacobian.
+The pseudo-inverse can then be computed as
+\[
+\boldsymbol{J}^+ = \boldsymbol{V}\,\boldsymbol{\Sigma}^+\,\boldsymbol{U}^T
+\]
+where \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the nonzero singular values.
+Vanishing singular values of the Jacobian correspond to directions which the Jacobian projects to zero.
+This mean that instead of trying to reconstruct this lost information with the pseudo-inverse, one simply sets the reciprocal of the zero singular values to zero.
+In practice, one needs to also consider small but nonzero singular values, which can lead to numerical instability. Therefore, one needs to set a threshold below which the reciprocal of the singular value is set to zero.
+
+Once one has computed the projection step, one can project back onto the binoda curve.
+Because second order errors are neglected the projection step is not perfect and might require multiple iterations to converge to the desired accuracy.
+Most importantly, the projection step is only guaranteed to converge if the initial point is close enough to the binodal curve, which is the case if we take small enough tangential steps.
+All in all the projection step allows us to take much larger tangential steps without introducing significant errors, which allows us to trace out the binodal curve much faster and yet more accurately than without the projection step.
+
+% More text to follow here about the projection step
+
+\subsection{Algorithm Considerations}
+\subsubsection{Initialization of the stepping scheme}
+This algorithm relies on the fact that we have a point on the binodal to start with.
+In our implementation we consider two fundamentally different types of initial points:
+the dilute limit of one species, where the system effectively reduces to a binary system,
+and the critical point, which is a distinct thermodynamic state rather than a dilute-limit construction.
+Both types of initial points can be found analytically for the Flory-Huggins free energy, which makes them ideal candidates for initialization.
+
+For explaining reasons we will consider the dilute limit of the zeroth species, but the same logic applies to the other species by relabeling the volume fractions.
+If the repelling interaction of the two remaining species is strong enough ($\chi_{12}>2$) then one can find the coexisting phases for the binary system from the coexistence condition:
+\[
+\ln(\phi) -\ln(1-\phi) + \chi_{12} (1-2\phi) = 0
+\]
+Where \(\phi\) is the volume fraction of one of the species, and the other species is given by \(1-\phi\). The dilute limit is then given by
+\[
+(\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)}) = (\phi-\epsilon, 1-\phi-\epsilon, 1-\phi-\epsilon, \phi-\epsilon)
+\]
+such that \(\phi_0^{(1)} = \phi_0^{(2)} = 2\epsilon\) is small, which allows us to be close enough to the binodal to be able to project back on the binodal and start the stepping scheme.
+Because the null space of the Jacobian is invariant under sign change one needs to choose the direction of the tangential step away from the border.
+
+The critical point can also be found analytically by finding the point in phase space where the second and third derivatives of the free energy vanish (see Section~\ref{sec:critical_points}).
+Because multiple singular values of the Jacobian nearly vanish near the critical point, it can be challenging to compute the tangential direction of the binodal curve from the Jacobian.
+However because the spinodal and binodal curves overlap at the critical point one can deduce that the tangential direction of the binodal curve at the critical point is given by the null vector of the Hessian of the free energy.
+
+% \begin{itemize}
+%     \item This algorithm relies on the fact that we have a point on the binodal to start with.
+%     One way to start is by considering the very dilute limit of one of the species. If the repelling interaction of the 
+%     two remaining species is strong enough (>2) then one can find the coexisting phases for the binary system by solving a single implicit equation.
+%     Adding a small amount of the third species leaves one close enough to the binodal to be able to project back on the binodal
+%     The initial direction is the chosen away from the border
+%     \item Another way to start is by considering the critical point, which can also be found analytically. Since the all singular values of the Jacobian vanish at the critical point
+%     One needs to initialize the volume fractions slightly away from the critical point along the binodal.
+%     The direction can be extracted from the spinodal (analytically) which overlaps with the binodal at the critical point.
+% \end{itemize}
+
+\subsubsection{Handling binodal branching events}
+While developing this algorithm we found a curious case for the symmetric ternary system  \ref{sss:case_study_symmetric_ternary} where the spinodal crossed the binodal, which would mean that part of the binodal
+was locally unstable but globally stable, which is illogical. This necessetated the existence of additional binoda branches enclosing the spinodal curve. 
+After investigating the the singular values of the Jacobian throughout the binodal curve, points appeared where the second smalles singular value also vaninshed, which means that the null space of the Jacobian is degenerate
+and one can step in multiple directions, which corresponds to the branching of the binodal curve.
+Therefore in order to get the entire binodal curve one needs to track the two smalles singualr values of the Jacobian to detect these branching events and then step in both directions.
+% \begin{itemize}
+%     \item Sometimes is phase space the null space of the Jacobian is degenerate and one can step in multiple directions, so the 
+%     binodal curve branches
+%     \item I stumbled across this when I was looking at the symmetric ternary system and I noticed that the spinodal seemed to cross the binodal, which would
+%     mean that there are regions in phase space which are locally unstable but not gloabally which is illogical. This necessetated binodal branches that I have not been able to track by only looking at the smallest singular value of the Jacobian.
+%     \item One needs to track the two smalles singular values of the Jacobian to detect this branching and then step in both directions to track both branches of the binodal curve
+% \end{itemize}
+
+\subsection{Implementation}
+The phase diagram of a ternary system in the Flory-Huggins theory is uniquely determined by the interaction parameters \(\chi_{ij}\).
+For our algorithm this has the effect that the user only needs to provide the interaction parameters and the algorithm will compute the entire phase diagram.
+All other parameters only define the numerical details which can be tuned to optimize the performance of the algorithm but do not affect the results in a significant way as long as they are within reasonable ranges.
+
+\subsubsection{Computing the spinodal and binodal curve}
+
+Once the interaction parameteres are provided, one first computes the spinodal curve and critical points, which can be done analytically for the Flory-Huggins free energy.
+Starting from an initial point, one can step along the binodal curve by repeating the steps:
+\begin{itemize}
+    \item Take a tangential step along the binodal curve
+    \item Project back onto the binodal curve using the pseudo-inverse of the Jacobian
+\end{itemize}
+
+The stepping is repeated until one of three termination criteria is met, which are:
+
+\begin{itemize}
+    \item The volume fraction of one of the species is outside of the physically meaningful range, which is between 0 and 1.
+    \item We reach a critical point, which is implemented by terminating whenever the distance between the two phases is smaller than a certain threshold.
+    \item In rare cases the binodal can loop back on itself, which can lead to infinite loops. 
+    To prevent this we monitor the distance between the current point and the initial point and terminate if this distance is smaller than a certain threshold.
+\end{itemize}
+
+During the stepping scheme, one needs to monitor the singular values of the Jacobian to detect branching events. Whenever the second smallest singular value is smaller than a certain threshold
+A new initial point is added to a task list. This initial point includes location in phase space and the direction is not being explored by the current process.
+After all initial points from the dilute limit and critical points are explored, the algorithm continues by picking new initial points from the task list until the task list is empty.
+In order to avoid compute sections with the same initial point, we cache the initial points that have already been explored and skip them when they are picked from the task list.
+% \begin{itemize}
+%     \item Explain from a high level how the algorithm is implemented
+%     \item Iitialization: Determine spinodal for given chi matrix and find critical points as well as binary coexistence points.
+%     \item Core Algorithm: Starting from initial point -> stepping until termination criteria -> Repeat for all initial points -> Detect branching events from the singular values from previous runs -> Repeat stepping for each branching event
+% \end{itemize}
+ 
+\subsubsection{Post processing}
+After all binodal branches have been computed, one needs to remove duplicates, which can occur if one for example starts at the boundary of the phase diagram and the critical point of the same binodal section.
+Once all duplicates are removed, one can look for intersecting points of two branches of the binodal, as this is where two tie lines go in different directions, which means that we have three coexisting phases.
+Once the algorithm has completed we are left with a set of spinodal and binodal branches, as well as the dividing lines between the one phase, two phase and three phase regions in phase space.
+
+\subsubsection{Numerical details}
+Due to the discrete nature of the stepping scheme we often times rely on numerical threshold values throughout the algorithm.
+For the step size of the tangential step, we typically choose a static value of around $0.01$. In the case where the second smalles singular value of the Jacobian is smaller than $10^{-1}$ we adapt the step size to be proportional to the singular value
+which is capped from below by a value of around $10^{-4}$ to prevent the step size from becoming too small. This is done to better resolve the branching events. The branching events are triggered when the second smallest singular value of the Jacobian is smaller than around $10^{-3}$.
+Additionally, for the projection loop we typically choose a threshold of around $10^{-10}$ for the norm of \(\boldsymbol{E}(\boldsymbol{\phi})\) to determine whether we are close enough to the binodal curve.
+The termination criteria for coexistence points near the critical point is 
+\[
+|\boldsymbol\phi^{(1)} - \boldsymbol\phi^{(2)}| < 10^{-3}
+\]
+In order to facilitate numerical stability of the projection step near the critical point we set all singular values of the Jacobian that are smaller than $10^{-6}$ to zero.
+
+\begin{numvaluesbox}
+\begin{itemize}
+        \item \textbf{$0.01$}: typical static step size for the tangential step.
+        \item \textbf{$10^{-1}$}: threshold below which the second smallest singular value triggers adaptive step-size scaling.
+        \item \textbf{$10^{-4}$}: lower cap for the adaptive step size.
+        \item \textbf{$10^{-3}$}: threshold for triggering branching events (based on the second smallest singular value).
+        \item \textbf{$10^{-10}$}: projection-loop threshold for $\|\boldsymbol{E}(\boldsymbol{\phi})\|$ to determine proximity to the binodal curve.
+        \item \textbf{$10^{-3}$}: termination criterion near the critical point, $|\boldsymbol\phi^{(1)} - \boldsymbol\phi^{(2)}| < 10^{-3}$.
+        \item \textbf{$10^{-6}$}: cutoff below which Jacobian singular values are set to zero near the critical point.
+\end{itemize}
+\end{numvaluesbox}
+\subsection{Results and validation}
+\subsubsection{Validation of the algorithm}
+\begin{itemize}
+    \item Validate by equilibrating spacially extended systems for randomly sampled points in phase space and comparing the bulk compositions of the coexisting phases with the results from the binodal construction.
+    \item Validate by comparing with flory package.
+\end{itemize}
+\subsubsection{Identification of three-phase regions}
+\begin{itemize}
+    \item According to Gibbs phase rule, in a ternary system we can have up to three coexisting phases.
+    \item One can detect three phase regions by looking at the intersecting points of two branches of the binodal
+    because at that point we have two tie lines going in different directions.
+    \item It can also happen that the a three phase region exists inside of another three phase region. In this case
+\end{itemize}
+
+\subsubsection{Case study: symmetric ternary system}
+\begin{itemize}
+\item symmetric ternary systems (\(\chi_{01} = \chi_{02} = \chi_{12}=\chi\)) offer a rich number of interesting features as one increases \(\chi\) such as
+branching bifurcations. Up to nine critical points. Binodal branches which loop back on themselves. Three three phase regions
+which join to a single three phase region, tie lines which rotate as one moves across phase space, etc.
+\item Verify with results from the literature
+\end{itemize}
+\subsubsection{Other interesting cases}
+\begin{itemize}
+    \item Binodal not crossing boundary, if flory parameter are negative enough (strong attraction)
+    \item Systems with binodals but without critical points
+\end{itemize}
 
 
 \end{document}
