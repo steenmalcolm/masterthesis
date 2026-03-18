@@ -157,7 +157,9 @@ Note that since we are investigating the reduced system the interaction energies
 The full Hamiltonian has the form:
 \begin{equation}
 \label{eq:ising_hamiltonian}
-H = \sum_n^N \epsilon_{11} \sigma_1^n \sigma_1^{n+1} + \epsilon_{22} \sigma_2^n \sigma_2^{n+1} + \epsilon_{12} (\sigma_1^n \sigma_2^{n+1} + \sigma_2^n \sigma_1^{n+1})
+H = \sum_{n}^{N} \epsilon_{11} \sigma_1^{(n)} \sigma_1^{(n+1)} 
++ \epsilon_{22} \sigma_2^{(n)} \sigma_2^{(n+1)} 
++ \epsilon_{12} \left(\sigma_1^{(n)} \sigma_2^{(n+1)} + \sigma_2^{(n)} \sigma_1^{(n+1)}\right)
 \end{equation}
 Reducing the number of states introduces linear terms, but becuase the total number of each state is conserved these terms simply add a constant to the Energy and can thus be neglected.
 \subsubsection{Mean-field and continuum limit}
@@ -225,7 +227,8 @@ The null-void interaction matrix is given by:
         \chi_{12}-\chi_{10}-\chi_{20} & -2\chi_{20}
     \end{pmatrix}
 \]
-It is easy to see that \(\chi_{10} > 0\) and \(\chi_{20} > 0\) are required for \(\chi_{11} < 0\) and \(\chi_{22} < 0\). The last condition \(|\chi| < 0\) translates to \[\chi_{12} \in [(\sqrt{\chi_{10}}-\sqrt{\chi_{20}})^2,(\sqrt{\chi_{10}}+\sqrt{\chi_{20}})^2]\]
+It is easy to see that \(\chi_{10} > 0\) and \(\chi_{20} > 0\) are required for \(\chi_{11} < 0\) and \(\chi_{22} < 0\). The last condition \(|\chi| < 0\) requires
+\[\chi_{12} \in \left[(\sqrt{\chi_{10}}-\sqrt{\chi_{20}})^2,(\sqrt{\chi_{10}}+\sqrt{\chi_{20}})^2\right]\]
 Thus all interaction parameter need to be positive, which may come as a surprise since negative interaction parameters are often used to model attractive interactions.
 One way to interpret this result is to look at the relative difference between interaction parameters. For example if \(\chi_{10}\) and \(\chi_{20}\) are large compared to \(\chi_{12}\) component \(1\) and \(2\) will effectively attract each other since they both repel component \(0\) strongly.
 Additionally we will see that in our systems phase separation only occurs once the interaction parameter are above \(2\) such that the condition \(\chi_{ij}>0\) still allows for homogenous mixtures.
@@ -982,6 +985,17 @@ piecewise-linear model.
 \subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}
 Although an analytical solution for the interfacial profile is generally not available, it is possible to derive an implicit expressions for the profile properties,
 for the symmetric case i.e. \(\chi_{01} = \chi_{02}\) and \(\phi_0^{(1)} = \phi_0^{(2)}\).
+In this case, the interaction matrix takes the form
+\[
+    \begin{pmatrix}
+        0 &\eta \chi& \eta\chi\\
+        \eta \chi& 0&  \chi\\
+        \eta\chi & \chi& 0\\
+
+    \end{pmatrix}
+\]
+Where \(\chi\) is the interaction strength between the last two components and \(\eta\) modulates the interaction strength of the first component with the other two and typically takes values between 0 and 1.
+This writing convention has been adopted from the work of Huang and Olvera de la Cruz~\cite{Huang2021InterfacialAO} and allows for a direct comparison with their results.
 \subsubsection{Implicit expression for the bulk phase compositions}
 The interaction matrix of the reduced two-component system is then given by:
 \[
@@ -991,7 +1005,7 @@ The interaction matrix of the reduced two-component system is then given by:
     \end{pmatrix}
 \]
 where \(\chi_d, \chi_o\) are the diagonal and off-diagonal elements, respectively.
-and \(\kappa_{ij} = -\chi_{ij}\).
+Whe choose \(\lambda = 1\) such that \(\kappa_{ij} = -\chi_{ij}\).
 The profiles are then given by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\ref{eq:fh_free_energy} leads to the following Euler–Lagrange equations:
 \[
 \begin{aligned}
@@ -1214,7 +1228,6 @@ Because second order errors are neglected the projection step is not perfect and
 Most importantly, the projection step is only guaranteed to converge if the initial point is close enough to the binodal curve, which is the case if we take small enough tangential steps.
 All in all the projection step allows us to take much larger tangential steps without introducing significant errors, which allows us to trace out the binodal curve much faster and yet more accurately than without the projection step.
 
-% More text to follow here about the projection step
 
 \subsection{Algorithm Considerations}
 \subsubsection{Initialization of the stepping scheme}
@@ -1240,30 +1253,12 @@ The critical point can also be found analytically by finding the point in phase 
 Because multiple singular values of the Jacobian nearly vanish near the critical point, it can be challenging to compute the tangential direction of the binodal curve from the Jacobian.
 However because the spinodal and binodal curves overlap at the critical point one can deduce that the tangential direction of the binodal curve at the critical point is given by the null vector of the Hessian of the free energy.
 
-% \begin{itemize}
-%     \item This algorithm relies on the fact that we have a point on the binodal to start with.
-%     One way to start is by considering the very dilute limit of one of the species. If the repelling interaction of the 
-%     two remaining species is strong enough (>2) then one can find the coexisting phases for the binary system by solving a single implicit equation.
-%     Adding a small amount of the third species leaves one close enough to the binodal to be able to project back on the binodal
-%     The initial direction is the chosen away from the border
-%     \item Another way to start is by considering the critical point, which can also be found analytically. Since the all singular values of the Jacobian vanish at the critical point
-%     One needs to initialize the volume fractions slightly away from the critical point along the binodal.
-%     The direction can be extracted from the spinodal (analytically) which overlaps with the binodal at the critical point.
-% \end{itemize}
-
 \subsubsection{Handling binodal branching events}
 While developing this algorithm we found a curious case for the symmetric ternary system  \ref{sss:case_study_symmetric_ternary} where the spinodal crossed the binodal, which would mean that part of the binodal
 was locally unstable but globally stable, which is illogical. This necessetated the existence of additional binoda branches enclosing the spinodal curve. 
 After investigating the the singular values of the Jacobian throughout the binodal curve, points appeared where the second smalles singular value also vaninshed, which means that the null space of the Jacobian is degenerate
 and one can step in multiple directions, which corresponds to the branching of the binodal curve.
 Therefore in order to get the entire binodal curve one needs to track the two smalles singualr values of the Jacobian to detect these branching events and then step in both directions.
-% \begin{itemize}
-%     \item Sometimes is phase space the null space of the Jacobian is degenerate and one can step in multiple directions, so the 
-%     binodal curve branches
-%     \item I stumbled across this when I was looking at the symmetric ternary system and I noticed that the spinodal seemed to cross the binodal, which would
-%     mean that there are regions in phase space which are locally unstable but not gloabally which is illogical. This necessetated binodal branches that I have not been able to track by only looking at the smallest singular value of the Jacobian.
-%     \item One needs to track the two smalles singular values of the Jacobian to detect this branching and then step in both directions to track both branches of the binodal curve
-% \end{itemize}
 
 \subsection{Implementation}
 The phase diagram of a ternary system in the Flory-Huggins theory is uniquely determined by the interaction parameters \(\chi_{ij}\).
@@ -1329,12 +1324,6 @@ In order to avoid compute sections with the same initial point, we cache the ini
 \end{algorithmic}
 \end{tcolorbox}
 
-% \begin{itemize}
-%     \item Explain from a high level how the algorithm is implemented
-%     \item Iitialization: Determine spinodal for given chi matrix and find critical points as well as binary coexistence points.
-%     \item Core Algorithm: Starting from initial point -> stepping until termination criteria -> Repeat for all initial points -> Detect branching events from the singular values from previous runs -> Repeat stepping for each branching event
-% \end{itemize}
- 
 \subsubsection{Post processing}
 After all binodal branches have been computed, one needs to remove duplicates, which can occur if one for example starts at the boundary of the phase diagram and the critical point of the same binodal section.
 Once all duplicates are removed, one can look for intersecting points of two branches of the binodal, as this is where two tie lines go in different directions, which means that we have three coexisting phases.
@@ -1350,6 +1339,8 @@ The termination criteria for coexistence points near the critical point is
 |\boldsymbol\phi^{(1)} - \boldsymbol\phi^{(2)}| < 10^{-3}
 \]
 In order to facilitate numerical stability of the projection step near the critical point we set all singular values of the Jacobian that are smaller than $10^{-6}$ to zero.
+Lastly the stepping scheme terminates if the current point is within a euclidean distance of around $10^{-3}$ from the initial point to prevent infinite loops in case the binodal curve loops back on itself.
+To avoid terminating right at the starting point, we define a minimum number of steps that needs to be taken before this termination criterion is applied, with a default value of 10 steps.
 
 \begin{numvaluesbox}
 \begin{itemize}
@@ -1359,9 +1350,12 @@ In order to facilitate numerical stability of the projection step near the criti
         \item \textbf{$10^{-10}$}: projection-loop threshold for $\|\boldsymbol{E}(\boldsymbol{\phi})\|$ to determine proximity to the binodal curve.
         \item \textbf{$10^{-3}$}: euclidean distance between the two phases for termination near the critical point.
         \item \textbf{$10^{-6}$}: cutoff below which Jacobian singular values are set to zero
+        \item \textbf{$10^{-3}$}: euclidean distance from the initial point for termination to prevent infinite loops.
+        \item \textbf{$10$}: minimum number of steps before applying the previous termination criterion.
 \end{itemize}
 \end{numvaluesbox}
-Note that these values have been chosen to optimize for accuracy over speed, since the algorithm is already quite fast compared to alternative methods of computing the phase diagram.
+Note that these values have been chosen to optimize for accuracy rather than speed, since the algorithm is already quite fast compared to alternative methods.
+
 \subsection{Results and validation}
 \subsubsection{Validation of the algorithm}
 \begin{itemize}
