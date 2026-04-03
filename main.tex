@@ -38,8 +38,13 @@
 }
 
 \begin{document}
-\tableofcontents
-\clearpage  
+% % Title page setup
+% \title{Research Lab Course Report: Thermodynamics and dynamics of ternary phase separation}
+% \author{Malcolm Steen}
+% \date{\today}
+% \maketitle
+% \tableofcontents
+% \clearpage  
 
 
 \section{Introduction}
@@ -117,7 +122,7 @@ Minimizing the free energy in Eq.~\ref{eq:free_energy_two_phase} with respect to
         \sum_{i=1}^2 \phi_i^{(1)} \frac{\partial f(\phi_1^{(1)},\phi_2^{(1)})}{\partial \phi_i} - f(\phi_1^{(1)},\phi_2^{(1)}) &= \sum_{i=1}^2 \phi_i^{(2)} \frac{\partial f(\phi_1^{(2)},\phi_2^{(2)})}{\partial \phi_i} - f(\phi_1^{(2)},\phi_2^{(2)})
     \end{aligned}
 \]
-Identifying the excess chemical potentials \(\mu_i = \frac{\partial f}{\partial \phi_i}\) and the osmotic pressure
+Identifying the exchange chemical potentials \(\mu_i = \frac{\partial f}{\partial \phi_i}\) and the osmotic pressure
 \[
     \Pi = \sum_{i=1}^2 \phi_i \frac{\partial f}{\partial \phi_i} - f,
 \]
@@ -218,7 +223,6 @@ These scaling relations will be of interest later on.
 
 \subsection{Mean-field approximation of lattice interactions}
 In the previous sections we have discussed properties of the free energy and how these properties can drive phase separation. In this section we will focus on the exact form of the free energy.
-\textcolor{red}{I could add the explicit FH free energy density here}
 \subsubsection{Lattice model}
 We start by considering a one dimensional lattice model with \(N\) lattice sites and three possible states at each lattice site \(0, 1, 2\) where the total number of each state is conserved.
 The lattice sites all have equal volume \(\nu\) regardless of their state.
@@ -576,13 +580,13 @@ It is convenient to define the surface excess of species \(i\) as
 \[
 \Gamma_i = N_i^s = N_i - N_i^{(1)} - N_i^{(2)}.
 \]
-Using the corresponding excess grand potential, the surface tension can then be written as
+The surface tension can then be written as
 \begin{equation}
 \gamma = \frac{1}{A}\left(F^s - \sum_i \mu_i \Gamma_i\right).
 \label{eq:surface_tension_thermodynamic}
 \end{equation}
 
-The main difference from the binary case is therefore that, in a ternary system, the surface excesses \(\Gamma_i\) generally cannot
+In a ternary system, the surface excesses \(\Gamma_i\) generally cannot
 all be eliminated simultaneously by a suitable choice of dividing surface. In a binary system, by contrast, one can choose the
 dividing surface such that the excess vanishes yielding the familiar expression \(\gamma = F^s/A\).
 \subsubsection{Surface tension of the Flory-Huggins model}
@@ -741,7 +745,7 @@ G_i(\phi_1^n(x),\phi_2^n(x))
 \end{equation}
 where \(\langle\cdot\rangle_x\) denotes the spatial average. By construction, the spatial average of the update vanishes, so the total mass of each component is conserved throughout the iteration.
 
-This dynamical system is artificial and does not represent the physical evolution of the system. Nevertheless, it relaxes toward the same constrained stationary profiles as the Cahn--Hilliard equations while requiring only the solution of coupled second-order equations instead of fourth-order ones.
+This dynamical system is artificial and does not represent the physical evolution of the system. Nevertheless, it relaxes toward the same constrained stationary profiles as the Cahn-Hilliard equations while requiring only the solution of coupled second-order equations instead of fourth-order ones.
 
 
 
@@ -809,270 +813,270 @@ Thus, modes with large wavevector \(k\) are strongly damped. This suppresses the
 
 For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the identity, and the semi-implicit scheme reduces to the explicit update.
 
-% \section{Surface tension of phase interfaces in ternary mixtures}
-% In this chapter, we investigate the surface tension of interfaces in ternary mixtures composed of three distinct components (labeled 0, 1 and 2). Among these, component 2 serves as an interfacial modulator, characterized by the weakest repulsive interactions with the other two species. This property allows component 2 to preferentially accumulate at phase interfaces, effectively mediating the interactions between components 0 and 1. We systematically vary the mean concentration of component 2 from a nearly binary limit to the critical point, examining how this modulation affects interfacial properties. We solve the interfacial problem numerically using the computational framework established in the previous section and additionally develop an analytical approximation that captures the essential physics. We then compare the analytical results to the numerical solutions to assess the accuracy and limitations of our theoretical approach. Finally, we derive the critical scaling behavior of the surface tension near the critical point.
+\section{Surface tension of phase interfaces in ternary mixtures}
+In this chapter, we investigate the surface tension of interfaces in ternary mixtures composed of three distinct components (labeled 0, 1 and 2). Among these, component 2 serves as an interfacial modulator, characterized by the weakest repulsive interactions with the other two species. This property allows component 2 to preferentially accumulate at phase interfaces, effectively mediating the interactions between components 0 and 1. We systematically vary the mean concentration of component 2 from a nearly binary limit to the critical point, examining how this modulation affects interfacial properties. We solve the interfacial problem numerically using the computational framework established in the previous section and additionally develop an analytical approximation that captures the essential physics. We then compare the analytical results to the numerical solutions to assess the accuracy and limitations of our theoretical approach. Finally, we derive the critical scaling behavior of the surface tension near the critical point.
 
-% \subsection{Determening the interfacial profiles and surface tension numerically}
-% \subsubsection{Model setup and numerical scheme}
-% After having rescaled the free energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T \nu^{-1/3}\) the model only depends on the Flory-Huggins interaction matrix \(\chi_{ij}\)
-% and the gradient prefactor \(\lambda\). Since the gradient prefactor only sets the interfactial length scale, we fix \(\lambda=1\). 
-% With the convention used in Eq.~\eqref{eq:fh_free_energy_density}, the gradient coefficient matrix is then
-% \begin{equation}
-%     \kappa_{ij} = -\chi_{ij}.
-% \end{equation}
+\subsection{Determening the interfacial profiles and surface tension numerically}
+\subsubsection{Model setup and numerical scheme}
+After having rescaled the free energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T \nu^{-1/3}\) the model only depends on the Flory-Huggins interaction matrix \(\chi_{ij}\)
+and the gradient prefactor \(\lambda\). Since the gradient prefactor only sets the interfactial length scale, we fix \(\lambda=1\). 
+With the convention used in Eq.~\eqref{eq:fh_free_energy_density}, the gradient coefficient matrix is then
+\begin{equation}
+    \kappa_{ij} = -\chi_{ij}.
+\end{equation}
 
-% In the following, we restrict attention to interaction parameters \(\chi_{ij}\in[0,3]\).
-% This range reliably produces liquid-liquid phase separation,
-% while avoiding (as far as possible) regions of three-phase coexistence; see the
-% phase-diagram discussion in Sec.~\ref{sec:phase_diagram}.
+In the following, we restrict attention to interaction parameters \(\chi_{ij}\in[0,3]\).
+This range reliably produces liquid-liquid phase separation,
+while avoiding (as far as possible) regions of three-phase coexistence; see the
+phase-diagram discussion in Sec.~\ref{sec:phase_diagram}.
 
-% For a chosen $\chi$-matrix, we initialize the system using the corresponding
-% coexisting bulk compositions. To reduce computational cost, these bulk phases are
-% computed first (using the \texttt{flory} package) and then used as boundary values
-% for the interfacial calculation. We initialize the interface as a sharp step
-% between the two coexisting phases.
-% % @article{florypackage,
-% %    title = {{flory}: A {Python} package for finding coexisting phases in multicomponent mixtures},
-% %    author = {Qiang, Yicheng and Zwicker, David},
-% %    year = {2025},
-% %    month = mar,
-% %    journal = {Journal of Open Source Software},
-% %    volume = {10},
-% %    number = {107},
-% %    pages = {7388},
-% %    issn = {2475-9066},
-% %    doi = {10.21105/joss.07388}
-% % }
+For a chosen $\chi$-matrix, we initialize the system using the corresponding
+coexisting bulk compositions. To reduce computational cost, these bulk phases are
+computed first (using the \texttt{flory} package) and then used as boundary values
+for the interfacial calculation. We initialize the interface as a sharp step
+between the two coexisting phases.
+% @article{florypackage,
+%    title = {{flory}: A {Python} package for finding coexisting phases in multicomponent mixtures},
+%    author = {Qiang, Yicheng and Zwicker, David},
+%    year = {2025},
+%    month = mar,
+%    journal = {Journal of Open Source Software},
+%    volume = {10},
+%    number = {107},
+%    pages = {7388},
+%    issn = {2475-9066},
+%    doi = {10.21105/joss.07388}
+% }
 
-% The spatial discretization is chosen adaptively to resolve the interface. The grid
-% spacing $\Delta x$ is set such that the interfacial region spans approximately
-% $40$ grid points. The total domain size is $256$ grid points such that the fields relax to
-% their bulk values well before the domain edges.
-
-
-
-% \subsubsection{Equilibration dynamics and interfacial structure}
-
-% Starting from the initial step profile, we relax the system to equilibrium using the
-% fixed-point iteration in Eq.~\eqref{eq:fixed_point_iteration}. Since we are only interested in the equilibrium profiles,
-% the step size $h$ is chosen as large as possible while maintaining numerical stability. The semi-implicit update strongly
-% suppresses high-wavenumber modes, which allows us to use $h=\mathcal{O}(10^{-1})$,
-% typically one to two orders of magnitude larger than in a fully explicit scheme.
-
-
-% We declare convergence when the maximum change in the volume fractions
-% satisfies
-% \[
-% \max_x\, \lVert \boldsymbol{\phi}^{i+1}(x)-\boldsymbol{\phi}^{i}(x)\rVert < 10^{-10}.
-% \]
-% Depending on interaction parameters and initialization, this criterion is reached
-% after $10^3$-$10^4$ iterations.
-
-% We continue equilibrating the system for increased mean concentrations of the second species until the critical point beyond which two-phase coexistence no longer is feasible.
-
-% At equilibrium, the interface exhibits a smooth, sigmoid-like transition in each component.
-% One the species with the weakest repulsive interactions with the other two components (i.e.\ the strongest effective attraction) is enriched at the interface, thus effectively screening the strongest repulsive interactions.
-% Interestingly the degree of absorption at the interface increases as the interactions with the other two components becomes more repulsive and can even lead to a third phase.
-% For a symmetric case \(\chi_{01} = \chi_{02}\), the zeroth species
-% is symmetric about the interface. In this regime, Huang and Olvera de la Cruz have shown
-% that the interfacial adsorption scales linearly with the ratio
-% $\chi_{\mathrm{01}}/\chi_{\mathrm{12}}$, matching our simulation data.
-
-
-% \subsubsection{Critical scaling of the surface tension}
-% Once the equilibrium profiles are obtained, the surface tension is
-% computed using the thermodynamic relation derived in the previous section. The
-% resulting surface tensions are shown in Fig.~\ref{fig:surface_tension_numerical}.
-
-
-% As the system approaches the critical point, the interface continuously vanishes, which explains why the surface tension vanishes as well.
-
-% Close to criticality, we observe a clear power-law dependence of the surface
-% tension on the distance from the critical point, which we quantify by the chemical
-% potential difference $\mu_2-\mu_{2,c}$:
-% \[
-% \gamma \sim (\mu_2-\mu_{2,c})^{\delta}.
-% \]
-% This scaling is observed for a wide range of interaction parameters. By fitting
-% the numerical data, we extract the corresponding critical exponent $\delta$ for
-% each parameter set. The results are summarized in Fig.~\ref{fig:critical_exponent_numerical}.
-
-% Within numerical uncertainty, the critical exponent is universal across all
-% interaction parameters considered and takes a value $\delta \approx 3/2$. This
-% is consistent with the classical mean-field prediction for binary mixtures
-% derived by Cahn~\cite{Cahn1958FreeTE}. In contrast, the prefactor of the power law
-% is not universal and varies substantially with the choice of interaction
-% parameters, reflecting non-universal microscopic details of the system.
-
-% Remarkably, the observed power-law behavior persists over a broad range of
-% $\mu_2-\mu_{2,c}$ values.
+The spatial discretization is chosen adaptively to resolve the interface. The grid
+spacing $\Delta x$ is set such that the interfacial region spans approximately
+$40$ grid points. The total domain size is $256$ grid points such that the fields relax to
+their bulk values well before the domain edges.
 
 
 
-% \subsection{An effective interfacial model to approximate the surface tension}
+\subsubsection{Equilibration dynamics and interfacial structure}
 
-% While the critical scaling of the surface tension near the critical point provides
-% important physical insight, obtaining a closed-form expression for $\gamma$ from
-% the full ternary Flory-Huggins free energy is generally intractable. Consequently,
-% for each choice of interaction parameters and mean concentration of the second species, the surface
-% tension must be computed by solving the full numerical interfacial problem.
-
-% To avoid this computational cost, we now introduce an analytical approximation that
-% estimates the surface tension using only the bulk volume fractions of the coexisting
-% phases and the interaction parameters. The approximation remains
-% quantitatively accurate over a broad range of interacrtion parameters and has
-% the correct scaling near the critical point, as we will demonstrate later.
-
-% \subsubsection{Derivation of a piecewise-linear interface}
-% As shown in the previous sections, interfacial profiles in ternary mixtures can be
-% highly nontrivial. To make progress, we approximate the interface by a
-% piecewise-linear profile that connects the two coexisting bulk phases over a finite
-% interfacial width.
+Starting from the initial step profile, we relax the system to equilibrium using the
+fixed-point iteration in Eq.~\eqref{eq:fixed_point_iteration}. Since we are only interested in the equilibrium profiles,
+the step size $h$ is chosen as large as possible while maintaining numerical stability. The semi-implicit update strongly
+suppresses high-wavenumber modes, which allows us to use $h=\mathcal{O}(10^{-1})$,
+typically one to two orders of magnitude larger than in a fully explicit scheme.
 
 
-% This approximation neglects two important features of the exact solution. First, it
-% assumes a common interfacial width for all components, which excludes
-% adsorption of any species at the interface. Second, it ignores the intrinsic
-% nonlinearity of the equilibrium profiles. Despite these simplifications, the
-% piecewise-linear ansatz allows for a closed-form expression for the surface tension.
+We declare convergence when the maximum change in the volume fractions
+satisfies
+\[
+\max_x\, \lVert \boldsymbol{\phi}^{i+1}(x)-\boldsymbol{\phi}^{i}(x)\rVert < 10^{-10}.
+\]
+Depending on interaction parameters and initialization, this criterion is reached
+after $10^3$-$10^4$ iterations.
 
-% To begin, we note that for a one-dimensional, planar interface at equilibrium, the
-% Euler–Lagrange equations imply the existence of a conserved quantity across the
-% interface. Writing the free energy density as a sum of a local and a gradient
-% contribution and adopting Einstein summation convention, we define
-% \begin{equation}
-%     f(x)
-%     = f_{\mathrm{local}}(\{\phi_i(x)\})
-%     + \frac{1}{2}\,\nabla \phi_i(x)\,\kappa_{ij}\,\nabla \phi_j(x).
-% \end{equation}
-% Introducing the exchange chemical potentials $\mu_i$ and osmotic pressure $\Pi$, the
-% combination
-% \begin{equation}
-%     f_{\mathrm{local}}(\{\phi_i(x)\})
-%     - \mu_i \phi_i(x)
-%     + \Pi
-%     - \frac{1}{2}\,\nabla \phi_i(x)\,\kappa_{ij}\,\nabla \phi_j(x)
-%     \eqcolon -V(\{\phi_i\}) - T(\{\nabla \phi_i\})
-%     \label{eq:invariant_quantity}
-% \end{equation}
-% is invariant across the interface. Here, the terms $V$ and $T$ play roles analogous
-% to potential and kinetic energy in classical mechanics.
+We continue equilibrating the system for increased mean concentrations of the second species until the critical point beyond which two-phase coexistence no longer is feasible.
 
-% Taking the spatial derivative of Eq.~\eqref{eq:invariant_quantity} yields
-% \[
-% \begin{aligned}
-%     \frac{d}{dx} \Bigl(
-%     f_{\mathrm{local}}(\{\phi_i\})
-%     - \mu_i \phi_i
-%     + \Pi
-%     - \frac{1}{2}\,\nabla \phi_i\,\kappa_{ij}\,\nabla \phi_j
-%     \Bigr)
-%     &=
-%     \left(
-%     \frac{\partial f_{\mathrm{local}}}{\partial \phi_i}
-%     - \mu_i
-%     - \kappa_{ij} \Delta \phi_j
-%     \right)
-%     \frac{d\phi_i}{dx} \\
-%     &= 0,
-% \end{aligned}
-% \]
-% where the expression in parentheses vanishes by virtue of the Euler–Lagrange
-% equations. Consequently, the quantity in
-% Eq.~\eqref{eq:invariant_quantity} is constant throughout the interfacial region.
+At equilibrium, the interface exhibits a smooth, sigmoid-like transition in each component.
+One the species with the weakest repulsive interactions with the other two components (i.e.\ the strongest effective attraction) is enriched at the interface, thus effectively screening the strongest repulsive interactions.
+Interestingly the degree of absorption at the interface increases as the interactions with the other two components becomes more repulsive and can even lead to a third phase.
+For a symmetric case \(\chi_{01} = \chi_{02}\), the zeroth species
+is symmetric about the interface. In this regime, Huang and Olvera de la Cruz have shown
+that the interfacial adsorption scales linearly with the ratio
+$\chi_{\mathrm{01}}/\chi_{\mathrm{12}}$, matching our simulation data.
 
 
-% For our approximation we assume that each component varies linearly across an interface of width $w$,
-% connecting the bulk values $\phi_i^{(1)}$ and $\phi_i^{(2)}$. The magnitude of the
-% gradient is therefore approximated by
-% \[
-%     |\nabla \phi_i| \simeq \frac{|\Delta \phi_i|}{w},
-% \]
-% where $\Delta \phi_i = \phi_i^{(2)} - \phi_i^{(1)}$ denotes the difference between the
-% coexisting bulk phases. The profile is centered around the mean composition
-% \[
-%     \bar{\phi}_i = \tfrac{1}{2}\left(\phi_i^{(1)} + \phi_i^{(2)}\right),
-% \]
-% at which the local free energy density is evaluated. Since we assume a common
-% interfacial width for all components, this approximation holds for all
-% $i$.
-% Substituting the gradient approximation into the quadratic gradient term
-% yields
-% \[
-%      \nabla \bar{\phi}_i\, \kappa_{ij}\, \nabla \bar{\phi}_j
-%     =
-%     w^{-2}\,\Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j.
-% \]
-% Solving for the interfacial width gives
-% \[
-%     w
-%     =
-%     \sqrt{
-%     \frac{
-%         \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
-%     }{
-%         \nabla \bar{\phi}_i\, \kappa_{ij}\, \nabla \bar{\phi}_j
-%     }
-%     }.
-% \]
+\subsubsection{Critical scaling of the surface tension}
+Once the equilibrium profiles are obtained, the surface tension is
+computed using the thermodynamic relation derived in the previous section. The
+resulting surface tensions are shown in Fig.~\ref{fig:surface_tension_numerical}.
 
 
-% The denominator can be expressed using the invariant quantity
-% Eq.~\eqref{eq:invariant_quantity}, evaluated at the center of the interface. This leads to the
-% approximate expression
-% \begin{equation}
-%     w
-%     =
-%     \sqrt{
-%     \frac{
-%         \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
-%     }{
-%         2\left(
-%         f_{\mathrm{local}}(\{\bar{\phi}_i\})
-%         - \mu_i \bar{\phi}_i
-%         + \Pi
-%         \right)
-%     }}
-%     \label{eq:interface_width_approximation}
-% \end{equation}
+As the system approaches the critical point, the interface continuously vanishes, which explains why the surface tension vanishes as well.
 
-% The surface tension corresponding to the piecewise-linear interfacial profile is
-% obtained by integrating the gradient contribution to the free energy,
-% \[
-%     \gamma
-%     =
-%     \int dx\, \nabla \phi_i\, \kappa_{ij}\, \nabla \phi_j.
-% \]
-% Within the linear-profile approximation, the gradients are constant across the
-% interface and vanish in the bulk. The integral therefore reduces to
-% \[
-%     \gamma
-%     =
-%     w\, \nabla \bar{\phi}_i\, \kappa_{ij}\, \nabla \bar{\phi}_j,
-% \]
-% Substituting the expression for $w$ from
-% Eq.~\eqref{eq:interface_width_approximation} yields the approximate surface tension
-% \begin{equation}
-%     \gamma
-%     =
-%     \sqrt{
-%     2\left(
-%         \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
-%     \right)
-%     \left(
-%         f_{\mathrm{local}}(\{\bar{\phi}_i\})
-%         - \mu_i \bar{\phi}_i
-%         + \Pi
-%     \right)
-%     }
-%     \label{eq:surface_tension_approximation}
-% \end{equation}
+Close to criticality, we observe a clear power-law dependence of the surface
+tension on the distance from the critical point, which we quantify by the chemical
+potential difference $\mu_2-\mu_{2,c}$:
+\[
+\gamma \sim (\mu_2-\mu_{2,c})^{\delta}.
+\]
+This scaling is observed for a wide range of interaction parameters. By fitting
+the numerical data, we extract the corresponding critical exponent $\delta$ for
+each parameter set. The results are summarized in Fig.~\ref{fig:critical_exponent_numerical}.
 
-% As anticipated, this expression depends only on the bulk compositions
-% $\{\phi_i^{(1)}, \phi_i^{(2)}\}$ of the coexisting phases and the interaction
-% parameters through $\kappa_{ij}$. Importantly, the closed-form nature of
-% Eq.~\eqref{eq:surface_tension_approximation} allows derivatives of the surface
-% tension with respect to order parameters to be evaluated analytically.
+Within numerical uncertainty, the critical exponent is universal across all
+interaction parameters considered and takes a value $\delta \approx 3/2$. This
+is consistent with the classical mean-field prediction for binary mixtures
+derived by Cahn~\cite{Cahn1958FreeTE}. In contrast, the prefactor of the power law
+is not universal and varies substantially with the choice of interaction
+parameters, reflecting non-universal microscopic details of the system.
+
+Remarkably, the observed power-law behavior persists over a broad range of
+$\mu_2-\mu_{2,c}$ values.
+
+
+
+\subsection{An effective interfacial model to approximate the surface tension}
+
+While the critical scaling of the surface tension near the critical point provides
+important physical insight, obtaining a closed-form expression for $\gamma$ from
+the full ternary Flory-Huggins free energy is generally intractable. Consequently,
+for each choice of interaction parameters and mean concentration of the second species, the surface
+tension must be computed by solving the full numerical interfacial problem.
+
+To avoid this computational cost, we now introduce an analytical approximation that
+estimates the surface tension using only the bulk volume fractions of the coexisting
+phases and the interaction parameters. The approximation remains
+quantitatively accurate over a broad range of interacrtion parameters and has
+the correct scaling near the critical point, as we will demonstrate later.
+
+\subsubsection{Derivation of a piecewise-linear interface}
+As shown in the previous sections, interfacial profiles in ternary mixtures can be
+highly nontrivial. To make progress, we approximate the interface by a
+piecewise-linear profile that connects the two coexisting bulk phases over a finite
+interfacial width.
+
+
+This approximation neglects two important features of the exact solution. First, it
+assumes a common interfacial width for all components, which excludes
+adsorption of any species at the interface. Second, it ignores the intrinsic
+nonlinearity of the equilibrium profiles. Despite these simplifications, the
+piecewise-linear ansatz allows for a closed-form expression for the surface tension.
+
+To begin, we note that for a one-dimensional, planar interface at equilibrium, the
+Euler–Lagrange equations imply the existence of a conserved quantity across the
+interface. Writing the free energy density as a sum of a local and a gradient
+contribution and adopting Einstein summation convention, we define
+\begin{equation}
+    f(x)
+    = f_{\mathrm{local}}(\{\phi_i(x)\})
+    + \frac{1}{2}\,\nabla \phi_i(x)\,\kappa_{ij}\,\nabla \phi_j(x).
+\end{equation}
+Introducing the exchange chemical potentials $\mu_i$ and osmotic pressure $\Pi$, the
+combination
+\begin{equation}
+    f_{\mathrm{local}}(\{\phi_i(x)\})
+    - \mu_i \phi_i(x)
+    + \Pi
+    - \frac{1}{2}\,\nabla \phi_i(x)\,\kappa_{ij}\,\nabla \phi_j(x)
+    \eqcolon -V(\{\phi_i\}) - T(\{\nabla \phi_i\})
+    \label{eq:invariant_quantity}
+\end{equation}
+is invariant across the interface. Here, the terms $V$ and $T$ play roles analogous
+to potential and kinetic energy in classical mechanics.
+
+Taking the spatial derivative of Eq.~\eqref{eq:invariant_quantity} yields
+\[
+\begin{aligned}
+    \frac{d}{dx} \Bigl(
+    f_{\mathrm{local}}(\{\phi_i\})
+    - \mu_i \phi_i
+    + \Pi
+    - \frac{1}{2}\,\nabla \phi_i\,\kappa_{ij}\,\nabla \phi_j
+    \Bigr)
+    &=
+    \left(
+    \frac{\partial f_{\mathrm{local}}}{\partial \phi_i}
+    - \mu_i
+    - \kappa_{ij} \Delta \phi_j
+    \right)
+    \frac{d\phi_i}{dx} \\
+    &= 0,
+\end{aligned}
+\]
+where the expression in parentheses vanishes by virtue of the Euler–Lagrange
+equations. Consequently, the quantity in
+Eq.~\eqref{eq:invariant_quantity} is constant throughout the interfacial region.
+
+
+For our approximation we assume that each component varies linearly across an interface of width $w$,
+connecting the bulk values $\phi_i^{(1)}$ and $\phi_i^{(2)}$. The magnitude of the
+gradient is therefore approximated by
+\[
+    |\nabla \phi_i| \simeq \frac{|\Delta \phi_i|}{w},
+\]
+where $\Delta \phi_i = \phi_i^{(2)} - \phi_i^{(1)}$ denotes the difference between the
+coexisting bulk phases. The profile is centered around the mean composition
+\[
+    \bar{\phi}_i = \tfrac{1}{2}\left(\phi_i^{(1)} + \phi_i^{(2)}\right),
+\]
+at which the local free energy density is evaluated. Since we assume a common
+interfacial width for all components, this approximation holds for all
+$i$.
+Substituting the gradient approximation into the quadratic gradient term
+yields
+\[
+     \nabla \bar{\phi}_i\, \kappa_{ij}\, \nabla \bar{\phi}_j
+    =
+    w^{-2}\,\Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j.
+\]
+Solving for the interfacial width gives
+\[
+    w
+    =
+    \sqrt{
+    \frac{
+        \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
+    }{
+        \nabla \bar{\phi}_i\, \kappa_{ij}\, \nabla \bar{\phi}_j
+    }
+    }.
+\]
+
+
+The denominator can be expressed using the invariant quantity
+Eq.~\eqref{eq:invariant_quantity}, evaluated at the center of the interface. This leads to the
+approximate expression
+\begin{equation}
+    w
+    =
+    \sqrt{
+    \frac{
+        \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
+    }{
+        2\left(
+        f_{\mathrm{local}}(\{\bar{\phi}_i\})
+        - \mu_i \bar{\phi}_i
+        + \Pi
+        \right)
+    }}
+    \label{eq:interface_width_approximation}
+\end{equation}
+
+The surface tension corresponding to the piecewise-linear interfacial profile is
+obtained by integrating the gradient contribution to the free energy,
+\[
+    \gamma
+    =
+    \int dx\, \nabla \phi_i\, \kappa_{ij}\, \nabla \phi_j.
+\]
+Within the linear-profile approximation, the gradients are constant across the
+interface and vanish in the bulk. The integral therefore reduces to
+\[
+    \gamma
+    =
+    w\, \nabla \bar{\phi}_i\, \kappa_{ij}\, \nabla \bar{\phi}_j,
+\]
+Substituting the expression for $w$ from
+Eq.~\eqref{eq:interface_width_approximation} yields the approximate surface tension
+\begin{equation}
+    \gamma
+    =
+    \sqrt{
+    2\left(
+        \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
+    \right)
+    \left(
+        f_{\mathrm{local}}(\{\bar{\phi}_i\})
+        - \mu_i \bar{\phi}_i
+        + \Pi
+    \right)
+    }
+    \label{eq:surface_tension_approximation}
+\end{equation}
+
+As anticipated, this expression depends only on the bulk compositions
+$\{\phi_i^{(1)}, \phi_i^{(2)}\}$ of the coexisting phases and the interaction
+parameters through $\kappa_{ij}$. Importantly, the closed-form nature of
+Eq.~\eqref{eq:surface_tension_approximation} allows derivatives of the surface
+tension with respect to order parameters to be evaluated analytically.
 
 % \subsubsection{Comparison between analytical approximation and numerical results}
 % \begin{figure}[h]
@@ -1083,260 +1087,260 @@ For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the i
 %     \label{fig:surface_tension}
 % \end{figure}
 
-% The quantitative comparison between the analytical approximation and the numerical
-% results is shown in Fig.~\ref{fig:surface_tension}. Somewhat surprisingly, the
-% approximate expression not only reproduces the correct critical scaling but also
-% provides good quantitative agreement with the numerically computed surface tension
-% over a wide range of parameters. Depending on the interaction matrix the surface tension will vary \(10\%\) to \(70\%\) from the exact value.
+The quantitative comparison between the analytical approximation and the numerical
+results is shown in Fig.~\ref{fig:surface_tension}. Somewhat surprisingly, the
+approximate expression not only reproduces the correct critical scaling but also
+provides good quantitative agreement with the numerically computed surface tension
+over a wide range of parameters. Depending on the interaction matrix the surface tension will vary \(10\%\) to \(70\%\) from the exact value.
 
-% A systematic deviation is nevertheless apparent: the analytical approximation
-% consistently overestimates the exact surface tension. This behavior can be
-% understood naturally within the variational formulation of the interfacial problem.
-% Using the invariant quantity from Eq.~\eqref{eq:invariant_quantity}, the effective
-% Lagrangian density of the system can be identified as
+A systematic deviation is nevertheless apparent: the analytical approximation
+consistently overestimates the exact surface tension. This behavior can be
+understood naturally within the variational formulation of the interfacial problem.
+Using the invariant quantity from Eq.~\eqref{eq:invariant_quantity}, the effective
+Lagrangian density of the system can be identified as
 
-% \[
-%     L = T - V = 2T = \nabla \phi_i \,\kappa_{ij}\, \nabla \phi_j,
-% \]
-
-
-% where $T$ and $V$ denote the gradient and local contributions, respectively. The
-% surface tension can therefore be interpreted as the action associated with the
-% interfacial profile,
-% \[
-%     \gamma = \int dx\, L \equiv S.
-% \]
-
-% Since the true equilibrium interface minimizes this action, any approximate
-% interfacial profile necessarily yields a larger value of $\gamma$. The systematic
-% overestimation observed in the analytical approximation is thus a direct
-% consequence of the underlying variational principle.
+\[
+    L = T - V = 2T = \nabla \phi_i \,\kappa_{ij}\, \nabla \phi_j,
+\]
 
 
+where $T$ and $V$ denote the gradient and local contributions, respectively. The
+surface tension can therefore be interpreted as the action associated with the
+interfacial profile,
+\[
+    \gamma = \int dx\, L \equiv S.
+\]
 
-% \subsubsection{Asymptotic critical scaling}
-% \textcolor{red}{Either use +/- or 1/2 for dense/dilute phase but not both. Also the derivation would benefit from a schematic figure showing the tie line, critical point and deviations in phi space.}
-
-
-% In the previous section, we showed that the surface tension can be expressed
-% approximately in terms of the bulk compositions of the coexisting phases. We now
-% analyze the behavior of this expression in the vicinity of the critical point, with
-% the goal of deriving its asymptotic scaling form.
-
-% Recall that the approximate surface tension is given by
-% Eq.~\eqref{eq:surface_tension_approximation} as the product of two factors. We first
-% consider the term
-% \[
-%     \tfrac{1}{2}\,\Delta \phi_i \,\kappa_{ij}\, \Delta \phi_j,
-% \]
-% which depends solely on the difference between the bulk compositions of the two
-% coexisting phases.
-
-% Close to the critical point, the volume fractions in the dense and dilute
-% phases can be written as small deviations from the critical composition
-% $\phi_{i,c}$,
-% \[
-%     \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2} \Delta \phi_i, \quad \phi_i^{(2)} = \phi_{i,c} - \tfrac{1}{2} \Delta \phi_i,
-% \]
-% where $\Delta \phi_i$ parameterizes the displacement of the coexisting phases along
-% the tie line in composition space.
-
-
-% Expanding the chemical potentials in the two coexisting phases about the critical
-% point yields
-% \begin{equation}
-%     \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
-%     =
-%     \boldsymbol{H}\,\Delta\boldsymbol{\phi}^{(1/2)} + \mathcal{O}(\Delta \phi^2),
-% \end{equation}
-% where $\boldsymbol{H}$ denotes the Hessian of the local free energy density evaluated
-% at the critical composition and
-% $\Delta\boldsymbol{\phi}^{(1/2)} = \boldsymbol{\phi}^{(1/2)} - \boldsymbol{\phi}_c$.
-% At coexistence, the chemical potentials in the two phases must be equal,
-% $\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$. Subtracting the two expansions and
-% defining
-% \[
-%     \Delta \boldsymbol{\phi}
-%     =
-%     \Delta \boldsymbol{\phi}^{(1)} - \Delta \boldsymbol{\phi}^{(2)},
-% \]
-% we obtain, to leading order,
-% \begin{equation}
-%     \boldsymbol{H}\,\Delta \boldsymbol{\phi} = 0 .
-% \end{equation}
-% This shows that the difference between the bulk compositions of the coexisting
-% phases lies in the null space of the Hessian at the critical point.
-
-% Furthermore, in the immediate vicinity of the critical point, the binodal is
-% approximately linear. Consequently, the deviations
-% $\Delta \boldsymbol{\phi}^{(1)}$ and $\Delta \boldsymbol{\phi}^{(2)}$ are parallel to $\Delta \boldsymbol{\phi}$ and
-% thus also belong to the null space of $\boldsymbol{H}$. As a result, the linear term
-% in the Taylor expansion of the chemical potentials vanishes along the coexistence
-% direction and higher-order terms control the leading behavior near criticality.
-
-
-% We now turn to the leading nonvanishing contribution in the Taylor expansion of the
-% chemical potential about the critical point. Expanding to second order yields
-% \begin{equation}
-%  \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
-%     =
-%     \frac{1}{2}
-%     \left(\alpha^{(1/2)}\right)^2
-%     \left[
-%         \frac{\partial^2 \mu_i}{\partial \phi_j \partial \phi_k}
-%         \,\Delta \phi_j \Delta \phi_k
-%     \right]\boldsymbol{e}_i
-%     + \mathcal{O}(\Delta \phi^3),
-%     \label{eq:second_order}
-% \end{equation}
-% where all derivatives are evaluated at the critical composition and we have
-% introduced
-% \[
-%     \alpha^{(1)}
-%     =
-%     \frac{\lvert \Delta \boldsymbol{\phi}^{(1)} \rvert}
-%          {\lvert \Delta \boldsymbol{\phi} \rvert}, \quad \alpha^{(2)}
-%     =
-%     \frac{\lvert \Delta \boldsymbol{\phi}^{(2)} \rvert}
-%          {\lvert \Delta \boldsymbol{\phi} \rvert}.
-% \]
-
-% Since the chemical potentials must be equal in the two coexisting phases,
-% $\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$, the prefactors must satisfy
-% $\left(\alpha^{(1)}\right)^2=\left(\alpha^{(2)}\right)^2$. Additionally the two phases 
-% must have displacements with opposite sign along the tie line, which implies
-% \[
-%     \Delta \boldsymbol{\phi}^{(1)}
-%     =
-%     -\,\Delta \boldsymbol{\phi}^{(2)}
-%     =
-%     \tfrac{1}{2}\,\Delta \boldsymbol{\phi}.
-% \]
-
-% The terms inside of the brackets in Eq.~\eqref{eq:second_order} is generically
-% nonzero. Consequently, the leading dependence of the chemical potential deviation on
-% the distance from the critical point is
-% \[
-%     \lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert
-%     \sim
-%     \lvert \Delta \boldsymbol{\phi} \rvert^2 .
-% \]
-% \footnote{The chemical potential remains constant along the tie line; therefore, it
-% only depends on the magnitude $\lvert \Delta \boldsymbol{\phi} \rvert$ and not on the
-% direction in composition space.}
-
-% Finally, since $\Delta \boldsymbol{\phi}$ lies in the null space of the Hessian at the
-% critical point, the leading nontrivial contribution to the dot product
-% $(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is equal to the
-% third derivative of the free energy. This quantity vanishes exactly at the critical
-% point, implying that $\boldsymbol{\mu}-\boldsymbol{\mu}_c$ is orthogonal to the tie
-% lines in $(\phi_1,\phi_2)$ composition space.
-
-% We now turn to the second factor in the expression for the surface tension,
-% \begin{equation}
-%     \nabla \bar{\phi}_i \,\kappa_{ij}\, \nabla \bar{\phi}_j
-%     =
-%     f(\bar{\boldsymbol{\phi}})
-%     - \mu_i \bar{\phi}_i
-%     + \Pi
-%     =
-%     f(\bar{\boldsymbol{\phi}})
-%     - f(\boldsymbol{\phi}^{(1)})
-%     + \mu_i \bigl(\phi_i^{(1)} - \bar{\phi}_i\bigr),
-%     \label{eq:second_product}
-% \end{equation}
-% where, in the first equality, we have used the conservation relation
-% Eq.~\eqref{eq:invariant_quantity}.
-
-% Close to the critical point, the dense-phase composition can be written as
-% \[
-%     \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2}\,\Delta \phi_i ,
-% \]
-% while the midpoint composition satisfies
-% \[
-%     \bar{\phi}_i
-%     =
-%     \tfrac{1}{2}\bigl(\phi_i^{(1)} + \phi_i^{(2)}\bigr)
-%     =
-%     \phi_{i,c},
-% \]
-% where the last equality follows from the symmetry
-% $\Delta \boldsymbol{\phi}^{(1)} = -\Delta \boldsymbol{\phi}^{(2)}$.
-
-% We now expand the local free energy density about the critical composition
-% $\boldsymbol{\phi}_c$. Using Einstein summation convention, we obtain
-% \begin{equation}
-%     \begin{split}
-%         f(\boldsymbol{\phi}^{(1)})
-%         &=
-%         f(\boldsymbol{\phi}_c)
-%         + \frac{1}{2}\,\mu_{i,c}\,\Delta \phi_i
-%         + \frac{1}{2^2\,2!}\,
-%         \Delta \phi_i \underbrace{H_{ij}\,\Delta \phi_j}_{=\,0} \\
-%         &\quad
-%         + \frac{1}{2^3\,3!}\,
-%         \underbrace{
-%         \frac{\partial^3 f}{\partial \phi_i \partial \phi_j \partial \phi_k}
-%         \Delta \phi_i \Delta \phi_j \Delta \phi_k
-%         }_{=\,0} \\
-%         &\quad
-%         + \frac{1}{2^4\,4!}\,
-%         \frac{\partial^4 f}{\partial \phi_i \partial \phi_j \partial \phi_k \partial \phi_l}
-%         \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
-%         + \mathcal{O}(\Delta \phi^5).
-%     \end{split}
-% \end{equation}
-
-% The quadratic term vanishes because $\Delta \boldsymbol{\phi}$ lies in the null space
-% of the Hessian at the critical point. The cubic term vanishes because the third
-% derivative of the free energy along the coexistence direction is zero at criticality.
-% Consequently, the leading nonzero contribution to the second factor in
-% Eq.~\eqref{eq:second_product} arises from the quartic term, which is generically
-% finite.
+Since the true equilibrium interface minimizes this action, any approximate
+interfacial profile necessarily yields a larger value of $\gamma$. The systematic
+overestimation observed in the analytical approximation is thus a direct
+consequence of the underlying variational principle.
 
 
 
-% Finally, we revisit the higher-order expansion of the chemical potential. 
-% As shown earlier, the first-order contribution vanishes and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\)
-% and the zeroth term will cancel. 
-% Therefore we will include the third-order term as the first nonzero contribution in the second product.
-% The chemical potential can then be written as
-% \begin{equation}
-%    \tfrac{1}{2}\mu_i\Delta \phi_i
-%    =\tfrac{1}{2}\mu_{i,c}\Delta \phi_i
-%     + \frac{1}{2^4 \cdot 3!}\,
-%      \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
-%      \Delta \phi_j \Delta \phi_k \Delta \phi_l
-%    + \mathcal{O}(\Delta \phi^5) .
-% \end{equation}
+\subsubsection{Asymptotic critical scaling}
+\textcolor{red}{Either use +/- or 1/2 for dense/dilute phase but not both. Also the derivation would benefit from a schematic figure showing the tie line, critical point and deviations in phi space.}
 
-% Collecting terms, we find
-% \begin{equation}
-%     f(\boldsymbol{\phi}_c) - f(\boldsymbol{\phi}^{(+)}) 
-%     + \tfrac{1}{2}\,\mu_i \Delta \phi_i 
-%     = \frac{1}{2^7}\,
-%       \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
-%       \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
-%     + \mathcal{O}(\Delta \phi^5) .
-% \end{equation}
+
+In the previous section, we showed that the surface tension can be expressed
+approximately in terms of the bulk compositions of the coexisting phases. We now
+analyze the behavior of this expression in the vicinity of the critical point, with
+the goal of deriving its asymptotic scaling form.
+
+Recall that the approximate surface tension is given by
+Eq.~\eqref{eq:surface_tension_approximation} as the product of two factors. We first
+consider the term
+\[
+    \tfrac{1}{2}\,\Delta \phi_i \,\kappa_{ij}\, \Delta \phi_j,
+\]
+which depends solely on the difference between the bulk compositions of the two
+coexisting phases.
+
+Close to the critical point, the volume fractions in the dense and dilute
+phases can be written as small deviations from the critical composition
+$\phi_{i,c}$,
+\[
+    \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2} \Delta \phi_i, \quad \phi_i^{(2)} = \phi_{i,c} - \tfrac{1}{2} \Delta \phi_i,
+\]
+where $\Delta \phi_i$ parameterizes the displacement of the coexisting phases along
+the tie line in composition space.
+
+
+Expanding the chemical potentials in the two coexisting phases about the critical
+point yields
+\begin{equation}
+    \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
+    =
+    \boldsymbol{H}\,\Delta\boldsymbol{\phi}^{(1/2)} + \mathcal{O}(\Delta \phi^2),
+\end{equation}
+where $\boldsymbol{H}$ denotes the Hessian of the local free energy density evaluated
+at the critical composition and
+$\Delta\boldsymbol{\phi}^{(1/2)} = \boldsymbol{\phi}^{(1/2)} - \boldsymbol{\phi}_c$.
+At coexistence, the chemical potentials in the two phases must be equal,
+$\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$. Subtracting the two expansions and
+defining
+\[
+    \Delta \boldsymbol{\phi}
+    =
+    \Delta \boldsymbol{\phi}^{(1)} - \Delta \boldsymbol{\phi}^{(2)},
+\]
+we obtain, to leading order,
+\begin{equation}
+    \boldsymbol{H}\,\Delta \boldsymbol{\phi} = 0 .
+\end{equation}
+This shows that the difference between the bulk compositions of the coexisting
+phases lies in the null space of the Hessian at the critical point.
+
+Furthermore, in the immediate vicinity of the critical point, the binodal is
+approximately linear. Consequently, the deviations
+$\Delta \boldsymbol{\phi}^{(1)}$ and $\Delta \boldsymbol{\phi}^{(2)}$ are parallel to $\Delta \boldsymbol{\phi}$ and
+thus also belong to the null space of $\boldsymbol{H}$. As a result, the linear term
+in the Taylor expansion of the chemical potentials vanishes along the coexistence
+direction and higher-order terms control the leading behavior near criticality.
+
+
+We now turn to the leading nonvanishing contribution in the Taylor expansion of the
+chemical potential about the critical point. Expanding to second order yields
+\begin{equation}
+ \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
+    =
+    \frac{1}{2}
+    \left(\alpha^{(1/2)}\right)^2
+    \left[
+        \frac{\partial^2 \mu_i}{\partial \phi_j \partial \phi_k}
+        \,\Delta \phi_j \Delta \phi_k
+    \right]\boldsymbol{e}_i
+    + \mathcal{O}(\Delta \phi^3),
+    \label{eq:second_order}
+\end{equation}
+where all derivatives are evaluated at the critical composition and we have
+introduced
+\[
+    \alpha^{(1)}
+    =
+    \frac{\lvert \Delta \boldsymbol{\phi}^{(1)} \rvert}
+         {\lvert \Delta \boldsymbol{\phi} \rvert}, \quad \alpha^{(2)}
+    =
+    \frac{\lvert \Delta \boldsymbol{\phi}^{(2)} \rvert}
+         {\lvert \Delta \boldsymbol{\phi} \rvert}.
+\]
+
+Since the chemical potentials must be equal in the two coexisting phases,
+$\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$, the prefactors must satisfy
+$\left(\alpha^{(1)}\right)^2=\left(\alpha^{(2)}\right)^2$. Additionally the two phases 
+must have displacements with opposite sign along the tie line, which implies
+\[
+    \Delta \boldsymbol{\phi}^{(1)}
+    =
+    -\,\Delta \boldsymbol{\phi}^{(2)}
+    =
+    \tfrac{1}{2}\,\Delta \boldsymbol{\phi}.
+\]
+
+The terms inside of the brackets in Eq.~\eqref{eq:second_order} is generically
+nonzero. Consequently, the leading dependence of the chemical potential deviation on
+the distance from the critical point is
+\[
+    \lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert
+    \sim
+    \lvert \Delta \boldsymbol{\phi} \rvert^2 .
+\]
+\footnote{The chemical potential remains constant along the tie line; therefore, it
+only depends on the magnitude $\lvert \Delta \boldsymbol{\phi} \rvert$ and not on the
+direction in composition space.}
+
+Finally, since $\Delta \boldsymbol{\phi}$ lies in the null space of the Hessian at the
+critical point, the leading nontrivial contribution to the dot product
+$(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is equal to the
+third derivative of the free energy. This quantity vanishes exactly at the critical
+point, implying that $\boldsymbol{\mu}-\boldsymbol{\mu}_c$ is orthogonal to the tie
+lines in $(\phi_1,\phi_2)$ composition space.
+
+We now turn to the second factor in the expression for the surface tension,
+\begin{equation}
+    \nabla \bar{\phi}_i \,\kappa_{ij}\, \nabla \bar{\phi}_j
+    =
+    f(\bar{\boldsymbol{\phi}})
+    - \mu_i \bar{\phi}_i
+    + \Pi
+    =
+    f(\bar{\boldsymbol{\phi}})
+    - f(\boldsymbol{\phi}^{(1)})
+    + \mu_i \bigl(\phi_i^{(1)} - \bar{\phi}_i\bigr),
+    \label{eq:second_product}
+\end{equation}
+where, in the first equality, we have used the conservation relation
+Eq.~\eqref{eq:invariant_quantity}.
+
+Close to the critical point, the dense-phase composition can be written as
+\[
+    \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2}\,\Delta \phi_i ,
+\]
+while the midpoint composition satisfies
+\[
+    \bar{\phi}_i
+    =
+    \tfrac{1}{2}\bigl(\phi_i^{(1)} + \phi_i^{(2)}\bigr)
+    =
+    \phi_{i,c},
+\]
+where the last equality follows from the symmetry
+$\Delta \boldsymbol{\phi}^{(1)} = -\Delta \boldsymbol{\phi}^{(2)}$.
+
+We now expand the local free energy density about the critical composition
+$\boldsymbol{\phi}_c$. Using Einstein summation convention, we obtain
+\begin{equation}
+    \begin{split}
+        f(\boldsymbol{\phi}^{(1)})
+        &=
+        f(\boldsymbol{\phi}_c)
+        + \frac{1}{2}\,\mu_{i,c}\,\Delta \phi_i
+        + \frac{1}{2^2\,2!}\,
+        \Delta \phi_i \underbrace{H_{ij}\,\Delta \phi_j}_{=\,0} \\
+        &\quad
+        + \frac{1}{2^3\,3!}\,
+        \underbrace{
+        \frac{\partial^3 f}{\partial \phi_i \partial \phi_j \partial \phi_k}
+        \Delta \phi_i \Delta \phi_j \Delta \phi_k
+        }_{=\,0} \\
+        &\quad
+        + \frac{1}{2^4\,4!}\,
+        \frac{\partial^4 f}{\partial \phi_i \partial \phi_j \partial \phi_k \partial \phi_l}
+        \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
+        + \mathcal{O}(\Delta \phi^5).
+    \end{split}
+\end{equation}
+
+The quadratic term vanishes because $\Delta \boldsymbol{\phi}$ lies in the null space
+of the Hessian at the critical point. The cubic term vanishes because the third
+derivative of the free energy along the coexistence direction is zero at criticality.
+Consequently, the leading nonzero contribution to the second factor in
+Eq.~\eqref{eq:second_product} arises from the quartic term, which is generically
+finite.
+
+
+
+Finally, we revisit the higher-order expansion of the chemical potential. 
+As shown earlier, the first-order contribution vanishes and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\)
+and the zeroth term will cancel. 
+Therefore we will include the third-order term as the first nonzero contribution in the second product.
+The chemical potential can then be written as
+\begin{equation}
+   \tfrac{1}{2}\mu_i\Delta \phi_i
+   =\tfrac{1}{2}\mu_{i,c}\Delta \phi_i
+    + \frac{1}{2^4 \cdot 3!}\,
+     \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
+     \Delta \phi_j \Delta \phi_k \Delta \phi_l
+   + \mathcal{O}(\Delta \phi^5) .
+\end{equation}
+
+Collecting terms, we find
+\begin{equation}
+    f(\boldsymbol{\phi}_c) - f(\boldsymbol{\phi}^{(+)}) 
+    + \tfrac{1}{2}\,\mu_i \Delta \phi_i 
+    = \frac{1}{2^7}\,
+      \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
+      \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
+    + \mathcal{O}(\Delta \phi^5) .
+\end{equation}
 
 % This shows that Eq.~\eqref{eq:second_product} scales as 
-% \[
-%     |\Delta \boldsymbol{\phi}|^4 \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^2 .
-% \]
-% Combining this result with the scaling of the first factor, we conclude that near the critical point the surface tension obeys
-% \[
-%     \gamma \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{3/2} .
-% \]
+\[
+    |\Delta \boldsymbol{\phi}|^4 \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^2 .
+\]
+Combining this result with the scaling of the first factor, we conclude that near the critical point the surface tension obeys
+\[
+    \gamma \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{3/2} .
+\]
 
-% In addition, this analysis provides the scaling of the interfacial width:
-% \[
-%     w 
-%     = \frac{\sqrt{\Delta \phi_i \,\kappa_{ij}\,\Delta \phi_j}}
-%            {\sqrt{\nabla \bar{\phi}_i \,\kappa_{ij}\,\nabla \bar{\phi}_j}}
-%     \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{-1/2} .
-% \]
-% Which diverges at the critical point, as expected.
+In addition, this analysis provides the scaling of the interfacial width:
+\[
+    w 
+    = \frac{\sqrt{\Delta \phi_i \,\kappa_{ij}\,\Delta \phi_j}}
+           {\sqrt{\nabla \bar{\phi}_i \,\kappa_{ij}\,\nabla \bar{\phi}_j}}
+    \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{-1/2} .
+\]
+Which diverges at the critical point, as expected.
 
 % \begin{figure}
 %     \centering
@@ -1345,44 +1349,44 @@ For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the i
 %     \label{fig:scaling}
 % \end{figure}
 
-% Taken together, these results provide a direct connection between the bulk
-% thermodynamic quantities introduced in the previous chapter and the interfacial
-% properties analyzed here. The critical scaling of the interfacial width $w \sim |\mu-\mu_c|^{-1/2}$ agrees with the 
-% diverging interfacial width observed in the numerical results, while the critical exponent of the surface tension $\gamma \sim |\mu-\mu_c|^{3/2}$ is consistent
-% with previous work on critical interfacial behavior in mean-field models (cite work here).
-% In this sense the effective interfacial model does not introduce new critical behavior, but rather
-% implies that near the critical point the interfacial properties do not matter so much on the profile shape as they do on the bulk thermodynamics.
+Taken together, these results provide a direct connection between the bulk
+thermodynamic quantities introduced in the previous chapter and the interfacial
+properties analyzed here. The critical scaling of the interfacial width $w \sim |\mu-\mu_c|^{-1/2}$ agrees with the 
+diverging interfacial width observed in the numerical results, while the critical exponent of the surface tension $\gamma \sim |\mu-\mu_c|^{3/2}$ is consistent
+with previous work on critical interfacial behavior in mean-field models (cite work here).
+In this sense the effective interfacial model does not introduce new critical behavior, but rather
+implies that near the critical point the interfacial properties do not matter so much on the profile shape as they do on the bulk thermodynamics.
 
-% \subsubsection{Sources of error and limitations}
+\subsubsection{Sources of error and limitations}
 
-% The piecewise-linear approximation differs from the true equilibrium interfacial
-% profiles in two essential ways. First, it replaces the smooth, nonlinear variation
-% of the volume fractions across the interface by a linear interpolation. Second, it
-% assumes that all species share a common interfacial width, thereby neglecting
-% preferential adsorption.
+The piecewise-linear approximation differs from the true equilibrium interfacial
+profiles in two essential ways. First, it replaces the smooth, nonlinear variation
+of the volume fractions across the interface by a linear interpolation. Second, it
+assumes that all species share a common interfacial width, thereby neglecting
+preferential adsorption.
 
-% As shown in Fig.~\ref{fig:surface_tension}, the approximation performs best far from
-% the critical point, where the mean concentration of one of the species nearly vanishes and the
-% system effectively reduces to a binary mixture. In this regime, the two remaining
-% components indeed exhibit nearly identical interfacial widths and the dominant
-% source of error arises from the simplified functional form of the profile. If one
-% assumes that the error due to the wrong functional form varies only weakly across phase space, this
-% suggests that the deviations from the equal-width assumption make up the
-% primary source of error closer, in particular as one approache the critical point.
+As shown in Fig.~\ref{fig:surface_tension}, the approximation performs best far from
+the critical point, where the mean concentration of one of the species nearly vanishes and the
+system effectively reduces to a binary mixture. In this regime, the two remaining
+components indeed exhibit nearly identical interfacial widths and the dominant
+source of error arises from the simplified functional form of the profile. If one
+assumes that the error due to the wrong functional form varies only weakly across phase space, this
+suggests that the deviations from the equal-width assumption make up the
+primary source of error closer, in particular as one approache the critical point.
 
-% To quantify the importance of species dependent interfacial widths, we fit a hyperbolic tangent
-% profile of the form
-% \[
-%     \phi(x)
-%     =
-%     \frac{\Delta \phi}{2}\,
-%     \tanh\!\left(\frac{x - x_0}{w}\right)
-%     + \bar{\phi}
-% \]
-% to the numerical equilibrium profiles of both component 1 and component 0.
-% The difference between the fitted interface positions $x_0$ for the two species then
-% provides a direct measure of the deviation from the equal-width assumption and thus
-% of the degree of interfacial adsorption.
+To quantify the importance of species dependent interfacial widths, we fit a hyperbolic tangent
+profile of the form
+\[
+    \phi(x)
+    =
+    \frac{\Delta \phi}{2}\,
+    \tanh\!\left(\frac{x - x_0}{w}\right)
+    + \bar{\phi}
+\]
+to the numerical equilibrium profiles of both component 1 and component 0.
+The difference between the fitted interface positions $x_0$ for the two species then
+provides a direct measure of the deviation from the equal-width assumption and thus
+of the degree of interfacial adsorption.
 
 % \begin{figure}[h]
 %     \centering
@@ -1393,149 +1397,149 @@ For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the i
 %     \label{fig:displacement}
 % \end{figure}
 
-% The results are shown in Fig.~\ref{fig:displacement}, together with the relative error
-% of the surface-tension approximation. A clear correlation is observed between the
-% relative error and the displacement between the centers of the profiles of the first two components.
-% profiles. Importantly, this correlation is not restricted to the specific interaction
-% parameters shown in Fig.~\ref{fig:displacement}, but persists across a broad range of
-% interaction strengths. This indicates that interfacial adsorption, rather than the
-% simplified functional form of the profile, is the primary limitation of the
-% piecewise-linear model.
+The results are shown in Fig.~\ref{fig:displacement}, together with the relative error
+of the surface-tension approximation. A clear correlation is observed between the
+relative error and the displacement between the centers of the profiles of the first two components.
+profiles. Importantly, this correlation is not restricted to the specific interaction
+parameters shown in Fig.~\ref{fig:displacement}, but persists across a broad range of
+interaction strengths. This indicates that interfacial adsorption, rather than the
+simplified functional form of the profile, is the primary limitation of the
+piecewise-linear model.
 
 
 
-% \subsubsection{Outlook and extensions}
+\subsubsection{Outlook and extensions}
 
 
 
-% \subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}
-% Although an analytical solution for the interfacial profile is generally not available, it is possible to derive an implicit expressions for the profile properties,
-% for the symmetric case i.e. \(\chi_{01} = \chi_{02}\) and \(\phi_0^{(1)} = \phi_0^{(2)}\).
-% In this case, the interaction matrix takes the form
-% \[
-%     \begin{pmatrix}
-%         0 &\eta \chi& \eta\chi\\
-%         \eta \chi& 0&  \chi\\
-%         \eta\chi & \chi& 0\\
+\subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}
+Although an analytical solution for the interfacial profile is generally not available, it is possible to derive an implicit expressions for the profile properties,
+for the symmetric case i.e. \(\chi_{01} = \chi_{02}\) and \(\phi_0^{(1)} = \phi_0^{(2)}\).
+In this case, the interaction matrix takes the form
+\[
+    \begin{pmatrix}
+        0 &\eta \chi& \eta\chi\\
+        \eta \chi& 0&  \chi\\
+        \eta\chi & \chi& 0\\
 
-%     \end{pmatrix}
-% \]
-% Where \(\chi\) is the interaction strength between the last two components and \(\eta\) modulates the interaction strength of the first component with the other two and typically takes values between 0 and 1.
-% This writing convention has been adopted from the work of Huang and Olvera de la Cruz~\cite{Huang2021InterfacialAO} and allows for a direct comparison with their results.
-% \subsubsection{Implicit expression for the bulk phase compositions}
-% The interaction matrix of the reduced two-component system is then given by:
-% \[
-%     \begin{pmatrix}
-%          \chi_d & \chi_o \\
-%         \chi_o & \chi_d
-%     \end{pmatrix}
-% \]
-% where \(\chi_d, \chi_o\) are the diagonal and off-diagonal elements, respectively.
-% Whe choose \(\lambda = 1\) such that \(\kappa_{ij} = -\chi_{ij}\).
-% The profiles are then given by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\ref{eq:fh_free_energy} leads to the following Euler–Lagrange equations:
-% \[
-% \begin{aligned}
-%     &-\chi_d \phi_1''(x) - \chi_o \phi_2''(x) = \chi_d \phi_1 + \chi_o \phi_2 + \ln(\phi_1) - \ln(1-\phi_1-\phi_2)-\mu_1\\
-%     &-\chi_o \phi_1''(x) - \chi_d  \phi_2''(x) = \chi_o \phi_1 + \chi_d \phi_2 + \ln(\phi_2) - \ln(1-\phi_1-\phi_2)-\mu_2\\
-% \end{aligned}
-% \]
-% Where \(\mu_1=\mu_2=\mu=\chi_d\phi_1^{(1)} + \chi_o \phi_2^{(1)} + \ln(\phi_1^{(1)}) - \ln(\phi_0^{(1)})\) is the chemical potential of the coexisting phases.
-% The EL equations  can be rewritten in terms of the eigenmodes of the interaction matrix \(\phi_\pm = \tfrac{1}{2}(\phi_1 \pm \phi_2)\):
-% \[
-% \begin{aligned}
-%     &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + \ln(\phi_+ + \phi_-)+\ln(\phi_+ - \phi_-) -2 \ln(1-2\phi_+) - 2\mu \\
-%     &\frac{2}{\bar\phi_c} \phi_-''(x)- = -\frac{2}{\bar\phi_c}\phi_- + \ln(\phi_+ + \phi_-)-\ln(\phi_+ - \phi_-)\\
-% \end{aligned}
-% \]
-% Where we define \(\chi_o - \chi_d \eqcolon 1/\bar\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
-% The chemical potential can be rewritten in terms of the mean volume fraction \(\bar\phi=(\phi_1^{(1)}+\phi_2^{(1)})/2\) and the difference 
-% \(\Delta\phi = (\phi_1^{(1)}-\phi_2^{(1)})/2\)
-% \[\mu=-\bar\phi/\phi^* - \Delta\phi/\phi_c+\ln(\bar\phi+\Delta\phi)-\ln(1-2\bar\phi)\].
-% First we will focus on the EL equation for \(\phi_-\).
-% For this we can look at the equation in the bulk where the laplacian is zero and \(\phi_+ = \bar\phi\) is constant.
-% Then we get the implicit equation for the bulk value of \(\phi_-(x\rightarrow\infty) = \Delta \phi\):
-% \begin{equation}
-% \begin{aligned}
-%     &-\frac{2}{\bar\phi_c}\Delta \phi + \ln(\bar\phi + \Delta\phi)-\ln(\bar\phi - \Delta\phi) = 0\\
-%     \Rightarrow\quad&\Delta \phi = \bar\phi\tanh\left(\frac{\Delta\phi}{\phi_c}\right)\\
-% \end{aligned}
-% \end{equation}
-% \subsubsection{Implicit expression for the interfacial absorption}
-% Next we will look at the EL equation for \(\phi_+\) at the interface. Due to anti-symmetry of \(\phi_-\) around the interface center we have \(\phi_-(x=0)=0\) and therefore
-% \[
-% \begin{aligned}
-%     &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + 2\ln(\phi_+) - 2 \ln(1-2\phi_+) - 2\mu \\
-%     \Rightarrow\quad&\frac{ \phi_+''(x)}{\phi_s} = -\frac{\delta\phi_+}{\phi_s} + \frac{\Delta\phi}{\phi_c} + \ln\left(\frac{\bar\phi+\delta\phi_+}{\bar\phi+\Delta\phi}\right)+\ln\left(\frac{1-2\bar\phi}{1-2(\bar\phi+\delta\phi_+)}\right) \\
-% \end{aligned}
-% \]
-% Where we have defined \(\delta\phi_+ = \phi_+ - \bar\phi\).
-% Now we can rearrange this to the implicit equation for \(\delta\phi_+\):
-% \begin{equation}
-%     \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
-% \end{equation}
-%     % \delta \phi_+ = \frac{1-2\bar\phi}{2}\frac{-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}=\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
-% Where we have defined 
-% \begin{equation}
-%     \Pi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
-% \end{equation}
-% where \(a_2 = \delta\phi_+''(x)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface center.
-% Near the critical point the interface width \(w\) diverges.
-% Consequently the order parameter varies only over the large length scale \(w\).
-% Dimensional analysis then implies
-% \[
-% \phi_+''(x) \sim \frac{\delta\phi_+}{w^2} 
-% \] Since \(w\rightarrow \infty\) as the critical point is approached, the ratio
-% \[
-% a_2 = \frac{\phi_+''(x)}{\delta\phi_+} \sim \frac{1}{w^2}
-% \]
-% vanishes in this limit. The curvature term therefore becomes parametrically small compared to the local terms in the Euler–Lagrange equation, justifying the approximation 
-% \(a_2 \ll 1\).
-% Under this assumption the equation for \(\delta\phi_+\) can be solved self-consistently
-% once \(\Delta \phi\) is known.
-% The results can be seen in figure~\ref{fig:phi_plus_minus_comparison}.
+    \end{pmatrix}
+\]
+Where \(\chi\) is the interaction strength between the last two components and \(\eta\) modulates the interaction strength of the first component with the other two and typically takes values between 0 and 1.
+This writing convention has been adopted from the work of Huang and Olvera de la Cruz~\cite{Huang2021InterfacialAO} and allows for a direct comparison with their results.
+\subsubsection{Implicit expression for the bulk phase compositions}
+The interaction matrix of the reduced two-component system is then given by:
+\[
+    \begin{pmatrix}
+         \chi_d & \chi_o \\
+        \chi_o & \chi_d
+    \end{pmatrix}
+\]
+where \(\chi_d, \chi_o\) are the diagonal and off-diagonal elements, respectively.
+Whe choose \(\lambda = 1\) such that \(\kappa_{ij} = -\chi_{ij}\).
+The profiles are then given by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\ref{eq:fh_free_energy} leads to the following Euler–Lagrange equations:
+\[
+\begin{aligned}
+    &-\chi_d \phi_1''(x) - \chi_o \phi_2''(x) = \chi_d \phi_1 + \chi_o \phi_2 + \ln(\phi_1) - \ln(1-\phi_1-\phi_2)-\mu_1\\
+    &-\chi_o \phi_1''(x) - \chi_d  \phi_2''(x) = \chi_o \phi_1 + \chi_d \phi_2 + \ln(\phi_2) - \ln(1-\phi_1-\phi_2)-\mu_2\\
+\end{aligned}
+\]
+Where \(\mu_1=\mu_2=\mu=\chi_d\phi_1^{(1)} + \chi_o \phi_2^{(1)} + \ln(\phi_1^{(1)}) - \ln(\phi_0^{(1)})\) is the chemical potential of the coexisting phases.
+The EL equations  can be rewritten in terms of the eigenmodes of the interaction matrix \(\phi_\pm = \tfrac{1}{2}(\phi_1 \pm \phi_2)\):
+\[
+\begin{aligned}
+    &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + \ln(\phi_+ + \phi_-)+\ln(\phi_+ - \phi_-) -2 \ln(1-2\phi_+) - 2\mu \\
+    &\frac{2}{\bar\phi_c} \phi_-''(x)- = -\frac{2}{\bar\phi_c}\phi_- + \ln(\phi_+ + \phi_-)-\ln(\phi_+ - \phi_-)\\
+\end{aligned}
+\]
+Where we define \(\chi_o - \chi_d \eqcolon 1/\bar\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
+The chemical potential can be rewritten in terms of the mean volume fraction \(\bar\phi=(\phi_1^{(1)}+\phi_2^{(1)})/2\) and the difference 
+\(\Delta\phi = (\phi_1^{(1)}-\phi_2^{(1)})/2\)
+\[\mu=-\bar\phi/\phi^* - \Delta\phi/\phi_c+\ln(\bar\phi+\Delta\phi)-\ln(1-2\bar\phi)\].
+First we will focus on the EL equation for \(\phi_-\).
+For this we can look at the equation in the bulk where the laplacian is zero and \(\phi_+ = \bar\phi\) is constant.
+Then we get the implicit equation for the bulk value of \(\phi_-(x\rightarrow\infty) = \Delta \phi\):
+\begin{equation}
+\begin{aligned}
+    &-\frac{2}{\bar\phi_c}\Delta \phi + \ln(\bar\phi + \Delta\phi)-\ln(\bar\phi - \Delta\phi) = 0\\
+    \Rightarrow\quad&\Delta \phi = \bar\phi\tanh\left(\frac{\Delta\phi}{\phi_c}\right)\\
+\end{aligned}
+\end{equation}
+\subsubsection{Implicit expression for the interfacial absorption}
+Next we will look at the EL equation for \(\phi_+\) at the interface. Due to anti-symmetry of \(\phi_-\) around the interface center we have \(\phi_-(x=0)=0\) and therefore
+\[
+\begin{aligned}
+    &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + 2\ln(\phi_+) - 2 \ln(1-2\phi_+) - 2\mu \\
+    \Rightarrow\quad&\frac{ \phi_+''(x)}{\phi_s} = -\frac{\delta\phi_+}{\phi_s} + \frac{\Delta\phi}{\phi_c} + \ln\left(\frac{\bar\phi+\delta\phi_+}{\bar\phi+\Delta\phi}\right)+\ln\left(\frac{1-2\bar\phi}{1-2(\bar\phi+\delta\phi_+)}\right) \\
+\end{aligned}
+\]
+Where we have defined \(\delta\phi_+ = \phi_+ - \bar\phi\).
+Now we can rearrange this to the implicit equation for \(\delta\phi_+\):
+\begin{equation}
+    \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
+\end{equation}
+    % \delta \phi_+ = \frac{1-2\bar\phi}{2}\frac{-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}=\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
+Where we have defined 
+\begin{equation}
+    \Pi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
+\end{equation}
+where \(a_2 = \delta\phi_+''(x)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface center.
+Near the critical point the interface width \(w\) diverges.
+Consequently the order parameter varies only over the large length scale \(w\).
+Dimensional analysis then implies
+\[
+\phi_+''(x) \sim \frac{\delta\phi_+}{w^2} 
+\] Since \(w\rightarrow \infty\) as the critical point is approached, the ratio
+\[
+a_2 = \frac{\phi_+''(x)}{\delta\phi_+} \sim \frac{1}{w^2}
+\]
+vanishes in this limit. The curvature term therefore becomes parametrically small compared to the local terms in the Euler–Lagrange equation, justifying the approximation 
+\(a_2 \ll 1\).
+Under this assumption the equation for \(\delta\phi_+\) can be solved self-consistently
+once \(\Delta \phi\) is known.
+The results can be seen in figure~\ref{fig:phi_plus_minus_comparison}.
 % \begin{figure}[h]
 %     \centering
 %     \includegraphics[width=0.9\linewidth]{figures/delphipl.png}
 %     \caption{Comparison between numerical solution of EL equations (solid lines) and analytical approximation (dashed lines) for \(\chi_{12}=2.3\).}
 %     \label{fig:phi_plus_minus_comparison}
 % \end{figure}
-% \subsubsection{Surface tension approximation with interfacial absorption}
-% Next we can look at the interface width, \(w = \Delta \phi / \nabla \phi_{-,IF}\), where \(\nabla \phi_{-,IF}\) is the gradient of \(\phi_-\) at the interface center.
-% At the interface we have \(\phi_- = \nabla\phi_+ = 0\). We can use the conserved quantity from Eq.~\ref{eq:invariant_quantity} to rewrite this as
-% \[
-%     f - 2\mu \phi_+ + \Pi = 2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi=\frac{(\nabla\phi_-)^2}{\bar\phi_c}
-% \]
-% \begin{equation}
-% \begin{aligned}
-% \phi_-'(0) =
-% \Bigg\{
-% \bar\phi_c \Big[
-% &2\phi_{+,0}\ln(\phi_{+,0})
-% +(1-2\phi_{+,0})\ln(1-2\phi_{+,0})
-% -\frac{\phi_{+,0}^2}{\phi_s} \\
-% &-(\bar\phi+\Delta\phi)\ln(\bar\phi+\Delta\phi)
-% -(\bar\phi-\Delta\phi)\ln(\bar\phi-\Delta\phi) \\
-% &-(1-2\bar\phi)\ln(1-2\bar\phi)
-% +\frac{\bar\phi^2}{\phi_s}
-% +\frac{\Delta\phi^2}{\bar\phi_c} \\
-% &-2(\phi_{+,0}-\bar\phi)
-% \left(
-% -\frac{\bar\phi}{\phi_s}
-% -\frac{\Delta\phi}{\bar\phi_c}
-% +\ln(\bar\phi+\Delta\phi)
-% -\ln(1-2\bar\phi)
-% \right)
-% \Big]
-% \Bigg\}^{1/2}
-% \end{aligned}
-% \end{equation}
+\subsubsection{Surface tension approximation with interfacial absorption}
+Next we can look at the interface width, \(w = \Delta \phi / \nabla \phi_{-,IF}\), where \(\nabla \phi_{-,IF}\) is the gradient of \(\phi_-\) at the interface center.
+At the interface we have \(\phi_- = \nabla\phi_+ = 0\). We can use the conserved quantity from Eq.~\ref{eq:invariant_quantity} to rewrite this as
+\[
+    f - 2\mu \phi_+ + \Pi = 2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi=\frac{(\nabla\phi_-)^2}{\bar\phi_c}
+\]
+\begin{equation}
+\begin{aligned}
+\phi_-'(0) =
+\Bigg\{
+\bar\phi_c \Big[
+&2\phi_{+,0}\ln(\phi_{+,0})
++(1-2\phi_{+,0})\ln(1-2\phi_{+,0})
+-\frac{\phi_{+,0}^2}{\phi_s} \\
+&-(\bar\phi+\Delta\phi)\ln(\bar\phi+\Delta\phi)
+-(\bar\phi-\Delta\phi)\ln(\bar\phi-\Delta\phi) \\
+&-(1-2\bar\phi)\ln(1-2\bar\phi)
++\frac{\bar\phi^2}{\phi_s}
++\frac{\Delta\phi^2}{\bar\phi_c} \\
+&-2(\phi_{+,0}-\bar\phi)
+\left(
+-\frac{\bar\phi}{\phi_s}
+-\frac{\Delta\phi}{\bar\phi_c}
++\ln(\bar\phi+\Delta\phi)
+-\ln(1-2\bar\phi)
+\right)
+\Big]
+\Bigg\}^{1/2}
+\end{aligned}
+\end{equation}
 
-% and thus:
-% \begin{equation}
-%     w = \sqrt{\frac{\bar\phi_c (\Delta \phi)^2}{2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi}}
-% \end{equation}
-% The analytical approximation for the interface width can be seen in figure~\ref{fig:interface_width_comparison}.
-% Here we can see that including the absorption yields a much better agreement with the numerical results.
+and thus:
+\begin{equation}
+    w = \sqrt{\frac{\bar\phi_c (\Delta \phi)^2}{2\phi_+\ln(\phi_+)+(1-2\phi_+)\ln(1-2\phi_+)-\frac{\phi_+^2}{\phi_s}-2\mu\phi_++\Pi}}
+\end{equation}
+The analytical approximation for the interface width can be seen in figure~\ref{fig:interface_width_comparison}.
+Here we can see that including the absorption yields a much better agreement with the numerical results.
 % \begin{figure}[h]
 %     \centering
 %     \includegraphics[width=0.9\linewidth]{figures/width_with_absorption.png}
@@ -1547,267 +1551,431 @@ For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the i
 
 
 
-% \clearpage
+\clearpage
 
-% \section{Fast Binodal Construction}
-% In the previous chapter, we investigated the interfacial profiles of ternary systems. 
-% For faster convergence of the equilibrium profiles, we initialized the system using knowledge of the bulk compositions of the coexisting phases.
-% These compositions can be obtained in a timely manner using the flory python package. 
-% This was initially the method of choice. However, after optimizing the numerical schemes for the interfacial profiles
-% precomputing the bulk compositions of the coexisting phases became the bottleneck of the entire procedure.
-% Since we are interested in systems for ever increasing mean volume fraction, we are essentially asking for the binodal curve
-% Since the system is equilibrated iteratively for ever increasing mean volume fraction of the second species, one
-% can ask the question of using information of the prior iteration to converge faster to the next bulk compositions.
-% In this section we will present a method which allows for a rapid computation of the binodal in phase space for the ternary system.
+\section{Fast Binodal Construction}
+In the previous chapter, we examined the interfacial profiles of ternary systems. 
+To accelerate convergence to equilibrium, the system was initialized using the bulk compositions of the coexisting phases. 
+These compositions were computed using the \texttt{flory} Python package \cite{Yicheng2025flory}, which at first provided a practical solution. 
+However, after optimizing the numerical schemes used for the interfacial profile calculations, the precomputation of the bulk coexistence compositions became the main computational bottleneck.
 
-% \subsection{Tracing out the binodal curve in phase space}
-% \textcolor{red}{Add a schematic figure showing the binodal curve with points on it representing previous iterations and the step along the curve (tangential step) and a projection step to the binodal.
-% Should this schematic be for dilute and dense phase or just one of them?}
-% In order to better understand this algorithm it is helpful to first think about the number of degrees of freedom and the number of constraints that define the binodal curve in phase space.
-% For two distinct phases in the ternary incompressible system, we have four degrees of freedom, which are the two independent volume fractions in each of the two phases.
-% On the other hand, the coexistence conditions impose three constraints.
-% This means that we have one degree of freedom left, which implies that the binodal curve is a one-dimensional manifold in the four-dimensional space of phase compositions.
+The way the system was explored was by iteratively stepping through phase space.
+Since successive points lie close to one another, this naturally suggests using the knowledge of the coexistence compositions from one step to approximate the compositions for the next,
+thereby accelerating convergence to the next point on the binodal curve.
 
-% \subsubsection{Coexistence conditions}
-
-% % \begin{itemize}
-% %     \item The coexistence conditions for a two-phase system are given by the equality of the chemical potentials and osmotic pressure in the two phases which are three equalities
-% %     \item Explicitly show the coexistence conditions for Flory-Huggins
-% %     \item The number of unknowns is four, the volume fractions of the two species in the two phases, so we have one degree of freedom and thus a curve of coexisting phases in phase space, which is the binodal curve.
-% % \end{itemize}
-% Given two phases in a ternary system a point on the binodal is uniquely given by the coordinates in phase space:
-% \[\boldsymbol\phi = (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})^T\]
-% , where the superscript denotes the phase and the subscript denotes the species.
-% These points are not arbitrary but are constrained by the coexistence conditions, which require that the chemical potentials and osmotic pressure of the two phases are equal.
-% \[
-% \begin{aligned}
-%     \mu_i(\phi_1^{(1)}, \phi_2^{(1)}) &= \mu_i(\phi_1^{(2)}, \phi_2^{(2)})\\
-%     \Pi(\phi_1^{(1)}, \phi_2^{(1)}) &= \Pi(\phi_1^{(2)}, \phi_2^{(2)})
-% \end{aligned}
-% \]
-% For the Flory-Huggins free energy, the chemical potentials and osmotic pressure can be expressed as
-% \[
-% \begin{aligned}
-%     \mu_i(\phi_1, \phi_2) &= \frac{\partial f}{\partial \phi_i} = \ln(\phi_i) - \ln(\phi_0) + \sum_{j=1}^2 \chi_{ij} \phi_j\\
-%     \Pi(\phi_1, \phi_2) &= -f + \sum_i \mu_i \phi_i =  -\ln(\phi_0) +\tfrac{1}{2}\sum_{i,j=1}^2 \phi_i\chi_{ij}  \phi_j
-% \end{aligned}
-% \]
-% The algorithm we will present in the next sections relies on the fact that we start with a point on the binodal, i.e. a point that satisfies the coexistence conditions.
-% \subsubsection{Tangential step along the binodal}
-
-% Given that we know the bulk compositions of the coexisting phases for a given point in phase space,
-% can we move a small step in phase space and remain on the binodal curve?
-% For a step that is small enough, we can expand the coexistance conditions to first order in the step size \(\delta\boldsymbol\phi = (\delta\phi_1^{(1)}, \delta\phi_2^{(1)}, \delta\phi_1^{(2)}, \delta\phi_2^{(2)})^T\):
-
-% \begin{equation}
-% \boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi}) = \boldsymbol{E}(\boldsymbol{\phi}) + \boldsymbol{J}\,\delta\boldsymbol{\phi} + \mathcal{O}(\delta\boldsymbol{\phi}^2) = \boldsymbol{0}
-% \label{eq:binodal_step}
-% \end{equation}
-% Where \(\boldsymbol{E} = (\mu_1^{(1)}-\mu_1^{(2)}, \mu_2^{(1)}-\mu_2^{(2)}, \Pi^{(1)}-\Pi^{(2)})^T\) and \(\boldsymbol{J}\) is the Jacobian matrix of the system:
-% \[
-% \boldsymbol{J} = \begin{pmatrix}
-% \frac{\partial \mu_1^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \mu_1^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \mu_1^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \mu_1^{(2)}}{\partial \phi_2^{(2)}}\\
-% \frac{\partial \mu_2^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \mu_2^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \mu_2^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \mu_2^{(2)}}{\partial \phi_2^{(2)}}\\
-% \frac{\partial \Pi^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \Pi^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \Pi^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \Pi^{(2)}}{\partial \phi_2^{(2)}}
-% \end{pmatrix}
-% \]
-% The first term on the right-hand side of Eq.~\ref{eq:binodal_step} vanishes since \(\boldsymbol{\phi}\) is a point on the binodal.
-% In order to remain on the binodal, we must therefore have \(\boldsymbol{J}\,\delta\boldsymbol{\phi} = \boldsymbol{0}\).
-% This means that the step along the binodal curve is proportional to the null space of the Jacobian matrix \(\delta \boldsymbol{\phi} \propto \text{null}(\boldsymbol{J})\).
-
-% \subsubsection{Projecting back onto the coexistence manifold}
-% Even though this is a good start it still introduces an error of order \(\delta\boldsymbol{\phi}^2\) which is propagated across iterations
-% and can lead to a significant deviation from the binodal curve after many iterations.
-% Although one can reduce this error by taking smaller steps, this also increases the number of iterations required to trace out the binodal curve, which is not ideal.
-% Instead we can ask a slightly different question:
-% given that we are close but not exactly on the binodal, in which direction should we step in order be at the binodal?
-% Mathematically, this can be expressed the same as  Eq.~\ref{eq:binodal_step}, but now the first term on the right-hand side does not vanish and we need to solve for \(\delta\boldsymbol{\phi}\) such that the entire right-hand side vanishes.
-% This can be written as
-% \[
-% \boldsymbol{J}\,\delta\boldsymbol{\phi} + \boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}
-% \]
-% It is easy to see that the soltution to this equation is given by the pseudo-inverse of the Jacobian:
-% \[
-% \delta\boldsymbol{\phi} = -\boldsymbol{J}^+\boldsymbol{E}(\boldsymbol{\phi})
-% \]
-% where \(\boldsymbol{J}^+ = \boldsymbol{J}^T(\boldsymbol{J}^T\boldsymbol{J})^{-1}\).
-% The Eq.~\ref{eq:binodal_step} is invariant under translations of \(\delta\boldsymbol{\phi}\) along the null space of the Jacobian. Since the pseudo-inverse solution is orthogonal to the null space it minimizes the step size,
-% by which we ensure that the tangential step and the projection step are independent and do not interfere with each other. This will become important when during algorithmic implementation we need 
-% to define a step size for the tangential step, which is not well defined if the projection step also moves tangentially along the binodal curve.
-
-% The pseudo-inverse is easy to compute using singular value decomposition (SVD) of the Jacobian
-% \[
-% \boldsymbol{J} = \boldsymbol{U}\,\boldsymbol{\Sigma}\,\boldsymbol{V}^T
-% \]
-% where \(\boldsymbol{U}\) and \(\boldsymbol{V}\) are orthogonal matrices and \(\boldsymbol{\Sigma}\) is a diagonal matrix containing the singular values of the Jacobian.
-% The pseudo-inverse can then be computed as
-% \[
-% \boldsymbol{J}^+ = \boldsymbol{V}\,\boldsymbol{\Sigma}^+\,\boldsymbol{U}^T
-% \]
-% where \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the nonzero singular values.
-% Vanishing singular values of the Jacobian correspond to directions which the Jacobian projects to zero.
-% This mean that instead of trying to reconstruct this lost information with the pseudo-inverse, one simply sets the reciprocal of the zero singular values to zero.
-% In practice, one needs to also consider small but nonzero singular values, which can lead to numerical instability. Therefore, one needs to set a threshold below which the reciprocal of the singular value is set to zero.
-
-% Once one has computed the projection step, one can project back onto the binoda curve.
-% Because second order errors are neglected the projection step is not perfect and might require multiple iterations to converge to the desired accuracy.
-% Most importantly, the projection step is only guaranteed to converge if the initial point is close enough to the binodal curve, which is the case if we take small enough tangential steps.
-% All in all the projection step allows us to take much larger tangential steps without introducing significant errors, which allows us to trace out the binodal curve much faster and yet more accurately than without the projection step.
+This intuition motivates the method presented in this section, which enables rapid construction of the binodal of a ternary system in phase space.
 
 
-% \subsection{Algorithm Considerations}
-% \subsubsection{Initialization of the stepping scheme}
-% This algorithm relies on the fact that we have a point on the binodal to start with.
-% In our implementation we consider two fundamentally different types of initial points:
-% the dilute limit of one species, where the system effectively reduces to a binary system,
-% and the critical point, which is a distinct thermodynamic state rather than a dilute-limit construction.
-% Both types of initial points can be found analytically for the Flory-Huggins free energy, which makes them ideal candidates for initialization.
+\subsection{Tracing out the binodal curve in phase space}
+To motivate the algorithm, it is useful to view the binodal geometrically in phase space. 
+Each point on the binodal corresponds to a pair of coexisting phase compositions, while the coexistence conditions restrict which pairs are physically admissible. 
+As a result, the set of allowed coexistence states forms a lower-dimensional structure in the full composition space that can be traced continuously from one point to the next. 
+This way of looking at the problem helps in understanding the construction method described below. The overall continuation strategy and the special cases discussed in this section are summarized schematically in Fig.~\ref{fig:tracer_schematics}.
 
-% For explaining reasons we will consider the dilute limit of the zeroth species, but the same logic applies to the other species by relabeling the volume fractions.
-% If the repelling interaction of the two remaining species is strong enough ($\chi_{12}>2$) then one can find the coexisting phases for the binary system from the coexistence condition:
-% \[
-% \ln(\phi) -\ln(1-\phi) + \chi_{12} (1-2\phi) = 0
-% \]
-% Where \(\phi\) is the volume fraction of one of the species and the other species is given by \(1-\phi\). The dilute limit is then given by
-% \[
-% (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)}) = (\phi-\epsilon, 1-\phi-\epsilon, 1-\phi-\epsilon, \phi-\epsilon)
-% \]
-% such that \(\phi_0^{(1)} = \phi_0^{(2)} = 2\epsilon\) is small, which allows us to be close enough to the binodal to be able to project back on the binodal and start the stepping scheme.
-% Because the null space of the Jacobian is invariant under sign change one needs to choose the direction of the tangential step away from the border.
 
-% The critical point can also be found analytically by finding the point in phase space where the second and third derivatives of the free energy vanish (see Section~\ref{sec:critical_points}).
-% Because multiple singular values of the Jacobian nearly vanish near the critical point, it can be challenging to compute the tangential direction of the binodal curve from the Jacobian.
-% However because the spinodal and binodal curves overlap at the critical point one can deduce that the tangential direction of the binodal curve at the critical point is given by the null vector of the Hessian of the free energy.
+\subsubsection{Coexistence conditions}
 
-% \subsubsection{Handling binodal branching events}
-% While developing this algorithm we found a curious case for the symmetric ternary system  \ref{sss:case_study_symmetric_ternary} where the spinodal crossed the binodal, which would mean that part of the binodal
-% was locally unstable but globally stable, which is illogical. This necessetated the existence of additional binoda branches enclosing the spinodal curve. 
-% After investigating the the singular values of the Jacobian throughout the binodal curve, points appeared where the second smalles singular value also vaninshed, which means that the null space of the Jacobian is degenerate
-% and one can step in multiple directions, which corresponds to the branching of the binodal curve.
-% Therefore in order to get the entire binodal curve one needs to track the two smalles singualr values of the Jacobian to detect these branching events and then step in both directions.
+A coexistence state of two phases in a ternary system can be represented by a point in phase space,
+\[
+\boldsymbol\phi = (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})^T,
+\]
+where the superscript labels the phase and the subscript labels the species.
+These coordinates are not independent, but must satisfy the coexistence conditions: the exchange chemical potentials of the two species and the osmotic pressure must be equal in both phases,
+\[
+\begin{aligned}
+    \mu_i(\phi_1^{(1)}, \phi_2^{(1)}) &= \mu_i(\phi_1^{(2)}, \phi_2^{(2)}), \qquad i=1,2,\\
+    \Pi(\phi_1^{(1)}, \phi_2^{(1)}) &= \Pi(\phi_1^{(2)}, \phi_2^{(2)}).
+\end{aligned}
+\]
+The coexistence conditions can be compactly written as
+\[
+\boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0},
+\]
+where
+\[
+\boldsymbol{E}
+=
+(\mu_1^{(1)}-\mu_1^{(2)},\, \mu_2^{(1)}-\mu_2^{(2)},\, \Pi^{(1)}-\Pi^{(2)})^T
+\]
+
+
+For the Flory-Huggins free energy, the exchange chemical potentials and osmotic pressure are given by
+\[
+\begin{aligned}
+    \mu_i(\phi_1, \phi_2) &= \frac{\partial f}{\partial \phi_i}
+    = \ln(\phi_i) - \ln(\phi_0) + \sum_{j=1}^2 \chi_{ij}\phi_j,\\
+    \Pi(\phi_1, \phi_2) &= -f + \sum_i \mu_i \phi_i
+    = -\ln(\phi_0) + \tfrac{1}{2}\sum_{i,j=1}^2 \phi_i \chi_{ij} \phi_j.
+\end{aligned}
+\]
+
+The algorithm described in the following sections starts from a point on the binodal, that is, from a phase-space point \(\boldsymbol\phi\) that satisfies these coexistence conditions.
+
+
+\subsubsection{Tangential step along the binodal}
+
+Suppose that the bulk compositions of the two coexisting phases are known for a given point
+\(\boldsymbol{\phi}\) in phase space.
+A natural question is whether one can take a small step away from this point while remaining on the binodal curve.
+For a sufficiently small displacement
+\[
+\delta\boldsymbol{\phi}
+=
+(\delta\phi_1^{(1)}, \delta\phi_2^{(1)}, \delta\phi_1^{(2)}, \delta\phi_2^{(2)})^T,
+\]
+the coexistence conditions can be expanded to first order as
+\begin{equation}
+\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi})
+=
+\boldsymbol{E}(\boldsymbol{\phi})
++
+\boldsymbol{J}\,\delta\boldsymbol{\phi}
++
+\mathcal{O}(\delta\boldsymbol{\phi}^2)
+=
+\boldsymbol{0},
+\label{eq:binodal_step}
+\end{equation}
+where \(\boldsymbol{J}\) is the Jacobian matrix defined as
+\[
+\boldsymbol{J} =
+\begin{pmatrix}
+\frac{\partial \mu_1^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \mu_1^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \mu_1^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \mu_1^{(2)}}{\partial \phi_2^{(2)}}\\
+\frac{\partial \mu_2^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \mu_2^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \mu_2^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \mu_2^{(2)}}{\partial \phi_2^{(2)}}\\
+\frac{\partial \Pi^{(1)}}{\partial \phi_1^{(1)}} & \frac{\partial \Pi^{(1)}}{\partial \phi_2^{(1)}} & -\frac{\partial \Pi^{(2)}}{\partial \phi_1^{(2)}} & -\frac{\partial \Pi^{(2)}}{\partial \phi_2^{(2)}}
+\end{pmatrix}.
+\]
+
+Since \(\boldsymbol{\phi}\) already lies on the binodal, the term \(\boldsymbol{E}(\boldsymbol{\phi})\) vanishes.
+To remain on the binodal to first order, the displacement must therefore satisfy
+\[
+\boldsymbol{J}\,\delta\boldsymbol{\phi} = \boldsymbol{0}.
+\]
+In other words, the local direction along the binodal is given by the null space of the Jacobian,
+\[
+\delta\boldsymbol{\phi_t} \propto \operatorname{null}(\boldsymbol{J}).
+\]
+
+
+\subsubsection{Projecting back onto the coexistence manifold}
+
+The tangential step derived above follows the local direction of the binodal, but it is only accurate to first order. As a result, the predicted point generally deviates from the coexistence manifold by an error of order \(\delta\boldsymbol{\phi}^2\). If left uncorrected, this error accumulates over many steps and can eventually lead to a noticeable drift away from the binodal. One way to reduce this drift is to take smaller tangential steps, but this also increases the number of iterations required to trace out the curve. A more efficient approach is therefore to add a correction step that projects the predicted point back onto the coexistence manifold.
+
+Suppose that \(\boldsymbol{\phi}\) is close to, but not exactly on, the binodal. Linearizing the coexistence conditions as in Eq.~\ref{eq:binodal_step} gives
+\[
+\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi})
+\approx
+\boldsymbol{E}(\boldsymbol{\phi}) + \boldsymbol{J}\,\delta\boldsymbol{\phi}.
+\]
+To recover a point on the binodal to first order, we require the right-hand side to vanish, which leads to
+\[
+\boldsymbol{J}\,\delta\boldsymbol{\phi} + \boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}.
+\]
+
+Because \(\boldsymbol{J}\) has a nontrivial null space, this equation does not have a unique solution: one may always add a component along the tangent direction without changing the first-order satisfaction of the coexistence conditions. To select a unique correction, we choose the minimum-norm solution,
+\[
+\delta\boldsymbol{\phi_n} = -\boldsymbol{J}^+ \boldsymbol{E}(\boldsymbol{\phi}),
+\]
+where \(\boldsymbol{J}^+\) denotes the Moore-Penrose pseudoinverse of \(\boldsymbol{J}\). This choice makes the correction step orthogonal to the null space of \(\boldsymbol{J}\), so that it does not introduce any additional motion along the binodal. In this way, the tangential step and the projection step remain cleanly separated.
+
+In practice, the pseudoinverse is computed using the singular value decomposition
+\[
+\boldsymbol{J} = \boldsymbol{U}\,\boldsymbol{\Sigma}\,\boldsymbol{V}^T,
+\]
+which gives
+\[
+\boldsymbol{J}^+ = \boldsymbol{V}\,\boldsymbol{\Sigma}^+\,\boldsymbol{U}^T.
+\]
+Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the singular values that are sufficiently large, while setting the reciprocals of vanishing or very small singular values to zero. The singular value associated with the null space corresponds to the tangent direction along the binodal and should therefore not be inverted. In practice, introducing a threshold for small singular values is essential for numerical stability.
+
+Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal. The projection may therefore need to be applied repeatedly until the desired accuracy is reached. Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
+
+
+\subsection{Algorithm Considerations}
+\subsubsection{Initialization of the stepping scheme}
+
+The stepping scheme requires an initial point on, or sufficiently close to, the binodal.
+In our implementation, we consider two qualitatively different types of starting points:
+the dilute limit of one species, in which the ternary system effectively reduces to a binary one,
+and the critical point, which represents a distinct thermodynamic state rather than a dilute-limit construction.
+For the Flory-Huggins free energy, both types of initial points can be determined analytically, making them well suited for initializing the algorithm. These two initialization strategies may, however, lead to duplicate traces of the same binodal section, as illustrated in Fig.~\ref{fig:tracer_schematics}C.
+
+For illustrative purposes, we consider the dilute limit of species \(0\), although the same construction applies to the other species after relabeling the volume fractions.
+If the repulsive interaction between the remaining two species is sufficiently strong, \(\chi_{12} > 2\), the coexisting phases of the corresponding binary system are determined by the coexistence condition
+\[
+\ln(\phi) - \ln(1-\phi) + \chi_{12}(1-2\phi) = 0,
+\]
+where \(\phi\) denotes the volume fraction of one species and the other has volume fraction \(1-\phi\).
+A corresponding initial point for the ternary system is then given by
+\[
+(\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})
+=
+(\phi-\epsilon,\, 1-\phi-\epsilon,\, 1-\phi-\epsilon,\, \phi-\epsilon),
+\]
+so that
+\[
+\phi_0^{(1)} = \phi_0^{(2)} = 2\epsilon
+\]
+is small.
+This places the system sufficiently close to the ternary binodal for the projection step to bring it onto the coexistence manifold and thus initialize the stepping scheme.
+Because the initial point lies very close to the boundary of the composition space, applying the full projection step can occasionally move the system outside this domain and thereby cause numerical difficulties.
+To avoid this, we damp the projection step and update the phase-space point according to
+\[
+\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \alpha\,\delta\boldsymbol{\phi},
+\]
+where \(\alpha \approx 10^{-2}\) is a small tunable parameter that can be adjusted to optimize the performance of the algorithm.
+Finally, since the null vector of the Jacobian is only defined up to an overall sign, the tangential direction must be chosen such that the trajectory points away from the boundary.
+
+The critical point provides a second possible initialization.
+It can also be determined analytically by locating the point in phase space at which the second and third derivatives of the free energy vanish (see Section~\ref{sec:critical_points}).
+Near the critical point, several singular values of the Jacobian become small, which makes the tangential direction obtained from the Jacobian numerically less robust.
+However, because the binodal and spinodal meet at the critical point, the tangent to the binodal can instead be inferred from the null vector of the Hessian of the free energy.
+
+
+\subsubsection{Handling binodal branching events}
+
+While developing this algorithm, we encountered an interesting case in the symmetric ternary system discussed in Section~\ref{sss:case_study_symmetric_ternary}. There, the spinodal appeared to cross the binodal, which would imply that part of the binodal is locally unstable while remaining globally stable.
+This, of course, is not possible and suggests the existence of additional binodal branches enclosing the spinodal curve.
+
+A clue to the origin of these additional branches became apparent when we examined the singular values of the Jacobian along the binodal. At certain points, not only the smallest singular value but also the second-smallest approached zero. This indicates that the null space of the Jacobian becomes degenerate, so that more than one local stepping direction is possible. Geometrically, this corresponds to a branching point of the binodal curve, as shown schematically in Fig.~\ref{fig:tracer_schematics}B.
+
+To capture the full binodal, the algorithm must therefore monitor the two smallest singular values of the Jacobian. When such a degeneracy is detected, the procedure is split and both directions are followed in order to trace all branches of the binodal.\\
+
+\begin{minipage}{0.95\textwidth}
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/tracer_schematics.pdf}
+    \captionof{figure}{Schematic illustration of the main steps and characteristic events in the algorithm, shown in the \(\phi_1\)-\(\phi_2\) phase space. (A) Successive tangential (green arrow) and projection (red arrow) steps; the projection step may need to be repeated. (B) Branching event: an initial binodal section (blue) splits into a second section (orange) when the Jacobian becomes degenerate. (C) Duplicate binodal sections obtained when tracing is initiated either from the dilute limit (blue points) or from the critical point (orange points). The stars denote the initial points of the tracing processes. (D) The crossing of two binodal branches indicates a three-phase region (red triangle).}
+    \label{fig:tracer_schematics}
+\end{minipage}\\
+
+
+\subsection{Implementation}
+
+Within Flory-Huggins theory, the phase diagram of a ternary system is fully determined by the interaction parameters \(\chi_{ij}\).\footnote{Here, we restrict attention to the case of equal molecular sizes.}
+Accordingly, the only physical input required by our algorithm is the set of interaction parameters, from which the full phase diagram is constructed.
+All remaining parameters are numerical in nature: they control aspects of the implementation such as step sizes, tolerances, and convergence behavior.
+These parameters can be adjusted to improve the efficiency of the algorithm, but provided they are chosen within reasonable ranges, they do not significantly affect the resulting phase diagram.
+
 
 % \subsection{Implementation}
 % The phase diagram of a ternary system in the Flory-Huggins theory is uniquely determined by the interaction parameters \(\chi_{ij}\).
 % For our algorithm this has the effect that the user only needs to provide the interaction parameters and the algorithm will compute the entire phase diagram.
 % All other parameters only define the numerical details which can be tuned to optimize the performance of the algorithm but do not affect the results in a significant way as long as they are within reasonable ranges.
 
-% \subsubsection{Computing the spinodal and binodal curve}
+\subsubsection{Computing the spinodal and binodal curve}
 
-% Once the interaction parameteres are provided, one first computes the spinodal curve and critical points, which can be done analytically for the Flory-Huggins free energy.
-% Starting from an initial point, one can step along the binodal curve by repeatedly taking a tangential step along the binodal and then projecting back onto the binodal curve using the pseudo-inverse of the Jacobian.
+Once the interaction parameters are specified, the spinodal curve and the critical points are computed first. For the Flory--Huggins free energy, both can be obtained analytically. Together with the dilute-limit constructions described above, these provide the initial points from which the binodal branches are traced.
 
-% The stepping is repeated until one of three termination criteria is met, which are:
+All initial points are collected in a task list. Each task consists of a point in phase space together with a continuation direction along which the corresponding binodal branch is to be explored. The algorithm then proceeds by repeatedly selecting a task from this list and tracing the associated branch. During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events. Whenever the second-smallest singular value falls below a prescribed threshold, this indicates that an additional branch may emanate from the current point. In that case, a new task is created from the current phase-space point together with the continuation direction that is not being followed by the current branch, and this task is added to the task list.
 
-% \begin{terminationbox}
-% \begin{itemize}
-%     \item The volume fraction of one of the species is outside of the physically meaningful range, which is between 0 and 1.
-%     \item We reach a critical point, which is implemented by terminating whenever the distance between the two phases is smaller than a certain threshold.
-%     \item In rare cases the binodal can loop back on itself, which can lead to infinite loops. 
-%     To prevent this we monitor the distance between the current point and the initial point and terminate if this distance is smaller than a certain threshold.
-% \end{itemize}
-% \end{terminationbox}
+In this way, the algorithm gradually discovers and explores all connected branches of the binodal. After the branches initialized from the dilute limits and critical points have been processed, the remaining branches are generated automatically through the detected branching events. The procedure continues until the task list is empty. To avoid tracing the same branch multiple times, previously explored initial points are cached and duplicate tasks are skipped when encountered.
 
-% During the stepping scheme, one needs to monitor the singular values of the Jacobian to detect branching events. Whenever the second smallest singular value is smaller than a certain threshold
-% A new initial point is added to a task list. This initial point includes location in phase space and the direction is not being explored by the current process.
-% After all initial points from the dilute limit and critical points are explored, the algorithm continues by picking new initial points from the task list until the task list is empty.
-% In order to avoid compute sections with the same initial point, we cache the initial points that have already been explored and skip them when they are picked from the task list.
+For a given task, computing the corresponding binodal branch means repeatedly taking a tangential step along the binodal and then projecting the predicted point back onto the coexistence manifold using the pseudoinverse of the Jacobian. This continuation is repeated until one of the following termination criteria is met:
 
-% \begin{tcolorbox}[colback=blue!6,colframe=blue!45!black,arc=2.5mm,title={Pseudocode: Computing the binodal curve},fonttitle=\bfseries]
-% \begin{algorithmic}[1]
-% \State $\mathrm{task\_list} \gets [\ ]$
-% \State $\mathrm{history\_list} \gets [\ ]$
-% \State $\mathrm{initial\_points} \gets \mathrm{ComputeInitialPoints}(\chi)$
-% \ForAll{$p \in \mathrm{initial\_points}$}
-%     \State $\mathrm{task\_list}.\mathrm{append}(p)$
-% \EndFor
-% \While{$\mathrm{task\_list}$ is not empty}
-%     \State $p_0 \gets \mathrm{task\_list}.\mathrm{pop\_first}()$
-%     \If{$\mathrm{InHistory}(p_0, \mathrm{history\_list})$}
-%         \State \textbf{continue}
-%     \EndIf
-%     \State $\mathrm{history\_list}.\mathrm{append}(p_0)$
-%     \State $(\mathrm{section}, \mathrm{branch\_points}) \gets \mathrm{ComputeBinodalSection}(p_0)$
-%     \State $\mathrm{StoreSection}(\mathrm{section})$
-%     \ForAll{$q \in \mathrm{branch\_points}$}
-%         \If{\textbf{not} $\mathrm{InHistory}(q, \mathrm{history\_list})$ }
-%             \State $\mathrm{task\_list}.\mathrm{append}(q)$
-%         \EndIf
-%     \EndFor
-% \EndWhile
+\begin{terminationbox}
+\begin{itemize}
+    \item One of the volume fractions leaves the physically admissible range between 0 and 1.
+    \item A critical point is reached, which is detected when the distance between the two coexisting phases falls below a prescribed threshold.
+    \item In rare cases, the binodal can loop back onto itself, which may lead to an infinite continuation cycle. To avoid this, the distance between the current point and the initial point is monitored, and the procedure is terminated once this distance drops below a prescribed threshold.
+\end{itemize}
+\end{terminationbox}
+The full workflow of the algorithm is summarized in the pseudocode below.
 
-% \Statex
-% \Function{ComputeBinodalSection}{$p_0$}
-%     \State $p \gets p_0$, $\mathrm{section} \gets [p_0]$, $\mathrm{sv\_list} \gets [\ ]$
-%     \While{termination criteria are not met}
-%         \State Take tangential step from $p$ and project back to binodal
-%         \State $\sigma \gets \mathrm{SingularValuesOfJacobian}(p)$
-%         \State $\mathrm{sv\_list}.\mathrm{append}(\sigma)$
-%         \State Append updated point to $\mathrm{section}$
-%     \EndWhile
-%     \State $\mathrm{branch\_points} \gets \mathrm{DetectBranchPoints}(\mathrm{section}, \mathrm{sv\_list})$
-%     \State \Return $(\mathrm{section}, \mathrm{branch\_points})$
-% \EndFunction
-% \end{algorithmic}
-% \end{tcolorbox}
 
-% \subsubsection{Post processing}
-% After all binodal branches have been computed, one needs to remove duplicates, which can occur if one for example starts at the boundary of the phase diagram and the critical point of the same binodal section.
-% Once all duplicates are removed, one can look for intersecting points of two branches of the binodal, as this is where two tie lines go in different directions, which means that we have three coexisting phases.
-% Once the algorithm has completed we are left with a set of spinodal and binodal branches, as well as the dividing lines between the one phase, two phase and three phase regions in phase space.
+\begin{tcolorbox}[colback=blue!6,colframe=blue!45!black,arc=2.5mm,title={Pseudocode: Computing the binodal curve},fonttitle=\bfseries]
+\begin{algorithmic}[1]
+\State $\mathrm{task\_list} \gets [\ ]$
+\State $\mathrm{history\_list} \gets [\ ]$
+\State $\mathrm{initial\_points} \gets \mathrm{ComputeInitialPoints}(\chi)$
+\ForAll{$p \in \mathrm{initial\_points}$}
+    \State $\mathrm{task\_list}.\mathrm{append}(p)$
+\EndFor
+\While{$\mathrm{task\_list}$ is not empty}
+    \State $p_0 \gets \mathrm{task\_list}.\mathrm{pop\_first}()$
+    \If{$\mathrm{InHistory}(p_0, \mathrm{history\_list})$}
+        \State \textbf{continue}
+    \EndIf
+    \State $\mathrm{history\_list}.\mathrm{append}(p_0)$
+    \State $(\mathrm{section}, \mathrm{branch\_points}) \gets \mathrm{ComputeBinodalSection}(p_0)$
+    \State $\mathrm{StoreSection}(\mathrm{section})$
+    \ForAll{$q \in \mathrm{branch\_points}$}
+        \State $\mathrm{task\_list}.\mathrm{append}(q)$
+    \EndFor
+\EndWhile
 
-% \subsubsection{Numerical details}
-% Due to the discrete nature of the stepping scheme we often times rely on numerical threshold values throughout the algorithm.
-% For the step size of the tangential step, we typically choose a static value of around $0.01$. In the case where the second smalles singular value of the Jacobian is smaller than $10^{-1}$ we adapt the step size to be proportional to the singular value
-% which is capped from below by a value of around $10^{-4}$ to prevent the step size from becoming too small. This is done to better resolve the branching events. The branching events are triggered when the second smallest singular value of the Jacobian is smaller than around $10^{-3}$.
-% Additionally, for the projection loop we typically choose a threshold of around $10^{-10}$ for the norm of \(\boldsymbol{E}(\boldsymbol{\phi})\) to determine whether we are close enough to the binodal curve.
-% The termination criteria for coexistence points near the critical point is 
-% \[
-% |\boldsymbol\phi^{(1)} - \boldsymbol\phi^{(2)}| < 10^{-3}
-% \]
-% In order to facilitate numerical stability of the projection step near the critical point we set all singular values of the Jacobian that are smaller than $10^{-6}$ to zero.
-% Lastly the stepping scheme terminates if the current point is within a euclidean distance of around $10^{-3}$ from the initial point to prevent infinite loops in case the binodal curve loops back on itself.
-% To avoid terminating right at the starting point, we define a minimum number of steps that needs to be taken before this termination criterion is applied, with a default value of 10 steps.
+\Statex
+\Function{ComputeBinodalSection}{$p_0$}
+    \State $p \gets p_0$, $\mathrm{section} \gets [p_0]$, $\mathrm{sv\_list} \gets [\ ]$
+    \While{termination criteria are not met}
+        \State Take tangential step from $p$ and project back to binodal
+        \State $\sigma \gets \mathrm{SingularValuesOfJacobian}(p)$
+        \State $\mathrm{sv\_list}.\mathrm{append}(\sigma)$
+        \State Append updated point to $\mathrm{section}$
+    \EndWhile
+    \State $\mathrm{branch\_points} \gets \mathrm{DetectBranchPoints}(\mathrm{section}, \mathrm{sv\_list})$
+    \State \Return $(\mathrm{section}, \mathrm{branch\_points})$
+\EndFunction
+\end{algorithmic}
+\end{tcolorbox}
 
-% \begin{numvaluesbox}
-% \begin{itemize}
-%         \item \textbf{$[10^{-4}, 10^{-2}]$}: range of dynamic step size for the tangential step.
-%         \item \textbf{$10^{-1}$}: singular value which toggles dynamic or static step size scaling.
-%         \item \textbf{$10^{-3}$}: threshold for triggering branching events (based on the second smallest singular value).
-%         \item \textbf{$10^{-10}$}: projection-loop threshold for $\|\boldsymbol{E}(\boldsymbol{\phi})\|$ to determine proximity to the binodal curve.
-%         \item \textbf{$10^{-3}$}: euclidean distance between the two phases for termination near the critical point.
-%         \item \textbf{$10^{-6}$}: cutoff below which Jacobian singular values are set to zero
-%         \item \textbf{$10^{-3}$}: euclidean distance from the initial point for termination to prevent infinite loops.
-%         \item \textbf{$10$}: minimum number of steps before applying the previous termination criterion.
-% \end{itemize}
-% \end{numvaluesbox}
-% Note that these values have been chosen to optimize for accuracy rather than speed, since the algorithm is already quite fast compared to alternative methods.
+\subsubsection{Post processing}
+After all binodal branches have been computed, one needs to remove duplicates, which can occur, for example, if tracing is started both at the boundary of the phase diagram and at the critical point of the same binodal section (see Fig.~\ref{fig:tracer_schematics}C).
+Once all duplicates are removed, one can look for intersecting points of two branches of the binodal, as this is where two tie lines go in different directions, which means that we have three coexisting phases (see Fig.~\ref{fig:tracer_schematics}D).
+Once the algorithm has completed we are left with a set of spinodal and binodal branches, as well as the dividing lines between the one phase, two phase and three phase regions in phase space.
 
-% \subsection{Results and validation}
-% \subsubsection{Validation of the algorithm}
-% \begin{itemize}
-%     \item Validate by equilibrating spacially extended systems for randomly sampled points in phase space and comparing the bulk compositions of the coexisting phases with the results from the binodal construction.
-%     \item Validate by comparing with flory package.
-% \end{itemize}
-% \subsubsection{Identification of three-phase regions}
-% \begin{itemize}
-%     \item According to Gibbs phase rule, in a ternary system we can have up to three coexisting phases.
-%     \item One can detect three phase regions by looking at the intersecting points of two branches of the binodal
-%     because at that point we have two tie lines going in different directions.
-%     \item It can also happen that the a three phase region exists inside of another three phase region. In this case
-% \end{itemize}
+\subsubsection{Identification of three-phase regions}
+Once we have removed duplicates, we can look for intersecting points of two branches of the binodal.
+These intersecting points are special because they correspond to points in phase space where two tie lines go in different directions,
+which means that three coexisting phases can exist at the same time.\\
 
-% \subsubsection{Case study: symmetric ternary system}
-% \begin{itemize}
-% \item symmetric ternary systems (\(\chi_{01} = \chi_{02} = \chi_{12}=\chi\)) offer a rich number of interesting features as one increases \(\chi\) such as
-% branching bifurcations. Up to nine critical points. Binodal branches which loop back on themselves. Three three phase regions
-% which join to a single three phase region, tie lines which rotate as one moves across phase space, etc.
-% \item Verify with results from the literature
-% \end{itemize}
-% \subsubsection{Other interesting cases}
-% \begin{itemize}
-%     \item Binodal not crossing boundary, if flory parameter are negative enough (strong attraction)
-%     \item Systems with binodals but without critical points
-% \end{itemize}
+\noindent
+\begin{minipage}{0.1\textwidth}
+\end{minipage}\hfill
+
+\begin{minipage}{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/three_phase_intuition.png}
+    \captionof{figure}{The three-phase region (red plane) provides a better convexification of the free energy surface (yellow surface) than the two-phase tie lines (black lines).\\}
+    \label{fig:three_phase_intuition}
+\end{minipage}\hfill
+\\If a point lies inside a three-phase region, it can be represented as a convex combination of three coexisting compositions.
+Geometrically, this corresponds to a common tangent plane that touches the free energy surface at three distinct points.
+Although such a point may also lie on a tie line and therefore admit a two-phase decomposition, this configuration is not thermodynamically optimal.
+The corresponding tie line provides only a partial convexification of the free energy surface. In contrast, the tangent plane associated with three-phase
+coexistence yields a lower free energy, as it constitutes the full convex envelope in this region.
+Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation
+and the system will partition into three coexisting phases (see figure~\ref{fig:three_phase_intuition}).
+
+We do not need to consider the possibility of four or more coexisting phases, because according to Gibbs phase rule, in a ternary system we can have at most three coexisting phases.
+
+
+
+\subsubsection{Numerical details}  
+Due to the discrete nature of the stepping scheme and the lack of exact convergence in practice, a set of numerical parameters must be introduced to control the behavior and stability of the algorithm.
+
+For instance, for the step size of the tangential step, we typically select a static value of around \(0.01\).
+Whenever the second smallest singular value of the Jacobian is smaller than \(10^{-1}\), we switch to an adaptive step size that scales with the singular value to allow for better resolution of branching events.  
+The adaptive step size is capped from below at a value of around \(10^{-4}\) to prevent an excessively long runtime of the algorithm.
+Branching events are triggered when the second smallest singular value of the Jacobian falls below approximately \(10^{-3}\).  
+
+The projection loop will typically not converge fully, so it terminates once the norm of the coexistence conditions \(\boldsymbol{E}(\boldsymbol{\phi})\) reaches \(10^{-10}\).  
+
+The termination criterion for coexistence points near the critical point is
+\[
+|\boldsymbol\phi^{(1)} - \boldsymbol\phi^{(2)}| < 10^{-3}.
+\]
+
+To facilitate numerical stability of the projection step near the critical point, all singular values of the Jacobian that are smaller than \(10^{-6}\) are set to zero.
+The reason is that whenever a singular value nearly vanishes, the corresponding direction is effectively mapped to the null space of the Jacobian.
+Rather than attempting to reconstruct this lost information using the pseudo-inverse, one simply ignores that direction.  
+
+Lastly, we define a constant to prevent infinite loops when the binodal curve loops back on itself during the stepping scheme.
+The algorithm terminates if the current point is within a Euclidean distance of approximately \(10^{-3}\) from the initial point.
+To avoid unwanted termination at the beginning, we impose a minimum number of steps that must be taken before this criterion is applied, with a default value of 10 steps.  
+
+\begin{numvaluesbox}
+\begin{itemize}
+        \item \textbf{$[10^{-4}, 10^{-2}]$}: range of dynamic step size for the tangential step.
+        \item \textbf{$10^{-1}$}: singular value threshold for switching between dynamic and static step size scaling.
+        \item \textbf{$10^{-3}$}: threshold for triggering branching events (based on the second smallest singular value).
+        \item \textbf{$10^{-10}$}: projection loop threshold for $\|\boldsymbol{E}(\boldsymbol{\phi})\|$ to determine proximity to the binodal curve.
+        \item \textbf{$10^{-3}$}: Euclidean distance between the two phases for termination near the critical point.
+        \item \textbf{$10^{-6}$}: cutoff below which Jacobian singular values are set to zero.
+        \item \textbf{$10^{-3}$}: Euclidean distance from the initial point for termination to prevent infinite loops.
+        \item \textbf{$10$}: minimum number of steps before applying the previous termination criterion.
+\end{itemize}
+\end{numvaluesbox}
+
+Note that these values have been chosen to optimize accuracy rather than speed, since the algorithm is already quite fast compared to alternative methods.
+For instance, decreasing the branching threshold of $10^{-3}$ suppresses false positive branching events, but increases the probability of false negatives, resulting in an incomplete reconstruction of the binodal.
+
+
+\subsection{Results and validation}
+\subsubsection{Validation of the algorithm}
+There are a few things we can verify. The obvious one is to check if the two phase coexistence compositions that we have found fulfill the coexistence conditions. Due to the projection step this is always guaranteed.
+Since three phase compositions are composed of the union of two two phase compositions, the coexistence conditions are also guaranteed for three phase coexistence compositions.
+So what else can be checked?
+It could happen that the algorithm does not find all possible phase separated states in our phase diagram, when for exmple a branching event was not triggered.
+In order to check for this inconsistency we need to compute the coexistence composition using a different method. Before developing this algorithm we used the 
+\texttt{flory} package \cite{Yicheng2025flory} to in the previous chapter compute the coexistence compositions, so now we could use it to compare it against.
+To this end we constructed a 3D grid for the chi parameter \(\chi_{ij} \in [-5, 5]\) for \(i,j \in \{0,1,2\}\) and built $1000$ phase diagrams for these interaction matrices.
+We would then sample random points in phase space and compare the coexistence compositions for that point from our algorithm to the \texttt{flory} package.
+The sampling of the two and three phase regions was based on the size of the two and three phase regions in phase space. We therefore sampled $20000$ two phase points, out of which \texttt{flory} would also find a two phase coexistence composition.
+In all instances the coexistence compositions were nearly identical with a free energy difference of less than $10^{-6}$. The only notable difference was near critical points, where the \texttt{flory} package would sometimes find more phases,
+likely due to the fact that near the critical point the singular values of the Jacobian become small. 
+
+\noindent
+\begin{minipage}{0.45\textwidth}
+For the three phase points we sampled $1000$ out of which same as for the two-phase case the difference was negligible (the difference between the free energies was of order $10^{-6}$).
+The only noticeble discrepancy between the two methods was near the boundary of a three phase region, where the \texttt{flory} package would sometimes find a two phase coexistence composition yielding a slightly higher free energy than the three phase coexistence composition found by our algorithm (see Fig.~\ref{fig:flory_fails}).
+
+We also sampled $2500$ points in the one phase region, where we expect no coexistence compositions. In all cases the \texttt{flory} package also found no coexistence compositions, which is consistent with our results.
+\end{minipage}
+\hfill
+\begin{minipage}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/flory_fails.png}
+    \captionof{figure}{Comparison of the coexistence compositions obtained from our algorithm and the \texttt{flory} package for points in the three phase region (orange area). The green points correspond to correct predictions from the \texttt{flory} package, while the red crosses indicate cases where two phase compositions were found yielding a higher free energy.}
+    \label{fig:flory_fails}
+\end{minipage}\\
+
+Of course this is not a proof that the algorithm will work for all possible interaction parameters, but it does give us confidence that the algorithm is robust and can be used to explore the replresentative phase behavior of ternary systems.
+
+\subsubsection{Case study: symmetric ternary system}
+The symmetric ternary case is when all interactions between one species and the other species is equal \(\chi_{01}=\chi_{02}\)\footnote{For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the volume fractions.} and the interaction between the remaining two species is given by \(\chi_{12}\).
+It has the advantage that by using an ansatz one can compute the binodals analytically.
+The asatz is that one of the species is constant in both phases and the remaining two species swap their volume fractions in each phase.
+If for example species 0 in constant then 
+\[
+\begin{aligned}
+\phi_0^{(1)}& = \phi_0^{(2)},\\
+\phi_1^{(1)}&= \phi_2^{(2)}\eqcolon \phi^{(1)},\\
+\phi_1^{(2)}&= \phi_2^{(1)}\eqcolon \phi^{(2)}
+\end{aligned}
+\]
+For this case the coexistence condition for the exchange chemical potential simplifies to
+\begin{equation}
+\ln\left(\frac{\phi^{(1)}}{\phi^{(2)}}\right) + \chi_{12} (\phi^{(2)}-\phi^{(1)}) = 0
+\label{eq:symmetric_implicit}
+\end{equation}\\
+
+\noindent
+\begin{minipage}{0.45\textwidth}
+Thus for given \(\phi^{(1)}\) we can find \(\phi^{(2)}\) by solving the implicit equation Eq.~\ref{eq:symmetric_implicit}.
+The results can be seen in Fig.~\ref{fig:verify_symmetric}. As one can see in the bottom pannel the difference between the exact and algorithmic
+results is nearly zero. We repeated this for many different \(\chi_{12} > 2\) values and the results are all in good agreement.
+It is therefore safe to conclude that the algorithm is able to accurately capture the binodal curve for this symmetric ternary system.\\
+Next we can look at the special case, where all interactions are equal \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\). In this case there have been some analytical results obtained in previous work \cite{Huang1995PhaseSeparation} which we can also use to verify our algorithm,
+at least qualitatively, since the results are only presented in figures. In the paper the authors look at several parameter regimes for the interaction strengths and find a rich variety for the range \(\chi \in [2, 3]\).
+\end{minipage}
+\hfill
+\begin{minipage}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/verify_symmetric.png}
+    \captionof{figure}{Binodal curve for the symmetric ternary system with \(\chi_{01}=\chi_{02}=1.5\) and \(\chi_{12}=2.5\). The dashed line shows the analytical solution from Eq.~\ref{eq:symmetric_implicit}, and the blue and orange points show the results from our algorithm.\\}
+    \label{fig:verify_symmetric}
+\end{minipage}\\
+For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\) the spinodal crosses the binodal.
+Therefore new binodal sections branch off and enclose the spinodal curve again. Additionally here the number of critical points increases from $3$ to $9$. In the regime \(2.575< \chi < 2.7\) there are three three-phase regions (Fig~\ref{fig:symmetric_chis}B). At \(\chi = 8/3\) the spinodal sections collide and $6$ of the $9$ critical points disappear (Fig.~\ref{fig:symmetric_chis}C). For \(\chi > 8/3\) there are only three critical points left (Fig~\ref{fig:symmetric_chis}D).
+At \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E). As one increases \(\chi\) further, the three-phase region grows in size (Fig~\ref{fig:symmetric_chis}F).
+\begin{minipage}{0.95\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/symmetric_chis.png}
+    \captionof{figure}{Phase diagram for different values of \(\chi\). The orange areas are the three-phase regions, the binodal is shown in blue, the spinodal is the thick dashed line, and the critical points are the gold stars and the tie-lines are the thin striped lines. The three-phase regions are shown as shaded areas. (A) \(\chi=2.4\), (B) \(\chi=2.65\), (C) \(\chi=8/3\), (D) \(\chi=2.7\), (E) \(\chi=2.746\), (F) \(\chi=3.0\). }
+    \label{fig:symmetric_chis}
+\end{minipage}\\
+
+\begin{itemize}
+\item symmetric ternary systems (\(\chi_{01} = \chi_{02} = \chi_{12}=\chi\)) offer a rich number of interesting features as one increases \(\chi\) such as
+branching bifurcations. Up to nine critical points. Binodal branches which loop back on themselves. Three three phase regions
+which join to a single three phase region, tie lines which rotate as one moves across phase space, etc.
+\item Verify with results from the literature
+\end{itemize}
+\subsubsection{Other interesting cases}
+\begin{itemize}
+    \item Binodal not crossing boundary, if flory parameter are negative enough (strong attraction)
+    \item Systems with binodals but without critical points
+\end{itemize}
 
 
 \bibliographystyle{plain}

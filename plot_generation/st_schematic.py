@@ -2,42 +2,7 @@ import os
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-plt.rcParams.update(
-    {
-        "figure.figsize": (10, 6),
-        "figure.dpi": 140,
-        "axes.grid": False,
-        "font.size": 22,
-        "axes.labelsize": 28,
-        "xtick.labelsize": 22,
-        "ytick.labelsize": 22,
-        "legend.fontsize": 20,
-        "axes.linewidth": 3.5,
-        "xtick.major.width": 3.5,
-        "ytick.major.width": 3.5,
-        "xtick.minor.width": 2.2,
-        "ytick.minor.width": 2.2,
-        "xtick.major.size": 12,
-        "ytick.major.size": 12,
-        "xtick.minor.size": 7,
-        "ytick.minor.size": 7,
-        "font.weight": "bold",
-        "axes.labelweight": "bold",
-        "legend.title_fontsize": 24,
-        "font.sans-serif": [
-            "Arial",
-            "Helvetica",
-            "DejaVu Sans",
-            "Liberation Sans",
-            "sans-serif",
-        ],
-        "font.family": "sans-serif",
-        "mathtext.fontset": "dejavusans",
-        "legend.frameon": False,
-        "savefig.bbox": "tight",
-    }
-)
+import plot_params
 
 # ------------------------------------------------------------
 # Parameters

@@ -1,44 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import plot_params
 from scipy.optimize import brentq
-
-plt.rcParams.update(
-    {
-        "figure.figsize": (15, 5.2),
-        "figure.dpi": 140,
-        "axes.grid": False,
-        "font.size": 22,
-        "axes.labelsize": 28,
-        "axes.titlesize": 24,
-        "xtick.labelsize": 22,
-        "ytick.labelsize": 22,
-        "legend.fontsize": 22,
-        "axes.linewidth": 3.5,
-        "xtick.major.width": 3.5,
-        "ytick.major.width": 3.5,
-        "xtick.minor.width": 2.2,
-        "ytick.minor.width": 2.2,
-        "xtick.major.size": 12,
-        "ytick.major.size": 12,
-        "xtick.minor.size": 7,
-        "ytick.minor.size": 7,
-        "font.weight": "bold",
-        "axes.labelweight": "bold",
-        "axes.titleweight": "bold",
-        "legend.title_fontsize": 24,
-        "font.sans-serif": [
-            "Arial",
-            "Helvetica",
-            "DejaVu Sans",
-            "Liberation Sans",
-            "sans-serif",
-        ],
-        "font.family": "sans-serif",
-        "mathtext.fontset": "dejavusans",
-        "legend.frameon": False,
-        "savefig.bbox": "tight",
-    }
-)
 
 chi_01 = 3
 chi_2 = 1.5
