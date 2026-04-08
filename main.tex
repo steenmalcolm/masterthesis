@@ -827,7 +827,7 @@ analytical approximation that captures the essential physics.
 We then compare the analytical results to the numerical solutions to assess the accuracy and limitations of our theoretical approach.
 Finally, we derive the critical scaling behavior of the surface tension near the critical point.
 
-\subsection{Determening the interfacial profiles and surface tension numerically}
+\subsection{Determening the interfacial profiles and surface tension numerically}\label{sec:interfacial_profiles_numerical}
 \subsubsection{Model setup and numerical scheme}
 After having rescaled the free energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T \nu^{-1/3}\) the model only depends on the Flory-Huggins interaction matrix \(\chi_{ij}\)
 and the lattice size \(a\). Since the lattice size only sets the interfactial length scale, we fix \(a=1\). 
@@ -837,9 +837,13 @@ With the convention used in Eq.~\eqref{eq:fh_free_energy_density}, the gradient 
 \end{equation}
 
 
+In the following, we restrict attention to interaction parameters:
+\begin{equation}
+    \chi_{12}\in[0.8,1.5],\quad \chi_{02}=1.5, \quad \chi_{01}\in[2.3, 3.0]
+    \label{eq:interaction_parameters}
+\end{equation}
 \noindent
 \begin{minipage}{0.45\textwidth}
-In the following, we restrict attention to interaction parameters \(\chi_{ij}\in[0,3]\) (where $\chi_{01}>\chi_{02},\chi_{12}$).
 This range reliably produces liquid-liquid phase separation,
 while avoiding (as far as possible) regions of three-phase coexistence.
 For a chosen $\chi$-matrix and mean volume fractions, we initialize the system using the corresponding
@@ -910,7 +914,8 @@ resulting surface tensions are shown in Fig.~\ref{fig:surface_tension_numerical}
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/st_simulation_results.png}
-    \captionof{figure}{Surface tension as a function of the chemical potential difference $\mu_{2,c}- \mu_2$ for $\chi_{01}=2.5$, $\chi_{02}=1.5$, $\chi_{12}=1.4$ (blue line) and various other interaction parameters (gray lines).
+    \captionof{figure}{Surface tension as a function of the chemical potential difference $\mu_{2,c}- \mu_2$
+    for various interaction parameters (colored lines) in the range specified by Eq.~\eqref{eq:interaction_parameters}.
     The surface tension exhibits a power-law scaling $\gamma \sim (\mu_{2,c}-\mu_2)^{3/2}$ close to criticality (dashed line).\\}
     \label{fig:surface_tension_numerical}
 \end{minipage}
@@ -1129,18 +1134,28 @@ tension with respect to order parameters to be evaluated analytically.
 % \end{figure}
 
 The quantitative comparison between the analytical approximation and the numerical
-results is shown in Fig.~\ref{fig:surface_tension}.
-\textcolor{red}{Figure of surface tension numerically and approximative for one set of parameter}
+results is shown in Fig.~\ref{fig:approximation_compare}.\\
+\begin{minipage}{\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/approximation_compare.png}
+    \captionof{figure}{(A) Exact (red) and approximate (blue) surface tension for $\chi_{01}=2.5$, $\chi_{02}=1.5$, $\chi_{12}=1.4$
+    as a function of the chemical potential.
+    (B) Relative error $\epsilon =(\gamma_{\mathrm{approx}}-\gamma_{\mathrm{exact}})/\gamma_{\mathrm{exact}}$ where the blue data points are for the same parameters as in (A) and the gray area outlines the range of possible errors for various other interaction parameters given by Eq.~\eqref{eq:interaction_parameters}.\\}
+
+    \label{fig:approximation_compare}
+\end{minipage}\\
 
 Somewhat surprisingly, the
 approximate expression not only reproduces the correct critical scaling but also
-provides good quantitative agreement with the numerically computed surface tension
+provides good qualitative agreement with the numerically computed surface tension
 over a wide range of parameters.
-Depending on the interaction matrix the surface tension will vary \(10\%\) to \(150\%\) from the exact value.
+For the parameter range considered in Eq.~\eqref{eq:interaction_parameters}, the surface tension will vary \(20\%\) to \(90\%\) from the exact value
+as can be seen in Fig.~\ref{fig:approximation_compare}.
+Additionally, one can see that the approximation becomes more accurate as the system approaches criticality.
 
 A systematic deviation is nevertheless apparent: the analytical approximation
 consistently overestimates the exact surface tension. This behavior can be
-understood naturally within the variational formulation of the interfacial problem.
+understood better within the variational formulation of the interfacial problem.
 Using the invariant quantity from Eq.~\eqref{eq:invariant_quantity}, the effective
 Lagrangian density of the system can be identified as
 
