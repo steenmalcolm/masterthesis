@@ -50,7 +50,7 @@ def load_symmetric(path="chapter_two_data/symmetric_extended.h5"):
 
 
 def main():
-    fn = "chapter_two_data/symmetric_extended.h5"
+    fn = "chapter_two_data/symmetric.h5"
 
     # Try loading from cache
     if not os.path.exists(fn):
@@ -67,7 +67,6 @@ def main():
                     "eta": float(grp.attrs["eta"]),
                     "phis": grp["phis"][:],
                     "mus": grp["mus"][:],
-                    "box_size": grp["box_size"][:],
                 }
             )
 
@@ -138,11 +137,16 @@ def main():
                 phi_pl_exact = (phis[i, 0, : N // 2] + phis[i, 1, : N // 2]) / 2
                 phi_mn_exact = -(phis[i, 1, : N // 2] - phis[i, 0, : N // 2]) / 2
                 dpl_exact = (phis[i, 0, : N // 2] + phis[i, 1, : N // 2]).min() / 2 - pb
-                box_size = r_sample["box_size"]
-                box = ComputationBox((N // 2,), (box_size[i] / 2,))
-                model = GradientExplicit(box, chis, lmd=LMD, dt=0.01)
                 phis_torch_i = torch.tensor(phis[i, :, : N // 2])
-                st = model.surface_tension(phis_torch_i).item()
+
+                st = (
+                    LMD**2
+                    * (
+                        np.gradient(phi_mn_exact, dx) ** 2 / phi_c
+                        + np.gradient(phi_pl_exact, dx) ** 2 / phi_s
+                    ).sum()
+                    * dx
+                )
                 phi1_approx, phi2_approx = (
                     phi_pl_approx + phi_mn_approx,
                     phi_pl_approx - phi_mn_approx,
@@ -150,7 +154,28 @@ def main():
                 phis_torch_i_approx = torch.tensor(
                     np.stack([phi1_approx, phi2_approx], axis=0)
                 )
-                st_approx = model.surface_tension(phis_torch_i_approx).item()
+                st_approx = (
+                    LMD**2
+                    * (
+                        np.gradient(phi_mn_approx, dx) ** 2 / phi_c
+                        + np.gradient(phi_pl_approx, dx) ** 2 / phi_s
+                    ).sum()
+                    * dx
+                )
+                phi1, phi2 = (
+                    phi_pl_approx + phi_mn_approx,
+                    phi_pl_approx - phi_mn_approx,
+                )
+                f = (
+                    phi1 * np.log(phi1)
+                    + phi2 * np.log(phi2)
+                    + phi0 * np.log(phi0)
+                    - (phi_pl_approx) ** 2 / phi_s
+                    - phi_mn_approx**2 / phi_c
+                )
+                mu, pi = get_mu_and_pi(dp, pb, phi_c, phi_s)
+                lhs = f - mu * 2 * phi_pl_approx + pi
+
                 # "Bad" approximation: square-root formula from approximation_compare.py
                 # first_term = del_phi @ kappas_r @ del_phi (analytically simplified)
                 # second_term = f_if - f_bulk (mu term vanishes by species swap symmetry)
@@ -162,10 +187,10 @@ def main():
                     + dp**2 / phi_c
                 )
                 st_approx_bad = np.sqrt(first_term * second_term)
-                error = abs(st_approx - st) / abs(st)
-                error_bad = abs(st_approx_bad - st) / abs(st)
-                plt.scatter(-mus[i], error, color="blue")
-                plt.scatter(-mus[i], error_bad, color="red")
+                error = (st_approx - st) / st
+                error_bad = (st_approx_bad - st) / st
+                plt.scatter(abs(mu - mu_c), error, color="blue")
+                plt.scatter(abs(mu - mu_c), error_bad, color="red")
                 if error > worst_error:
                     worst_error = error
                     worst_instance = np.array(

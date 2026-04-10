@@ -68,15 +68,22 @@ def compute_all_results():
                         "box_size": grp["box_size"][:],
                     }
                 )
-        return results
 
-    results = []
+    else:
+        results = []
     N = 512
     num_points = 32
     try:
         for chi in tqdm([2.1, 2.2, 2.3, 2.4, 2.5], desc="chi"):
             etas = np.linspace(0, 1.0, 11)
             for eta in tqdm(etas, desc=f"  eta (chi={chi:.1f})", leave=False):
+                # Check if eta and chi is already in results and skip if so
+                if any(
+                    np.isclose(r["chi"], chi) and np.isclose(r["eta"], eta)
+                    for r in results
+                ):
+                    print(f"  Skipping chi={chi:.1f}, eta={eta:.2f} (already computed)")
+                    continue
                 uid = np.random.randint(1e9)
                 chi_d, chi_o = -2 * eta * chi, chi * (1 - 2 * eta)
                 chis = np.array(
@@ -138,7 +145,7 @@ def compute_all_results():
                     w = dp / dpg
                     w *= LMD
 
-                    x = np.linspace(-6 * w, 6 * w, N // 2)
+                    x = np.linspace(-10 * w, 10 * w, N // 2)
                     dx = x[1] - x[0]
                     phi_mn_approx = -dp * np.tanh(x / w)
                     # phi_pl_approx = pb + dpl * (1 - np.tanh(x * dx / w * 0.7698) ** 2)
@@ -150,7 +157,7 @@ def compute_all_results():
                     phi0 = 1 - phi1 - phi2
                     phi1 = np.r_[phi1, phi1[::-1]]
                     phi0 = np.r_[phi0, phi0[::-1]]
-                    x = np.linspace(-12 * w, 12 * w, N)
+                    x = np.linspace(-20 * w, 20 * w, N)
                     box_size[i] = x[-1] - x[0]
                     box = ComputationBox((len(x),), (x[-1] - x[0],))
 

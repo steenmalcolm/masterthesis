@@ -10,7 +10,7 @@ np.random.seed(42)
 chi_ops = np.linspace(-4.5, -1, 4)
 chi = -5
 delta_ops = np.array([-0.5, 0, 0.5, 1.1, 10.0, 60.0])
-delta_labels = ["-1.0,-0.5", "0.0", "0.5", "3.0", "9.0"]
+delta_labels = ["-0.5,0.0", "0.5", "1.0", "10", "60"]
 subplot_labels = ["A", "B", "C", "D", "E", "F"]
 fig, axes = plt.subplots(
     2,
@@ -103,14 +103,11 @@ for j, delta in enumerate(delta_ops):
     ax.taxis.set_ticks([0, 1])
     ax.laxis.set_ticks([0, 1])
     ax.raxis.set_ticks([0, 1])
-    ax.taxis.set_ticks([])
-    ax.laxis.set_ticks([])
-    ax.raxis.set_ticks([])
 
     ax.set_tlabel(r"$\phi_0$", fontsize=18)
     ax.set_llabel(r"$\phi_1$", fontsize=18)
     ax.set_rlabel(r"$\phi_2$", fontsize=18)
 
-fig.tight_layout
+fig.tight_layout()
 fig.savefig("figures/interesting_case.png", dpi=300)
 # plt.show()

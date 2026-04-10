@@ -2075,24 +2075,23 @@ To further investigate these types of systems it makes sense to look at interact
 \chi-\delta& \chi+\delta\\
 \end{pmatrix}
 \]
-\textcolor{red}{Are the classifications convex/concave in the correct order}
 
 \textcolor{red}{Notice how the tie-line at the center is the same in Fig~\ref{fig:interesting_case}. 
 I think explaining the behavior below for different $\delta$ is more intuitive if we start from this 
 tie line and then move left/right. Also maybe I can calculate the length of that tie-line analytically and show it does not depend on $\delta$.}
 
-Where we set $\chi<0$ constant and vary $\delta$. Systems with a convex binodal (Fig.~\ref{fig:interesting_case}A) appear for $\delta<0$.
-This makes sense if one consideres that for $\delta<0$ the cross-species interaction is more repelling than the same-species interaction. Thus as the solvent is added (i.e. we move towards the center of the phase diagram) the repelling force is damped and phase separation is weaker.
+Where we set $\chi<0$ constant and vary $\delta$. Systems with a concave binodal (Fig.~\ref{fig:interesting_case}A) appear for $\delta<0$.
+This makes sense if one consideres that for $\delta<0$ the cross-species interaction is more repelling than the same-species interaction. Thus if we start at the dilute limit and the solvent is added (i.e. we move towards the center of the phase diagram) the repelling force is damped and phase separation is weaker.
 If $\delta=0$ cross-species interactions are the same as as same-species and thus the binodal/spinodal are straight.
-Lastly if $\delta > 0$ the system prefers cross-species interactions and thus as the solvent increases cross-species interactions decrease and phase-separation increases.
+Lastly if $\delta > 0$ the system favors cross-species interactions and thus as the solvent increases cross-species interactions decrease and phase-separation increases.
 If one increase $\delta>-\chi-4$, phase separation no longer occurs at the boundary and we find the next interesting class of phase diagrams.
 In this class the binodal/spinodal is fully contained inside of the admissible domain and does not intersect with the boundaries. 
 Instead of no critical points there are now two critical points on opposite ends of phase space. 
-For $\delta\ll\chi$ the phasediagram will barely change its shape. This is because the enthropic part become negligable in the free energy compared to the enthalpic part, which is dominated by $\delta$.
-In this limit the coexistence compositions are given by 
+For $\delta\gg\chi$ the phasediagram will barely change its shape. This is because the enthropic part become negligable in the free energy compared to the enthalpic part, which is dominated by $\delta$.
+In this limit the free energy is approximately given by
 \[
 \begin{aligned}
-    F  &= \sum_{ij}\phi_i A_{ij} \phi_j,\quad i,j \in \{1,2\}\\
+    F  &= \delta\sum_{ij}\phi_i A_{ij} \phi_j,\quad i,j \in \{1,2\}\\
 \boldsymbol A &=
 \begin{pmatrix}
 1& -1\\
@@ -2100,17 +2099,22 @@ In this limit the coexistence compositions are given by
 \end{pmatrix}
 \end{aligned}
 \]
-Interestingly the angles will remain the same throughout different values of $\delta$ (why?).
-
+And thus the by changing $\delta$ we only change the overall scale of the free energy, which does not affect the coexistence conditions.
 
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.98\textwidth]{figures/interesting_case.png}
-    \captionof{figure}{Phase diagram for varying $\delta$ }
+    \captionof{figure}{Phase diagram for varying $\chi = -5$ and varying $\delta$. (A) $\delta=-0.5$, (B) $\delta=0.0$, (C) $\delta=0.5$, (D) $\delta=1.1$, (E) $\delta=10.0$ and (F) $\delta=60.0$.\\}
     \label{fig:interesting_case}
 \end{minipage}\\
-\textcolor{red}{End of this section not complete yet.}
 
+One may also notice that the vertical tie-line at the center of the phase diagram is the same for all values of $\delta$. 
+The tie-line is given by the relation \(\phi_1 = \phi_2 = \phi\). Thus the free energy simplifies to
+\[
+ 2\phi \ln(\phi) + (1-2\phi) \ln(1-2\phi) + 2\chi \phi^2.
+\]
+and thus the coexistence conditions for this tie-line are independent of $\delta$ and only depend on $\chi$.
+In fact we can compute the coexistence compositions for \(\chi=-5\) and find \(\phi_{1/2}^{(1)} \approx 0.072\) and \(\phi_{1/2}^{(2)} \approx 0.428\).
 
 
 \clearpage
