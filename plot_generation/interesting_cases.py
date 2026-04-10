@@ -103,6 +103,9 @@ for j, delta in enumerate(delta_ops):
     ax.taxis.set_ticks([0, 1])
     ax.laxis.set_ticks([0, 1])
     ax.raxis.set_ticks([0, 1])
+    ax.taxis.set_ticks([])
+    ax.laxis.set_ticks([])
+    ax.raxis.set_ticks([])
 
     ax.set_tlabel(r"$\phi_0$", fontsize=18)
     ax.set_llabel(r"$\phi_1$", fontsize=18)

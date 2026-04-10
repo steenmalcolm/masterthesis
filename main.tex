@@ -93,7 +93,7 @@ where
 \]
 is the Hessian matrix of the free energy density. Local stability requires \(\delta F > 0\) for every nonzero fluctuation, which is equivalent to the Hessian being positive definite.
 If one eigenvalue of the Hessian becomes negative, then there exists a fluctuation that lowers the free energy and the homogeneous state is locally unstable towards phase separation.
-The spinodal is therefore determined by the point where one or both eigenvalues vanish. For a system with two independent variables this condition is equivalent to
+The set of points where one or both eigenvalues vanish defines the spinodal. For a system with two independent variables the spinodal is given by the condition
 \[
     \det H = 0.
 \]
@@ -115,13 +115,13 @@ and
 \[
      V_1 + V_2 = V,
 \]
-where \(\bar\phi_i\) is the mean volume fraction of species \(i\). Therefore the six variables reduce to three independent variables.
+where \(\bar\phi_i\) is the mean volume fraction of species \(i\). Therefore the six variables reduce to three independent variables, which can be chosen as \(\phi_1^{(1)}, \phi_2^{(1)}, V_1\).
 Minimizing the free energy in Eq.~\ref{eq:free_energy_two_phase} with respect to these three variables yields the coexistence conditions
 \[
     \begin{aligned}
-        \frac{\partial f(\phi_1^{(1)},\phi_2^{(1)})}{\partial \phi_1} &= \frac{\partial f(\phi_1^{(2)},\phi_2^{(2)})}{\partial \phi_1} \\
-        \frac{\partial f(\phi_1^{(1)},\phi_2^{(1)})}{\partial \phi_2} &= \frac{\partial f(\phi_1^{(2)},\phi_2^{(2)})}{\partial \phi_2} \\
-        \sum_{i=1}^2 \phi_i^{(1)} \frac{\partial f(\phi_1^{(1)},\phi_2^{(1)})}{\partial \phi_i} - f(\phi_1^{(1)},\phi_2^{(1)}) &= \sum_{i=1}^2 \phi_i^{(2)} \frac{\partial f(\phi_1^{(2)},\phi_2^{(2)})}{\partial \phi_i} - f(\phi_1^{(2)},\phi_2^{(2)})
+        \frac{\partial f}{\partial \phi_1}(\phi_1^{(1)},\phi_2^{(1)}) &= \frac{\partial f}{\partial \phi_1}(\phi_1^{(2)},\phi_2^{(2)}) \\
+        \frac{\partial f}{\partial \phi_2}(\phi_1^{(1)},\phi_2^{(1)}) &= \frac{\partial f}{\partial \phi_2}(\phi_1^{(2)},\phi_2^{(2)}) \\
+        \sum_{i=1}^2 \phi_i^{(1)} \frac{\partial f}{\partial \phi_i}(\phi_1^{(1)},\phi_2^{(1)}) - f(\phi_1^{(1)},\phi_2^{(1)}) &= \sum_{i=1}^2 \phi_i^{(2)} \frac{\partial f}{\partial \phi_i}(\phi_1^{(2)},\phi_2^{(2)}) - f(\phi_1^{(2)},\phi_2^{(2)})
     \end{aligned}
 \]
 Identifying the exchange chemical potentials \(\mu_i = \frac{\partial f}{\partial \phi_i}\) and the osmotic pressure
@@ -146,7 +146,7 @@ The pairs of compositions that satisfy these conditions define the coexistence p
     \label{fig:common_tangent}
 \end{minipage}\\
 
-Geometrically, these conditions correspond to a Maxwell construction for the free energy surface \(f(\phi_1, \phi_2)\). The slopes of the coexistance points are the same corresponding to equal chemical potentials (see Fig.~\ref{fig:common_tangent}A). The equal area condition in the Maxwell construction reflects the equal pressure requirement at coexistence (see Fig.~\ref{fig:common_tangent}B).\\
+Geometrically, these conditions correspond to a Maxwell construction for the free energy surface \(f(\phi_1, \phi_2)\). The slopes of the coexistence points are the same corresponding to equal chemical potentials (see Fig.~\ref{fig:common_tangent}A). The equal area condition in the Maxwell construction reflects the equal pressure requirement at coexistence (see Fig.~\ref{fig:common_tangent}B).\\
 
 
 In general the spinodal lies inside the binodal, since local instability implies global instability.\\
@@ -161,7 +161,7 @@ In general the spinodal lies inside the binodal, since local instability implies
     \centering
     \includegraphics[width=0.98\textwidth]{figures/metastable.png}
     \captionof{figure}{Phase diagram of ternary system showing the binodal (solid black line), spinodal (dashed black line),
-    and the regions of stability, metastability and instability as well as the critical point (gold star).  }
+    and the regions of stability, metastability and instability of the homogenous state as well as the critical point (gold star).  }
     \label{fig:metastable}
 \end{minipage}\\
 
@@ -206,7 +206,7 @@ The emergence of two minima from a single minimum is illustrated in Fig.~\ref{fi
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.98\textwidth]{figures/critical_point_schematic.png}
-    \captionof{figure}{Three cross-sectiosn of the free energy landscape of the ternary system in Fig.~\ref{fig:metastable}.
+    \captionof{figure}{Three cross-sections of the free energy landscape of the ternary system in Fig.~\ref{fig:metastable}.
     For $\phi_2 > \phi_{2,c}$ (A) the free energy has a single minimum corresponding to a homogeneous phase.
     For $\phi_2 < \phi_{2,c}$ (C) the free energy has two minima corresponding to two coexisting phases.
     At the critical point $\phi_2 = \phi_{2,c}$ (B) the two minima merge into a single minimum, marking the onset of phase separation.}
@@ -227,7 +227,7 @@ These scaling relations will be of interest later on.
 In the previous sections we have discussed properties of the free energy and how these properties can drive phase separation. In this section we will focus on the exact form of the free energy.
 \subsubsection{Lattice model}
 We start by considering a one dimensional lattice model with \(N\) lattice sites and three possible states at each lattice site \(0, 1, 2\) where the total number of each state is conserved.
-The lattice sites all have equal volume \(\nu\) regardless of their state.
+The lattice sites all have equal lattice spacing \(a\) regardless of their state.
 In the null-void case which we are investigating, vacant lattice sites are not allowed and thus the number of independent variables reduces from three to two
 \[
 \sigma_0 + \sigma_1 + \sigma_2 = 1.
@@ -256,10 +256,7 @@ We now rewrite the same-species and cross-species nearest-neighbor interactions 
 \end{aligned}
 \]
 
-We then introduce a mean-field approximation by replacing the occupation variables \(\sigma_i^n\) by their local averages \(\langle \sigma_i^n \rangle\). In a second step, we assume that these local averages vary smoothly on the scale of the lattice spacing. Denoting the lattice spacing by
-\[
-a = \nu^{1/3},
-\]
+We then introduce a mean-field approximation by replacing the occupation variables \(\sigma_i^n\) by their local averages \(\langle \sigma_i^n \rangle\). In a second step, we assume that these local averages vary smoothly on the scale of the lattice spacing \(a\).
 we define continuum fields \(\phi_i(x)\) through
 \[
 \langle \sigma_i^n \rangle \rightarrow \phi_i(x),
@@ -365,7 +362,7 @@ In this derivation, the reduced Flory-Huggins interaction parameters and the red
 In the literature one often encounters species-dependent molecular sizes \(\nu_i\) \cite{Luo2025ChargeAsymmetry,Kirschbaum2021Controlling,zwicker2025physicsdropletregulationbiological}. Differences in molecular size modify the combinatorics and hence the entropic contribution to the free energy. We do not consider this generalization here, since all components are assumed to occupy the same lattice volume.
 \subsubsection{Interface stability}
 
-The free energy functional in Eq.~\ref{eq:fh_free_energy} contains gradient terms, which penalize sharp spatial variations and thereby stabilize smooth interfaces between coexisting phases. For this penalty to be non-negative, the gradient matrix of the reduced system
+The free energy functional in Eq.~\ref{eq:fh_free_energy} contains gradient terms, that penalize sharp spatial variations and thereby stabilize smooth interfaces between coexisting phases. For this penalty to be non-negative, the gradient matrix of the reduced system
 \[
 \tilde{\kappa}=
 \begin{pmatrix}
@@ -382,44 +379,58 @@ Using the relation
 \[
 \tilde{\kappa}_{ij}=-a^2\tilde{\chi}_{ij},
 \]
-with \(a=\nu^{1/3}\), these conditions imply
+these conditions imply
 \[
 \tilde{\chi}_{11}<0,\qquad \tilde{\chi}_{22}<0,\qquad \det\tilde{\chi}>0.
 \]
 Thus, the requirement of interface stability imposes constraints on the allowed values of the interaction parameters in the full system.
+The interaction matrix of the full system is given by
+\[
+\chi=
+\begin{pmatrix}0 & \chi_{01} & \chi_{02} \\
+\chi_{01} & 0 & \chi_{12} \\
+\chi_{02} & \chi_{12} &0 
+\end{pmatrix}.
+\]
 
-The reduced interaction matrix is
+The reduced interaction matrix can be written in terms of the full interaction matrix as
 \begin{equation}
 \tilde{\chi}=
 \begin{pmatrix}
--2\chi_{10} & \chi_{12}-\chi_{10}-\chi_{20} \\
-\chi_{12}-\chi_{10}-\chi_{20} & -2\chi_{20}
+-2\chi_{01} & \chi_{12}-\chi_{01}-\chi_{02} \\
+\chi_{12}-\chi_{01}-\chi_{02} & -2\chi_{02}
 \end{pmatrix}.
 \label{eq:reduced_chi}
 \end{equation}
+
 The conditions \(\tilde{\chi}_{11}<0\) and \(\tilde{\chi}_{22}<0\) immediately imply
+
 \[
-\chi_{10}>0,\qquad \chi_{20}>0.
+\chi_{01}>0,\qquad \chi_{02}>0.
 \]
+
 Moreover, the determinant condition
+
 \[
 \det\tilde{\chi}
 =
-4\chi_{10}\chi_{20}
+4\chi_{01}\chi_{02}
 -
-(\chi_{12}-\chi_{10}-\chi_{20})^2
+(\chi_{12}-\chi_{01}-\chi_{02})^2
 >0
 \]
+
 requires
+
 \[
 \chi_{12}\in
 \left(
-(\sqrt{\chi_{10}}-\sqrt{\chi_{20}})^2,\,
-(\sqrt{\chi_{10}}+\sqrt{\chi_{20}})^2
+(\sqrt{\chi_{01}}-\sqrt{\chi_{02}})^2,\,
+(\sqrt{\chi_{01}}+\sqrt{\chi_{02}})^2
 \right).
 \]
 
-Hence, within this reduced parametrization, interface stability restricts the possible interaction parameters to positive values. At first sight this may seem counterintuitive, since negative interaction parameters are often associated with effective attraction. However, what matters here is the relative magnitude of the interactions. For instance, if \(\chi_{10}\) and \(\chi_{20}\) are both large compared to \(\chi_{12}\), components \(1\) and \(2\) may still colocalize because both strongly repel component \(0\).
+Hence, within this reduced parametrization, interface stability restricts the possible interaction parameters to positive values. At first sight this may seem counterintuitive, since negative interaction parameters are often associated with effective attraction. However, what matters here is the relative magnitude of the interactions. For instance, if \(\chi_{01}\) and \(\chi_{02}\) are both large compared to \(\chi_{12}\), components \(1\) and \(2\) may still colocalize because both strongly repel component \(0\).
 
 As discussed in \cite{zwicker2025physicsdropletregulationbiological}, binary mixtures phase separate only when the interaction parameter exceeds the critical value \(\chi = 2\). This shows that positive values of \(\chi_{ij}\) do not by themselves imply phase separation and can still be compatible with homogeneous mixtures.
 
@@ -523,21 +534,21 @@ where, in general, the mobility matrix may depend on the local volume fractions.
 
 For completeness, we note that the full thermodynamically consistent dynamics of an incompressible multicomponent mixture can be written as \cite{zwicker2025physicsdropletregulationbiological}
 \[
-\partial_t \phi_i + \nabla \cdot (\phi_i \mathbf{v})
+\partial_t \phi_i + \nabla \cdot (\phi_i \boldsymbol{v})
 =
 \nabla \cdot \left(
-\Omega_i \sum_{j=1}^{N_c}\Lambda_{ij}\nabla \mu_j
+\sum_{j=1}^{N_c}\Lambda_{ij}\nabla \mu_j
 \right)
 + s_i
-+ \Omega_i \nabla \cdot \boldsymbol{\xi}_i,
++ \nabla \cdot \boldsymbol{\xi}_i,
 \]
 supplemented by the incompressible Navier-Stokes equation
 \[
-\partial_t \mathbf{v} + \rho\,\mathbf{v}\cdot\nabla \mathbf{v}
+\partial_t \boldsymbol{v} + \rho\,\boldsymbol{v}\cdot\nabla \boldsymbol{v}
 =
 \nabla\cdot \boldsymbol{\sigma},
 \qquad
-\nabla\cdot \mathbf{v}=0,
+\nabla\cdot \boldsymbol{v}=0,
 \]
 where \(s_i\) accounts for chemical reactions, \(\boldsymbol{\xi}_i\) denotes thermal noise obeying the fluctuation-dissipation relation and \(\boldsymbol{\sigma}\) is the stress tensor, which incorporates viscous dissipation, equilibrium stresses due to phase separation, elastic effects and possible active stresses \cite{annurev:/content/journals/10.1146/annurev.fluid.30.1.139,Michieletto2022Rheology,RevModPhys.85.1143,Ramaswamy_2010}.
 
@@ -680,7 +691,8 @@ This yields the constrained Euler-Lagrange equations
 \qquad i\in\{1,2\},
 \]
 
-\footnote{The constraints of mass conservation would typically require a Lagrange multiplier on the right-hand side. However, later on we will enforce mass conservation differently.}For a one-dimensional system, the Euler-Lagrange equations take the form
+The constraints of mass conservation would typically require a Lagrange multiplier on the right-hand side. However, later on we will enforce mass conservation differently.
+For a one-dimensional system, the Euler-Lagrange equations take the form
 \[
 \frac{\partial f}{\partial \phi_i}
 -
@@ -770,9 +782,9 @@ Compared with finite-difference or finite-element approaches, spectral methods t
 
 The central idea of the pseudo-spectral method is to use the Fourier transform to convert spatial derivatives into algebraic multiplications in Fourier space. For each component \(i\in\{1,2\}\), the second derivative is computed as
 \[
-\partial_{xx}\phi_i
+\phi_i''(x)
 =
-\mathcal{F}^{-1}\!\left[-k^2\,\mathcal{F}[\phi_i]\right],
+\mathcal{F}^{-1}\!\left[-k^2\,\mathcal{F}[\phi_i(x)]\right],
 \]
 where \(\mathcal{F}\) denotes the Fourier transform and \(k\) is the wavevector. This allows the second-derivative terms in the operators \(G_i\) to be evaluated efficiently in Fourier space, while the logarithmic and other nonlinear terms are computed pointwise in real space.
 
@@ -784,7 +796,7 @@ The resulting domain contains two interfaces and is periodic by construction, wh
 
 For diffusion-dominated PDEs, explicit time-stepping schemes can be inefficient because stability imposes a severe restriction on the time step size. For example, the diffusion equation
 \[
-\dot{\phi} = D\,\phi_{xx}
+\frac{d\phi(x,t)}{ dt} = D\,\frac{d^2\phi(x,t)}{dx^2}
 \]
 requires
 \[
@@ -801,7 +813,7 @@ we apply the modified operator
 \left(\frac{1}{h}-\lambda \partial_{xx}\right)
 \left(\boldsymbol{\phi}^{n+1}-\boldsymbol{\phi}^{n}\right),
 \]
-where \(\lambda>0\) is a stabilization parameter. In this construction, the linear second-derivative term is treated implicitly, while the nonlinear part of the update remains explicit.
+where \(\lambda>0\) is a stabilization parameter. 
 
 Inserting this into the fixed-point iteration scheme from Eq.~\ref{eq:fixed_point_iteration} and rearranging yields
 \begin{equation}
@@ -818,11 +830,11 @@ G_i(\phi_1^n,\phi_2^n)
 \qquad i\in\{1,2\}.
 \end{equation}
 
-In Fourier space, the second derivative acts as \(\partial_{xx} \to -k^2\), so the prefactor becomes
+In Fourier space, the second derivative transforms as \(\partial_{xx} \to -k^2\), so the prefactor becomes
 \[
 \frac{1}{1+h\lambda k^2}.
 \]
-Thus, modes with large wavevector \(k\) are strongly damped. This suppresses the short-wavelength instabilities that limit explicit schemes and typically allows much larger time steps.
+Thus, modes with large wavevector \(k\) are strongly damped. This suppresses the short wavelength instabilities that limit explicit schemes and typically allows for much larger time steps.
 
 For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the identity and the semi-implicit scheme reduces to the explicit update.
 
@@ -840,7 +852,7 @@ Finally, we highlight the importance of preferential interfacial adsorption by e
 
 \subsection{Determining the interfacial profiles and surface tension numerically}\label{sec:interfacial_profiles_numerical}
 \subsubsection{Model setup and numerical scheme}
-After rescaling the free-energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T \nu^{-1/3}\), the model depends only on the Flory-Huggins interaction matrix \(\chi_{ij}\)
+After rescaling the free-energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T a^{-1}\), the model depends only on the Flory-Huggins interaction matrix \(\chi_{ij}\)
 and the lattice size \(a\). Since the lattice size merely sets the interfacial length scale, we fix \(a=1\).
 With the convention used in Eq.~\eqref{eq:fh_free_energy_density}, the gradient coefficient matrix is then
 \begin{equation}
@@ -2054,7 +2066,7 @@ at least qualitatively, since the results are only presented in figures. In the 
 \end{minipage}\\
 For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\) the spinodal crosses the binodal.
 Therefore new binodal sections branch off and enclose the spinodal curve again. Additionally here the number of critical points increases from $3$ to $9$. In the regime \(2.575< \chi < 2.7\) there are three three-phase regions (Fig~\ref{fig:symmetric_chis}B). At \(\chi = 8/3\) the spinodal sections collide and $6$ of the $9$ critical points disappear (Fig.~\ref{fig:symmetric_chis}C). For \(\chi > 8/3\) there are only three critical points left (Fig~\ref{fig:symmetric_chis}D).
-At \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E). As one increases \(\chi\) further, the three-phase region grows in size (Fig~\ref{fig:symmetric_chis}F).
+At \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E). As one increases \(\chi\) further, the three-phase region grows in size (Fig~\ref{fig:symmetric_chis}F).\\
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/symmetric_chis.png}
@@ -2076,9 +2088,6 @@ To further investigate these types of systems it makes sense to look at interact
 \end{pmatrix}
 \]
 
-\textcolor{red}{Notice how the tie-line at the center is the same in Fig~\ref{fig:interesting_case}. 
-I think explaining the behavior below for different $\delta$ is more intuitive if we start from this 
-tie line and then move left/right. Also maybe I can calculate the length of that tie-line analytically and show it does not depend on $\delta$.}
 
 Where we set $\chi<0$ constant and vary $\delta$. Systems with a concave binodal (Fig.~\ref{fig:interesting_case}A) appear for $\delta<0$.
 This makes sense if one consideres that for $\delta<0$ the cross-species interaction is more repelling than the same-species interaction. Thus if we start at the dilute limit and the solvent is added (i.e. we move towards the center of the phase diagram) the repelling force is damped and phase separation is weaker.
@@ -2103,7 +2112,7 @@ And thus the by changing $\delta$ we only change the overall scale of the free e
 
 \begin{minipage}{0.95\textwidth}
     \centering
-    \includegraphics[width=0.98\textwidth]{figures/interesting_case.png}
+    \includegraphics[width=\textwidth]{figures/interesting_case.png}
     \captionof{figure}{Phase diagram for varying $\chi = -5$ and varying $\delta$. (A) $\delta=-0.5$, (B) $\delta=0.0$, (C) $\delta=0.5$, (D) $\delta=1.1$, (E) $\delta=10.0$ and (F) $\delta=60.0$.\\}
     \label{fig:interesting_case}
 \end{minipage}\\
