@@ -63,7 +63,7 @@ for ax, phi2, phi2_l, label in zip(axes, phi2_values, phi2_labels, panel_labels)
     # Shift each curve vertically so the minimum is near zero
     f_shifted = f - np.min(f) + 0.01
 
-    ax.plot(phi1, f_shifted, color="#1565c0", linewidth=3.0)
+    ax.plot(phi1, f_shifted, color="#1565c0", linewidth=5.0)
 
     # Panel label
     ax.text(
@@ -82,7 +82,7 @@ for ax, phi2, phi2_l, label in zip(axes, phi2_values, phi2_labels, panel_labels)
         0.9,
         phi2_l,
         transform=ax.transAxes,
-        fontsize=22,
+        fontsize=28,
         fontweight="bold",
         va="top",
         ha="center",
@@ -99,7 +99,7 @@ for ax, phi2, phi2_l, label in zip(axes, phi2_values, phi2_labels, panel_labels)
             f_spinodal,
             color="orange",
             edgecolor="black",
-            s=80,
+            s=250,
             zorder=4,
         )
 
@@ -120,7 +120,7 @@ for ax, phi2, phi2_l, label in zip(axes, phi2_values, phi2_labels, panel_labels)
             f_spinodal,
             color="orange",
             edgecolor="black",
-            s=80,
+            s=250,
             zorder=4,
         )
 
@@ -137,16 +137,16 @@ for ax, phi2, phi2_l, label in zip(axes, phi2_values, phi2_labels, panel_labels)
         min_idx = np.argmin(f[: len(f) // 2])
         print(min_idx)
         ax.text(
-            phi1[min_idx] + 0.002,
+            phi1[min_idx] - 0.022,
             f_shifted[min_idx] + 0.01,
             r"$\phi_1^{(1)}$",
-            fontsize=18,
+            fontsize=28,
         )
         ax.scatter(
             phi1[min_idx],
             f_shifted[min_idx],
             color="black",
-            s=70,
+            s=250,
             zorder=3,
         )
         min_idx = np.argmin(f[len(f) // 2 :]) + len(f) // 2
@@ -155,14 +155,14 @@ for ax, phi2, phi2_l, label in zip(axes, phi2_values, phi2_labels, panel_labels)
             phi1[min_idx],
             f_shifted[min_idx],
             color="black",
-            s=70,
+            s=250,
             zorder=3,
         )
         ax.text(
-            phi1[min_idx] + 0.002,
+            phi1[min_idx] - 0.049,
             f_shifted[min_idx] + 0.01,
             r"$\phi_1^{(2)}$",
-            fontsize=18,
+            fontsize=28,
         )
 
     ax.set_xlabel(r"$\phi_1$")

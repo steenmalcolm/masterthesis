@@ -33,8 +33,8 @@ mask = phi1s > 0
 phi0s = phi0s[mask]
 phi1s = phi1s[mask]
 phi2s = 1 - phi0s - phi1s
-ax.plot(phi2s, phi1s, color="black", linewidth=1.2, label="binodal() curve")
-ax.plot(phi2s, phi0s, color="black", linewidth=1.2, label="spinodal curve")
+ax.plot(phi2s, phi1s, color="black", linewidth=4.0, label="binodal() curve")
+ax.plot(phi2s, phi0s, color="black", linewidth=4.0, label="spinodal curve")
 ax.scatter(
     1 - 2 / chi_01,
     1 / chi_01,
@@ -52,7 +52,7 @@ ax.plot(
     phi1_spinodal,
     color="black",
     linestyle="--",
-    linewidth=1.2,
+    linewidth=4.0,
     label="spinodal points",
 )
 ax.plot(
@@ -60,7 +60,7 @@ ax.plot(
     phi0_spinodal,
     color="black",
     linestyle="--",
-    linewidth=1.2,
+    linewidth=4.0,
     label="spinodal points",
 )
 
@@ -97,11 +97,11 @@ ax.fill_between(
 
 # Add region labels
 ax.text(
-    0.5,
+    0.3,
     0.38,
     "unstable",
     transform=ax.transAxes,
-    fontsize=22,
+    fontsize=30,
     color="#000000",
     ha="center",
     va="center",
@@ -109,11 +109,11 @@ ax.text(
     fontweight="bold",
 )
 ax.text(
-    0.5,
-    0.62,
+    0.3,
+    0.65,
     "metastable",
     transform=ax.transAxes,
-    fontsize=14,
+    fontsize=30,
     color="#000000",
     ha="center",
     va="center",
@@ -121,11 +121,11 @@ ax.text(
     fontweight="bold",
 )
 ax.text(
-    0.5,
-    0.17,
+    0.3,
+    0.155,
     "metastable",
     transform=ax.transAxes,
-    fontsize=14,
+    fontsize=30,
     color="#000000",
     ha="center",
     va="center",
@@ -133,11 +133,11 @@ ax.text(
     fontweight="bold",
 )
 ax.text(
-    0.5,
-    0.85,
+    0.3,
+    0.88,
     "stable",
     transform=ax.transAxes,
-    fontsize=22,
+    fontsize=30,
     color="#000000",
     ha="center",
     va="center",

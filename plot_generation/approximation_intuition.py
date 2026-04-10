@@ -12,8 +12,11 @@ x0 = -0.1  # nonzero interface location
 w = 1.5
 
 phi1_left, phi1_right = 0.55, 0.30
+phi1_mean = 0.5 * (phi1_left + phi1_right)
 phi2_left, phi2_right = 0.30, 0.60
+phi2_mean = 0.5 * (phi2_left + phi2_right)
 phi0_left, phi0_right = 1 - phi1_left - phi2_left, 1 - phi1_right - phi2_right
+phi0_mean = 0.5 * (phi0_left + phi0_right)
 
 x = np.linspace(-L / 2, L / 2, 1200)
 
@@ -37,19 +40,52 @@ fig, axes = plt.subplots(2, 1, figsize=(5, 12), constrained_layout=True)
 
 ax = axes[0]
 # Species 1 (blue)
-(line1,) = ax.plot(x, phi1, linewidth=3.0, label=r"$\phi_1(x)$")
+(line1,) = ax.plot(x, phi1, linewidth=4.5, label=r"$\phi_1(x)$", zorder=2)
+ax.plot(
+    [x[0], x[-1]],
+    [phi1_mean, phi1_mean],
+    color=line1.get_color(),
+    linestyle="--",
+    linewidth=1.5,
+    zorder=1,
+)
 
 # Species 2 (orange)
-(line2,) = ax.plot(x, phi2, linewidth=3.0, label=r"$\phi_2(x)$")
+(line2,) = ax.plot(x, phi2, linewidth=4.5, label=r"$\phi_2(x)$", zorder=2)
+ax.plot(
+    [x[0], x[-1]],
+    [phi2_mean, phi2_mean],
+    color=line2.get_color(),
+    linestyle="--",
+    linewidth=1.5,
+    zorder=1,
+)
 
-(line0,) = ax.plot(x, phi0, linewidth=3.0, label=r"$\phi_0(x)$")
+(line0,) = ax.plot(x, phi0, linewidth=4.5, label=r"$\phi_0(x)$", zorder=2)
+ax.plot(
+    [x[0], x[-1]],
+    [phi0_mean, phi0_mean],
+    color=line0.get_color(),
+    linestyle="--",
+    linewidth=1.5,
+    zorder=1,
+)
 
 # Bulk-value labels
 x_left_text = -L / 2 + 0.2
-x_right_text = 0
-ax.text(x_left_text, phi1_left + 0.02, r"$\phi_2$", color=line1.get_color())
-ax.text(x_left_text, phi2_left + 0.02, r"$\phi_1$", color=line2.get_color())
-ax.text(x_left_text, phi0_left + 0.02, r"$\phi_0$", color=line0.get_color())
+x_right_text = L / 2 - 1.6
+ax.text(
+    x_left_text, phi1_left + 0.02, r"$\phi_2$", color=line1.get_color(), fontsize=28
+)
+ax.text(
+    x_left_text, phi2_left + 0.02, r"$\phi_1$", color=line2.get_color(), fontsize=28
+)
+ax.text(
+    x_left_text, phi0_left + 0.02, r"$\phi_0$", color=line0.get_color(), fontsize=28
+)
+ax.text(x_right_text, phi1_mean - 0.05, r"$\bar\phi_2$", color=line1.get_color())
+ax.text(x_right_text, phi2_mean + 0.02, r"$\bar\phi_1$", color=line2.get_color())
+ax.text(x_right_text, phi0_mean + 0.02, r"$\bar\phi_0$", color=line0.get_color())
 ax.text(-L / 2 - 2, 0.57, "A", color="black", fontsize=36)
 # ax.text(x_left_text, phi1_left + 0.02, r"$\phi_1^{(1)}$", color=line1.get_color())
 # ax.text(x_left_text, phi2_left + 0.02, r"$\phi_0^{(1)}$", color=line2.get_color())
@@ -80,14 +116,20 @@ phi2_hard = np.where(x < 0, phi2_left, phi2_right)
 phi2_hard[(n - w_n) // 2 : (n + w_n) // 2] = np.linspace(phi2_left, phi2_right, w_n)
 phi0_hard = 1 - phi1_hard - phi2_hard
 
-ax.plot(x, phi1_hard, linewidth=2.5, color=line1.get_color())
-ax.plot(x, phi2_hard, linewidth=2.5, color=line2.get_color())
-ax.plot(x, phi0_hard, linewidth=2.5, color=line0.get_color())
+ax.plot(x, phi1_hard, linewidth=4.5, color=line1.get_color())
+ax.plot(x, phi2_hard, linewidth=4.5, color=line2.get_color())
+ax.plot(x, phi0_hard, linewidth=4.5, color=line0.get_color())
 ax.axvline(x[(n - w_n) // 2], color="black", linestyle="--")
 ax.axvline(x[(n + w_n) // 2], color="black", linestyle="--")
-ax.text(x_left_text, phi1_left + 0.02, r"$\phi_2$", color=line1.get_color())
-ax.text(x_left_text, phi2_left + 0.02, r"$\phi_1$", color=line2.get_color())
-ax.text(x_left_text, phi0_left + 0.02, r"$\phi_0$", color=line0.get_color())
+ax.text(
+    x_left_text, phi1_left + 0.02, r"$\phi_2$", color=line1.get_color(), fontsize=28
+)
+ax.text(
+    x_left_text, phi2_left + 0.02, r"$\phi_1$", color=line2.get_color(), fontsize=28
+)
+ax.text(
+    x_left_text, phi0_left + 0.02, r"$\phi_0$", color=line0.get_color(), fontsize=28
+)
 
 # ax.axvline(0, color="0.3", linestyle=":", linewidth=2.5)
 
@@ -103,3 +145,4 @@ ax.set_xticks([-L / 2, x[(n - w_n) // 2], x[(n + w_n) // 2], L / 2])
 ax.set_xticklabels([r"$-L/2$", r"$-w/2$", r"$w/2$", r"$L/2$"])
 # os.makedirs("figures", exist_ok=True)
 fig.savefig("figures/approximation_intuition.png", dpi=300)
+# plt.show()

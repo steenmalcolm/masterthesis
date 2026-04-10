@@ -206,7 +206,7 @@ The emergence of two minima from a single minimum is illustrated in Fig.~\ref{fi
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.98\textwidth]{figures/critical_point_schematic.png}
-    \captionof{figure}{Three cross-sections of the free energy landscape of the ternary system in Fig.~\ref{fig:metastable}.
+    \captionof{figure}{5hree cross-sections of the free energy landscape of the ternary system in Fig.~\ref{fig:metastable}.
     For $\phi_2 > \phi_{2,c}$ (A) the free energy has a single minimum corresponding to a homogeneous phase.
     For $\phi_2 < \phi_{2,c}$ (C) the free energy has two minima corresponding to two coexisting phases.
     At the critical point $\phi_2 = \phi_{2,c}$ (B) the two minima merge into a single minimum, marking the onset of phase separation.}
@@ -269,7 +269,7 @@ Using the continuum correspondence
 \[
 \sum_n \rightarrow \frac{1}{a}\int dx,
 \]
-the interaction energy in Eq.~\ref{eq:ising_hamiltonian} takes the form \textcolor{red}{Perhaps add the full calculations in the appendix}
+the interaction energy in Eq.~\ref{eq:ising_hamiltonian} takes the form \textcolor{red}{Perhaps add the full calculations in the appendix?}
 \[
 E
 =
@@ -443,7 +443,6 @@ In the present work, we neglect hydrodynamic flow, chemical reactions and therma
 The resulting evolution equations are thermodynamically consistent and guarantee non-negative entropy production.
 
 \subsubsection{Conservation laws}
-\textcolor{red}{Change notation from 3D to 1D to be consistent with the rest of the chapter}
 
 Mass conservation implies that each component satisfies a continuity equation of the form
 \[
@@ -985,8 +984,9 @@ interfacial width. In this ansatz, all species share the same interfacial width,
 
 This approximation neglects two important features of the exact solution. First, it
 assumes a common interfacial window for all components, which removes the possibility of
-adsorption at the interface\footnote{If one species accumulates at the interface, the profiles of the other species are offset along the x-axis with respect to each other}. Second, it ignores the intrinsic
-nonlinearity of the equilibrium profiles.
+adsorption at the interface. This is because the accumulation of one species shifts the
+profiles of the other species relative to each other along the x-axis.
+Second, it ignores the intrinsic nonlinearity of the equilibrium profiles.
 We will discuss the implications of these assumptions later on.\\
 
 Before introducing the approximation, we will introcude a conserved quantity of the equilibrium interfacial problem, which we will use in our approximation. 
@@ -1003,7 +1003,7 @@ contribution and adopting Einstein summation convention, we define
 \begin{minipage}{0.35\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/approximation_intuition.png}
-    \captionof{figure}{(A) Schematic of the true interfacial profile compared with (B) the piecewise-linear approximation. \textcolor{red}{Perhaps add horizontal lines to indicate the mean volume fractions for each species.}}
+    \captionof{figure}{(A) Schematic of the true interfacial profile (solid lines) compared with (B) the piecewise-linear approximation. The dashed lines in (A) denote mean compositions \(\bar\phi_i\).\\}
     \label{fig:approx_intuition}
 \end{minipage}\\
 
@@ -1655,8 +1655,22 @@ A direct calculation would likely show that this width coincides with that of th
 
 \subsubsection{Improving the surface tension approximation}
 Finally we can use the analytical expressions for the interfacial profiles to improve the surface tension approximation.
-The 
-\textcolor{red}{More to come!}
+The surface tension approximation in Eq.~\eqref{eq:surface_tension_approximation} can be rewritten as
+\[
+\gamma \approx \sqrt{(\kappa_{ij}\Delta \phi_i \Delta \phi_j)\,(f(\bar\phi+\delta\phi_+) -2\mu_i( \bar{\phi} + \delta\phi_+)+ \Pi)}
+\]
+Where now instead of using the mean composition \(\bar\phi\) we use the composition at the interface \(\bar\phi + \delta\phi_+\) including the effect of interfacial adsorption.
+The results of this improved approximation can be seen in Fig.~\ref{fig:st_symmetric_approx}.\\
+
+\begin{minipage}{0.95\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/st_symmetric_approx.png}
+    \captionof{figure}{Relative error of the surface tension approximation for the symmetric ternary system with (solid) and without (dashed) interfacial adsorption effects included, as a function of the chemical potential difference \(\mu_c-\mu\). The colorscale indicates the interaction strength \(\eta\) and \(\chi=2.5\).\\}
+    \label{fig:st_symmetric_approx}
+\end{minipage}
+
+Clearly the approximation that includes interfacial adsorption effects performs much better and is essentially constant across phase space, with a relative error of approximately \(6\%\).
+As predicted the main source of error after accounting for interfacial adsorption is the simplified functional form of the profile, which contributes a baseline error of approximately \(5\%\) as shown in Fig.~\ref{fig:fit_profiles}B.
 
 \clearpage
 

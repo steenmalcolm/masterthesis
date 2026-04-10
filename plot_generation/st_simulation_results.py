@@ -144,7 +144,7 @@ print(
     f"Selected representatives (st[0] values): {[results[i]['st'][0] for i in rep_indices]}"
 )
 
-fig, ax = plt.subplots(figsize=(12, 8))
+fig, ax = plt.subplots(figsize=(14, 8))
 colors = [f"C{i}" for i in range(N_REPRESENTATIVES)]
 
 mu_r_first = None

@@ -37,12 +37,12 @@ phi2_hard = np.where(x < 0, phi2_left, phi2_right)
 fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
 
 # Species 1 (blue)
-(line1,) = ax.plot(x, phi1, linewidth=3.0, label=r"$\phi_1(x)$")
+(line1,) = ax.plot(x, phi1, linewidth=5.0, label=r"$\phi_1(x)$")
 ax.plot(x, phi1_hard, linestyle="--", linewidth=2.5, color=line1.get_color())
 ax.fill_between(x, phi1, phi1_hard, color=line1.get_color(), alpha=0.25)
 
 # Species 2 (orange)
-(line2,) = ax.plot(x, phi2, linewidth=3.0, label=r"$\phi_2(x)$")
+(line2,) = ax.plot(x, phi2, linewidth=5.0, label=r"$\phi_2(x)$")
 ax.plot(x, phi2_hard, linestyle="--", linewidth=2.5, color=line2.get_color())
 ax.fill_between(x, phi2, phi2_hard, color=line2.get_color(), alpha=0.25)
 
@@ -52,11 +52,35 @@ ax.fill_between(x, phi2, phi2_hard, color=line2.get_color(), alpha=0.25)
 x_left_text = -L / 2 + 0.35
 x_right_text = L / 2 - 1.15
 
-ax.text(x_left_text, phi1_left + 0.02, r"$\phi_1^{(1)}$", color=line1.get_color())
-ax.text(x_left_text, phi2_left + 0.02, r"$\phi_2^{(1)}$", color=line2.get_color())
+ax.text(
+    x_left_text,
+    phi1_left + 0.04,
+    r"$\phi_1^{(1)}$",
+    color=line1.get_color(),
+    fontsize=28,
+)
+ax.text(
+    x_left_text,
+    phi2_left + 0.04,
+    r"$\phi_2^{(1)}$",
+    color=line2.get_color(),
+    fontsize=28,
+)
 
-ax.text(x_right_text, phi1_right + 0.02, r"$\phi_1^{(2)}$", color=line1.get_color())
-ax.text(x_right_text, phi2_right + 0.02, r"$\phi_2^{(2)}$", color=line2.get_color())
+ax.text(
+    x_right_text,
+    phi1_right + 0.04,
+    r"$\phi_1^{(2)}$",
+    color=line1.get_color(),
+    fontsize=28,
+)
+ax.text(
+    x_right_text,
+    phi2_right + 0.04,
+    r"$\phi_2^{(2)}$",
+    color=line2.get_color(),
+    fontsize=28,
+)
 
 ax.set_xlim(-L / 2, L / 2)
 ax.set_ylim(0, 1.0)
@@ -66,7 +90,6 @@ ax.set_xlabel(r"$x$")
 ax.set_ylabel(r"$\phi_i(x)$")
 ax.set_xticks([-L / 2, 0, L / 2])
 ax.set_xticklabels([r"$-L/2$", r"$0$", r"$L/2$"])
-ax.legend(loc="center left")
 
 os.makedirs("figures", exist_ok=True)
-fig.savefig("figures/ternary_interface_profiles_phi1_phi2_only.png", dpi=300)
+fig.savefig("figures/st_schematic.png", dpi=300)

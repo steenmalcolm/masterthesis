@@ -98,25 +98,25 @@ ax_mu.text(
 
 # --- Left: Free energy and tangent ---
 ax_curve.plot(
-    phi[phi < spin1], f[phi < spin1], color="#1565c0", linewidth=2.5, label=r"$f(\phi)$"
+    phi[phi < spin1], f[phi < spin1], color="#1565c0", linewidth=4.5, label=r"$f(\phi)$"
 )
 ax_curve.plot(
     phi[(phi >= spin1) & (phi <= spin2)],
     f[(phi >= spin1) & (phi <= spin2)],
     color="#1565c0",
-    linewidth=2.5,
+    linewidth=4.5,
     linestyle="--",
 )
-ax_curve.plot(phi[phi > spin2], f[phi > spin2], color="#1565c0", linewidth=2.5)
+ax_curve.plot(phi[phi > spin2], f[phi > spin2], color="#1565c0", linewidth=4.5)
 # Common tangent remains orange dashed
 ax_curve.plot(
-    phi, line, color="black", linewidth=2.8, linestyle="-", label="common tangent"
+    phi, line, color="black", linewidth=4.8, linestyle="-", label="common tangent"
 )
 ax_curve.scatter(
     [phi_left, phi_right],
     [f_left, f_right],
     color="black",
-    s=70,
+    s=250,
     zorder=3,
     label="coexisting states",
 )
@@ -126,17 +126,17 @@ ax_curve.plot(
     [ax_curve.get_ylim()[0], f_left],
     color="0.3",
     linestyle=":",
-    linewidth=2.2,
+    linewidth=4.2,
 )
 ax_curve.plot(
     [phi_right, phi_right],
     [ax_curve.get_ylim()[0], f_right],
     color="0.3",
     linestyle=":",
-    linewidth=2.2,
+    linewidth=4.2,
 )
-ax_curve.text(phi_left - 0.03, f_left + 0.015, r"$\phi^{(1)}$", fontsize=18)
-ax_curve.text(phi_right - 0.03, f_right + 0.015, r"$\phi^{(2)}$", fontsize=18)
+ax_curve.text(phi_left - 0.03, f_left + 0.045, r"$\phi^{(1)}$", fontsize=25)
+ax_curve.text(phi_right - 0.03, f_right + 0.045, r"$\phi^{(2)}$", fontsize=25)
 ax_curve.set_xlabel(r"$\phi$")
 ax_curve.set_ylabel(r"$f(\phi)$")
 ax_curve.set_xlim(0, 1)
@@ -150,22 +150,22 @@ ax_mu.plot(
     phi[phi < spin1],
     mu[phi < spin1],
     color="#1565c0",
-    linewidth=2.5,
+    linewidth=4.5,
     label=r"$\mu(\phi) = f'(\phi)$",
 )
 ax_mu.plot(
     phi[(phi >= spin1) & (phi <= spin2)],
     mu[(phi >= spin1) & (phi <= spin2)],
     color="#1565c0",
-    linewidth=2.5,
+    linewidth=4.5,
     linestyle="--",
 )
-ax_mu.plot(phi[phi > spin2], mu[phi > spin2], color="#1565c0", linewidth=2.5)
+ax_mu.plot(phi[phi > spin2], mu[phi > spin2], color="#1565c0", linewidth=4.5)
 ax_mu.plot(
     phi,
     mu_tangent,
     color="black",
-    linewidth=2.8,
+    linewidth=4.8,
     linestyle="-",
     label="tangent slope",
 )
@@ -210,23 +210,23 @@ ax_mu.scatter(
     [phi_left, phi_right],
     [slope, slope],
     color="black",
-    s=70,
+    s=250,
     zorder=3,
     label="coexisting states",
 )
 ax_mu.text(
     phi_left - 0.03,
-    slope + 0.015,
+    slope + 0.055,
     r"$\phi^{(1)}$",
-    fontsize=18,
+    fontsize=25,
     ha="center",
     va="bottom",
 )
 ax_mu.text(
     phi_right - 0.03,
-    slope + 0.015,
+    slope + 0.055,
     r"$\phi^{(2)}$",
-    fontsize=18,
+    fontsize=25,
     ha="center",
     va="bottom",
 )
@@ -244,7 +244,7 @@ ax_curve.scatter(
     f_spinodal,
     color="orange",
     edgecolor="black",
-    s=70,
+    s=250,
     zorder=4,
     label="spinodal points",
 )
@@ -257,7 +257,7 @@ for x, y in zip(spinodal_points, f_spinodal):
         [0, y],
         color="orange",
         linestyle="--",
-        linewidth=2.2,
+        linewidth=4.2,
         alpha=0.7,
     )
     # Chemical potential plot: vertical line from bottom to spinodal marker
@@ -268,14 +268,13 @@ for x, y in zip(spinodal_points, f_spinodal):
         [ax_mu.get_ylim()[0], mu_spinodal],
         color="orange",
         linestyle="--",
-        linewidth=2.2,
+        linewidth=4.2,
         alpha=0.7,
     )
-    ax_mu.scatter(x, mu_spinodal, color="orange", edgecolor="black", s=70, zorder=4)
+    ax_mu.scatter(x, mu_spinodal, color="orange", edgecolor="black", s=250, zorder=4)
 
 # ax_mu.set_title("Chemical potential and equal-area (pressure) requirement")
 # ax_mu.legend(loc="upper center")
 
 fig.tight_layout()
 fig.savefig("figures/common_tangent.png", dpi=300)
-plt.show()

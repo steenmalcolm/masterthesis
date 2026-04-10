@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plot_params
 import torch
+from matplotlib import axes
 from scipy.optimize import root_scalar
 from surfacetension.solvers import ComputationBox, GradientExplicit
 
@@ -50,7 +51,7 @@ def load_symmetric(path="chapter_two_data/symmetric_extended.h5"):
 
 
 def main():
-    fn = "chapter_two_data/symmetric.h5"
+    fn = "chapter_two_data/symmetric_extended.h5"
 
     # Try loading from cache
     if not os.path.exists(fn):
@@ -67,15 +68,24 @@ def main():
                     "eta": float(grp.attrs["eta"]),
                     "phis": grp["phis"][:],
                     "mus": grp["mus"][:],
+                    "box_size": grp["box_size"][:],
                 }
             )
 
         worst_instance = None
         worst_error = 0
         worst_data = {}
+        fig, ax = plt.subplots(1, 1, figsize=(14, 8))
+        cmap = plt.get_cmap("Blues")
+        ratios = np.array([r["eta"] for r in results])
+        ratio_min, ratio_max = ratios.min() - 0.3, ratios.max()
+
         for r_sample in results:
             eta = r_sample["eta"]
             chi = r_sample["chi"]
+            box_size = r_sample["box_size"]
+            if chi < 2.5:
+                continue
             phis = r_sample["phis"]
             mus = r_sample["mus"]
             N = phis.shape[-1]
@@ -92,6 +102,8 @@ def main():
             phi_s = -1 / (chi_o + chi_d)
             mu_c = chi_d * phi_c + chi_o * phi_c + np.log(phi_c / (1 - 2 * phi_c))
             pb_ops = phis[:, :, 0].mean(axis=1)
+            errs, errs_bad = np.zeros_like(pb_ops), np.zeros_like(pb_ops)
+            mus = np.zeros_like(pb_ops)
             for i, pb in enumerate(pb_ops):
 
                 dp = None
@@ -124,7 +136,8 @@ def main():
                 w = dp / dpg
                 w *= LMD
 
-                x = np.linspace(-6 * w, 6 * w, N // 2)
+                bs = box_size[i]
+                x = np.linspace(-bs / 4, bs / 4, N // 2)
                 dx = x[1] - x[0]
                 phi_mn_approx = -dp * np.tanh(x / w)
                 phi_pl_approx = pb + dpl * (1 - np.tanh(x / w) ** 2)
@@ -140,7 +153,7 @@ def main():
                 phis_torch_i = torch.tensor(phis[i, :, : N // 2])
 
                 st = (
-                    LMD**2
+                    LMD
                     * (
                         np.gradient(phi_mn_exact, dx) ** 2 / phi_c
                         + np.gradient(phi_pl_exact, dx) ** 2 / phi_s
@@ -154,14 +167,6 @@ def main():
                 phis_torch_i_approx = torch.tensor(
                     np.stack([phi1_approx, phi2_approx], axis=0)
                 )
-                st_approx = (
-                    LMD**2
-                    * (
-                        np.gradient(phi_mn_approx, dx) ** 2 / phi_c
-                        + np.gradient(phi_pl_approx, dx) ** 2 / phi_s
-                    ).sum()
-                    * dx
-                )
                 phi1, phi2 = (
                     phi_pl_approx + phi_mn_approx,
                     phi_pl_approx - phi_mn_approx,
@@ -174,101 +179,79 @@ def main():
                     - phi_mn_approx**2 / phi_c
                 )
                 mu, pi = get_mu_and_pi(dp, pb, phi_c, phi_s)
-                lhs = f - mu * 2 * phi_pl_approx + pi
+                f_if_bad = (
+                    2 * pb * np.log(pb)
+                    + (1 - 2 * pb) * np.log(1 - 2 * pb)
+                    - pb**2 / phi_s
+                )
+                f_if = (
+                    2 * (pb + dpl) * np.log(pb + dpl)
+                    + (1 - 2 * (pb + dpl)) * np.log(1 - 2 * (pb + dpl))
+                    - (pb + dpl) ** 2 / phi_s
+                )
 
                 # "Bad" approximation: square-root formula from approximation_compare.py
                 # first_term = del_phi @ kappas_r @ del_phi (analytically simplified)
                 # second_term = f_if - f_bulk (mu term vanishes by species swap symmetry)
-                first_term = 8 * dp**2 * LMD**2 * phi_c
-                second_term = (
-                    2 * pb * np.log(pb)
-                    - (pb + dp) * np.log(pb + dp)
-                    - (pb - dp) * np.log(pb - dp)
-                    + dp**2 / phi_c
-                )
-                st_approx_bad = np.sqrt(first_term * second_term)
+                first_term = 2 * (2 * dp) ** 2 * LMD**2 * phi_c
+                second_term = f_if - 2 * mu * (pb + dpl) + pi
+                second_term_bad = f_if_bad - 2 * mu * pb + pi
+                st_approx = np.sqrt(first_term * second_term)
+                st_approx_bad = np.sqrt(first_term * second_term_bad)
                 error = (st_approx - st) / st
                 error_bad = (st_approx_bad - st) / st
-                plt.scatter(abs(mu - mu_c), error, color="blue")
-                plt.scatter(abs(mu - mu_c), error_bad, color="red")
+                errs_bad[i] = error_bad
+                errs[i] = error
+                mus[i] = mu - mu_c
                 if error > worst_error:
                     worst_error = error
                     worst_instance = np.array(
                         [x, phi_mn_approx, phi_pl_approx, phi_mn_exact, phi_pl_exact]
                     )
                     worst_data = r_sample
-            print("done")
 
-        print(
-            f"Worst approximation error: {worst_error:.2%} for eta={worst_data['eta']:.2f} and chi={worst_data['chi']:.2f}"
-        )
-        x, phi_mn_approx, phi_pl_approx, phi_mn_exact, phi_pl_exact = worst_instance
+            ax.plot(
+                mus,
+                errs * 100,
+                "-",
+                color=cmap((eta - ratio_min) / (ratio_max - ratio_min)),
+                linewidth=3.5,
+            )
+            ax.plot(
+                mus,
+                errs_bad * 100,
+                "--",
+                color=cmap((eta - ratio_min) / (ratio_max - ratio_min)),
+                linewidth=3.5,
+            )
+        ax.set_xscale("log")
+        ax.set_xlabel(r"$\mu - \mu_c$")
+        ax.set_ylabel(r"$\epsilon_{\mathrm{approx.}}$ (%)")
 
-        fig, axes = plt.subplots(2, 1, figsize=(6, 8), constrained_layout=True)
+        # # axes[0].set_ylim(1e-6, 5e-1)
+        # axes[0].text(1e-6, 1.4e-2, "A", color="black", fontsize=36)
+        # # axes[1].set_xlim(2e-4, 3)
+        # axes[0].set_ylabel(r"$|\delta \phi_+|$")
+        # axes[0].set_xticks([])
+        # axes[1].set_xlabel(r"$\mu_c - \mu$")
+        # axes[1].set_ylabel(r"$\epsilon_{\mathrm{approx.}}$ (%)")
+        # # axes[1].set_ylim(0, 100)
+        # axes[1].text(1e-6, 5.2, "B", color="black", fontsize=36)
+        # axes[1].set_xscale("log")
+    sm = plt.cm.ScalarMappable(
+        cmap=cmap, norm=plt.Normalize(vmin=ratio_min, vmax=ratio_max)
+    )
+    sm.set_array([])
 
-        L = 20
-        ax = axes[0]
-        (l1,) = ax.plot(
-            x,
-            phi_mn_approx,
-            linewidth=3.0,
-            label=r"$\phi_-^{\mathrm{approx}}$",
-            color="blue",
-        )
-        ax.plot(
-            x,
-            phi_mn_exact,
-            "--",
-            linewidth=2.0,
-            color="red",
-            label=r"$\phi_-^{\mathrm{exact}}$",
-        )
-        ax.set_xlim(x[0], x[-1])
-        ax.set_ylabel(r"$\phi_-(x)$")
-        ax.set_xticks([])
-        ax.text(
-            -2 * L,
-            ax.get_ylim()[1] - 0.05,
-            "A",
-            color="black",
-            fontsize=36,
-        )
-        ax.set_xticks([-L, 0, L])
-        ax.set_xticklabels([r"", r"", r""])
-        ax.set_xlim(-L, L)
-
-        ax = axes[1]
-        (l2,) = ax.plot(
-            x,
-            phi_pl_approx,
-            linewidth=3.0,
-            label=r"$\phi_+^{\mathrm{approx}}$",
-            color="blue",
-        )
-        ax.plot(
-            x,
-            phi_pl_exact,
-            "--",
-            linewidth=2.0,
-            color="red",
-            label=r"$\phi_+^{\mathrm{exact}}$",
-        )
-        ax.set_xlim(x[0], x[-1])
-        ax.set_xlabel(r"$x$")
-        ax.set_ylabel(r"$\phi_+(x)$")
-        ax.text(
-            -2 * L,
-            ax.get_ylim()[1] - 0.0017,
-            "B",
-            color="black",
-            fontsize=36,
-        )
-        ax.set_xticks([-L, 0, L])
-        ax.set_xticklabels([r"$L/2$", r"$0$", r"$L/2$"])
-        ax.set_xlim(-L, L)
-
-        plt.show()
-        # fig.savefig("figures/symm_profile_approx.png", dpi=300)
+    plt.tight_layout()
+    fig.subplots_adjust(right=0.85)
+    cbar = fig.colorbar(sm, ax=ax, pad=0.05)
+    cbar.set_label(r"$\eta$")
+    ax.set_ylim(0, None)
+    ax.set_yticks([0, 6, 20, 40, 60, 80, 100])
+    print(np.mean(errs))
+    # ax.set_yscale("log")
+    fig.savefig("figures/st_symmetric_approx.png", dpi=300)
 
 
 if __name__ == "__main__":

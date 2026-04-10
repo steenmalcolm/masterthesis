@@ -45,29 +45,65 @@ x = np.linspace(-L / 2, L / 2, 2400)
 fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
 
 # Species 1 (blue)
-(line1,) = ax.plot(x, phi1, linewidth=3.0, label=r"$\phi_1(x)$")
-ax.plot(x, phi1_hard, linestyle="--", linewidth=2.5, color=line1.get_color())
+(line1,) = ax.plot(x, phi1, linewidth=4.5, label=r"$\phi_1(x)$")
+ax.plot(x, phi1_hard, linestyle="--", linewidth=3.5, color=line1.get_color())
 
 # Species 2 (orange)
-(line2,) = ax.plot(x, phi2, linewidth=3.0, label=r"$\phi_2(x)$")
-ax.plot(x, phi2_hard, linestyle="--", linewidth=2.5, color=line2.get_color())
+(line2,) = ax.plot(x, phi2, linewidth=4.5, label=r"$\phi_2(x)$")
+ax.plot(x, phi2_hard, linestyle="--", linewidth=3.5, color=line2.get_color())
 
-(line0,) = ax.plot(x, phi0, linewidth=3.0, label=r"$\phi_0(x)$")
-ax.plot(x, phi0_hard, linestyle="--", linewidth=2.5, color=line0.get_color())
+(line0,) = ax.plot(x, phi0, linewidth=4.5, label=r"$\phi_0(x)$")
+ax.plot(x, phi0_hard, linestyle="--", linewidth=3.5, color=line0.get_color())
 
 # ax.axvline(0, color="0.3", linestyle=":", linewidth=2.5)
 
 # Bulk-value labels
-x_left_text = -L / 2 - 1.0
+x_left_text = -L / 2 - 1.4
 x_right_text = 0
 
-ax.text(x_left_text, phi1_left + 0.02, r"$\phi_1^{(1)}$", color=line1.get_color())
-ax.text(x_left_text, phi2_left + 0.02, r"$\phi_0^{(1)}$", color=line2.get_color())
-ax.text(x_left_text, phi0_left + 0.02, r"$\phi_2^{(1)}$", color=line0.get_color())
+ax.text(
+    x_left_text,
+    phi1_left + 0.0,
+    r"$\phi_1^{(1)}$",
+    color=line1.get_color(),
+    fontsize=36,
+)
+ax.text(
+    x_left_text,
+    phi2_left + 0.0,
+    r"$\phi_0^{(1)}$",
+    color=line2.get_color(),
+    fontsize=36,
+)
+ax.text(
+    x_left_text,
+    phi0_left + 0.0,
+    r"$\phi_2^{(1)}$",
+    color=line0.get_color(),
+    fontsize=36,
+)
 
-ax.text(x_right_text, phi1_right - 0.05, r"$\phi_1^{(2)}$", color=line1.get_color())
-ax.text(x_right_text, phi2_right - 0.05, r"$\phi_0^{(2)}$", color=line2.get_color())
-ax.text(x_right_text, phi0_right - 0.05, r"$\phi_2^{(2)}$", color=line0.get_color())
+ax.text(
+    x_right_text,
+    phi1_right - 0.07,
+    r"$\phi_1^{(2)}$",
+    color=line1.get_color(),
+    fontsize=36,
+)
+ax.text(
+    x_right_text,
+    phi2_right - 0.07,
+    r"$\phi_0^{(2)}$",
+    color=line2.get_color(),
+    fontsize=36,
+)
+ax.text(
+    x_right_text,
+    phi0_right - 0.07,
+    r"$\phi_2^{(2)}$",
+    color=line0.get_color(),
+    fontsize=36,
+)
 
 ax.set_xlim(-L / 2, L / 2)
 ax.set_yticks([0.0])

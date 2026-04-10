@@ -16,7 +16,7 @@ fig, ax = plt.subplots(1, 1, figsize=(14, 8), constrained_layout=True)
 ax.scatter(
     bin_phis[0, 0],
     bin_phis[0, 1],
-    s=100,
+    s=250,
     color="blue",
     edgecolor="black",
     zorder=2,
@@ -24,7 +24,7 @@ ax.scatter(
 ax.scatter(
     bin_phis[1, 0],
     bin_phis[1, 1],
-    s=100,
+    s=250,
     color="blue",
     edgecolor="black",
     zorder=2,
@@ -87,14 +87,14 @@ for mc, loc, d_idx in zip(mcs, inset_locations, data_idx):
     print(f"Creating inset at location {loc} for MC={mc}")
     ax = main_ax.inset_axes(loc)
     # Species 1 (blue)
-    (line1,) = ax.plot(x, phi1, linewidth=3.0, label=r"$\phi_1(x)$")
+    (line1,) = ax.plot(x, phi1, linewidth=6.0, label=r"$\phi_1(x)$")
     # ax.plot(x, phi1_hard, linestyle="--", linewidth=2.5, color=line1.get_color())
 
     # Species 2 (orange)
-    (line2,) = ax.plot(x, phi2, linewidth=3.0, label=r"$\phi_2(x)$")
+    (line2,) = ax.plot(x, phi2, linewidth=6.0, label=r"$\phi_2(x)$")
     # ax.plot(x, phi2_hard, linestyle="--", linewidth=2.5, color=line2.get_color())
 
-    (line0,) = ax.plot(x, phi0, linewidth=3.0, label=r"$\phi_0(x)$")
+    (line0,) = ax.plot(x, phi0, linewidth=6.0, label=r"$\phi_0(x)$")
     # ax.plot(x, phi0_hard, linestyle="--", linewidth=2.5, color=line0.get_color())
 
     # ax.axvline(0, color="0.3", linestyle=":", linewidth=2.5)
@@ -123,7 +123,7 @@ for mc, loc, d_idx in zip(mcs, inset_locations, data_idx):
             xyB=(bin_phis[0, 0, d_idx], bin_phis[0, 1, d_idx]),
             coordsB=main_ax.transData,
             color="black",
-            lw=1.0,
+            lw=3.0,
             zorder=1,
         )
         fig.add_artist(con)
@@ -133,7 +133,7 @@ for mc, loc, d_idx in zip(mcs, inset_locations, data_idx):
             xyB=(bin_phis[1, 0, d_idx], bin_phis[1, 1, d_idx]),
             coordsB=main_ax.transData,
             color="black",
-            lw=1.0,
+            lw=3.0,
             zorder=1,
         )
         fig.add_artist(con)
@@ -144,7 +144,7 @@ for mc, loc, d_idx in zip(mcs, inset_locations, data_idx):
             xyB=(bin_phis[0, 0, d_idx], bin_phis[0, 1, d_idx]),
             coordsB=main_ax.transData,
             color="black",
-            lw=1.0,
+            lw=3.0,
             zorder=1,
         )
         fig.add_artist(con)
@@ -154,7 +154,7 @@ for mc, loc, d_idx in zip(mcs, inset_locations, data_idx):
             xyB=(bin_phis[1, 0, d_idx], bin_phis[1, 1, d_idx]),
             coordsB=main_ax.transData,
             color="black",
-            lw=1.0,
+            lw=3.0,
             zorder=1,
         )
         fig.add_artist(con)
