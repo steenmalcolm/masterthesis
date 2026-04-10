@@ -45,13 +45,15 @@
 % \maketitle
 % \tableofcontents
 % \clearpage  
+\tableofcontents
+\newpage
 
 
-% \section{Introduction}
+\section{Introduction}
 \section{Liquid-liquid phase separation}
-Phase separation in multicomponent fluids provides a general physical framework for understanding how a homogeneous mixture can spontaneously demix into coexisting phases with distinct compositions. At its core, this phenomenon emerges from the competition between entropy, which favors mixing, and intermolecular interactions, which can favor segregation. In biological and soft-matter systems, this balance underlies liquid-liquid phase separation and the formation of condensed phases with well-defined interfaces and characteristic dynamical behavior. A theoretical description of such systems therefore requires linking equilibrium thermodynamics, interfacial physics, and diffusive transport within a unified framework.
+Phase separation in multicomponent fluids provides a general physical framework for understanding how a homogeneous mixture can spontaneously demix into coexisting phases with distinct compositions. At its core, this phenomenon emerges from the competition between entropy, which favors mixing and intermolecular interactions, which can favor segregation. In biological and soft-matter systems, this balance underlies liquid-liquid phase separation and the formation of condensed phases with well-defined interfaces and characteristic dynamical behavior. A theoretical description of such systems therefore requires linking equilibrium thermodynamics, interfacial physics and diffusive transport within a unified framework.
 
-In this chapter, we develop the theoretical basis for the ternary phase-separating system studied in this thesis. We begin with the thermodynamics of incompressible mixtures and derive the conditions for local and global stability, which define the spinodal, binodal, and critical point. We then introduce a mean-field lattice description that leads to a Flory-Huggins free-energy functional with gradient terms, allowing spatially heterogeneous states and diffuse interfaces to be described on a continuum level. Building on this free-energy framework, we formulate the diffusive dynamics of phase separation in terms of coupled Cahn-Hilliard equations for the conserved volume fractions. We further discuss the thermodynamic definition of surface tension in ternary systems and, finally, outline the numerical methods used to compute equilibrium profiles and interfacial properties. Together, these results establish the theoretical framework that will be used throughout the remainder of this thesis to analyze phase behavior, interface formation, and relaxation dynamics in ternary mixtures.
+In this chapter, we develop the theoretical basis for the ternary phase-separating system studied in this thesis. We begin with the thermodynamics of incompressible mixtures and derive the conditions for local and global stability, which define the spinodal, binodal and critical point. We then introduce a mean-field lattice description that leads to a Flory-Huggins free-energy functional with gradient terms, allowing spatially heterogeneous states and diffuse interfaces to be described on a continuum level. Building on this free-energy framework, we formulate the diffusive dynamics of phase separation in terms of coupled Cahn-Hilliard equations for the conserved volume fractions. We further discuss the thermodynamic definition of surface tension in ternary systems and, finally, outline the numerical methods used to compute equilibrium profiles and interfacial properties. Together, these results establish the theoretical framework that will be used throughout the remainder of this thesis to analyze phase behavior, interface formation and relaxation dynamics in ternary mixtures.
 
 \subsection{Thermodynamics of a ternary mixture}
 We begin by considering the a complex mixture of three components at constant temperature \(T\), Volume \(V\) and particle numbers \(N_0, N_1, N_2\). This system is best described by the Helmholtz free energy.
@@ -270,7 +272,7 @@ Using the continuum correspondence
 \[
 \sum_n \rightarrow \frac{1}{a}\int dx,
 \]
-the interaction energy in Eq.~\ref{eq:ising_hamiltonian} takes the form
+the interaction energy in Eq.~\ref{eq:ising_hamiltonian} takes the form \textcolor{red}{Perhaps add the full calculations in the appendix}
 \[
 E
 =
@@ -283,7 +285,7 @@ E
 \]
 where Einstein summation over repeated indices is implied.
 
-To obtain the entropic contribution, we consider a lattice with \(N\) sites, of which \(N_1\) are occupied by species 1, \(N_2\) by species 2 and \(N-N_1-N_2\) by solvent. The number of distinct arrangements is given by the multinomial coefficient
+To obtain the entropic contribution, we consider a lattice with \(N\) sites, of which \(N_1\) are occupied by species 1, \(N_2\) by species 2 and \(N-N_1-N_2\) by species 0. The number of distinct arrangements is given by the multinomial coefficient
 \[
 \Omega = \frac{N!}{(N-N_1-N_2)!N_1!N_2!}.
 \]
@@ -301,33 +303,37 @@ where \(\phi_i = N_i/N\) are the volume fractions.
 
 The transition from this global expression to a continuum entropy functional is more subtle; for a more detailed discussion, see \cite{Blom2024}. Here we employ a local density approximation and assume that the system can be partitioned into many small coarse-graining cells, each characterized by local volume fractions \(\phi_1(x)\) and \(\phi_2(x)\). The total mixing entropy is then approximated as the sum of the entropies of these cells, which in the continuum limit gives
 \[
+\begin{aligned}
 TS
 =
 -\frac{k_B T}{a}\int dx\,
-\Big[
+\Big[&
 \phi_1(x)\ln\phi_1(x)
-+\phi_2(x)\ln\phi_2(x)
-+(1-\phi_1(x)-\phi_2(x))\ln(1-\phi_1(x)-\phi_2(x))
-\Big].
++\phi_2(x)\ln\phi_2(x)\\
++&(1-\phi_1(x)-\phi_2(x))\ln(1-\phi_1(x)-\phi_2(x))
+\Big].\\
+\end{aligned}
 \]
 
 Combining the energetic and entropic contributions, the free energy functional \(F=E-TS\) becomes
 \begin{equation}
 \label{eq:fh_free_energy}
+\begin{aligned}
 F[\phi_1,\phi_2]
 =
 \frac{k_B T}{a}\int dx\,
-\Big[
+\Big[&
 \frac{1}{2}\phi_i\tilde{\chi}_{ij}\phi_j
 +
-\frac{1}{2}\phi_i'(x)\tilde{\kappa}_{ij}\phi_j'(x)
-+
+\frac{1}{2}\phi_i'(x)\tilde{\kappa}_{ij}\phi_j'(x)\\
++&
 \phi_1\ln\phi_1
 +
 \phi_2\ln\phi_2
 +
 (1-\phi_1-\phi_2)\ln(1-\phi_1-\phi_2)
-\Big],
+\Big],\\
+\end{aligned}
 \end{equation}
 where, in the present lattice model, we define
 \[
@@ -339,20 +345,22 @@ where, in the present lattice model, we define
 The corresponding free energy density \(f\) is therefore
 \begin{equation}
 \label{eq:fh_free_energy_density}
+\begin{aligned}
 \frac{f(\phi_1,\phi_2)}{k_B T a^{-1}}
-=
+=&
 \frac{1}{2}\phi_i\tilde{\chi}_{ij}\phi_j
 +
-\frac{1}{2}\phi_i'(x)\tilde{\kappa}_{ij}\phi_j'(x)
-+
+\frac{1}{2}\phi_i'(x)\tilde{\kappa}_{ij}\phi_j'(x)\\
++&
 \phi_1\ln\phi_1
 +
 \phi_2\ln\phi_2
 +
-(1-\phi_1-\phi_2)\ln(1-\phi_1-\phi_2).
+(1-\phi_1-\phi_2)\ln(1-\phi_1-\phi_2).\\
+\end{aligned}
 \end{equation}
 
-In this derivation, the reduced Flory-Huggins interaction parameters and the reduced gradient coefficients are both determined by the microscopic interaction matrix \(\tilde{\epsilon}_{ij}\) and are therefore not independent. It should be emphasized, however, that alternative derivations of Flory-Huggins free energies can lead to different relations between \(\tilde{\chi}_{ij}\) and \(\tilde{\kappa}_{ij}\) and the gradient coefficients may even depend on the local volume fractions \cite{Tang1991FreeEnergyFunctional,Lifschitz1993InterfacialBehavior}. Biological systems are considerably more complex than any of these idealized models can capture. The purpose of the present derivation is therefore not to claim a unique microscopic mapping, but rather to motivate one possible relation between the interaction and gradient parameters and additionally to reduce the number of independent parameters of the model.
+In this derivation, the reduced Flory-Huggins interaction parameters and the reduced gradient coefficients are both determined by the microscopic interaction matrix \(\tilde{\epsilon}_{ij}\) and are therefore not independent. It should be emphasized, however, that alternative derivations of Flory-Huggins free energies can lead to different relations between \(\tilde{\chi}_{ij}\) and \(\tilde{\kappa}_{ij}\) and the gradient coefficients may even depend on the local volume fractions \cite{Tang1991FreeEnergyFunctional,Lifschitz1993InterfacialBehavior}. Biological systems are considerably more complex than what any of these idealized models can capture. The purpose of the present derivation is therefore not to claim a unique microscopic mapping, but rather to motivate one possible relation between the interaction and gradient parameters and additionally to reduce the number of independent parameters of the model.
 
 In the literature one often encounters species-dependent molecular sizes \(\nu_i\) \cite{Luo2025ChargeAsymmetry,Kirschbaum2021Controlling,zwicker2025physicsdropletregulationbiological}. Differences in molecular size modify the combinatorics and hence the entropic contribution to the free energy. We do not consider this generalization here, since all components are assumed to occupy the same lattice volume.
 \subsubsection{Interface stability}
@@ -381,13 +389,14 @@ with \(a=\nu^{1/3}\), these conditions imply
 Thus, the requirement of interface stability imposes constraints on the allowed values of the interaction parameters in the full system.
 
 The reduced interaction matrix is
-\[
+\begin{equation}
 \tilde{\chi}=
 \begin{pmatrix}
 -2\chi_{10} & \chi_{12}-\chi_{10}-\chi_{20} \\
 \chi_{12}-\chi_{10}-\chi_{20} & -2\chi_{20}
 \end{pmatrix}.
-\]
+\label{eq:reduced_chi}
+\end{equation}
 The conditions \(\tilde{\chi}_{11}<0\) and \(\tilde{\chi}_{22}<0\) immediately imply
 \[
 \chi_{10}>0,\qquad \chi_{20}>0.
@@ -665,13 +674,13 @@ Importantly, the resulting surface tension is independent of the precise choice 
 In the previous sections, we derived the kinetics of phase separation from continuity equations and thermodynamic arguments. The stationary solutions of the resulting Cahn-Hilliard equations correspond to equilibrium profiles of the free energy functional subject to mass conservation. However, solving the Cahn-Hilliard equations numerically can be challenging because they involve fourth-order spatial derivatives.
 
 Alternatively, the equilibrium profiles can be obtained directly from variational calculus by minimizing the free-energy functional with respect to the volume fractions.
-This yields the constrained Euler-Lagrange equations \footnote{The constraints of mass conservation would typically require a Lagrange multiplier on the right-hand side. However, later on we will enforce mass conservation differently.}
+This yields the constrained Euler-Lagrange equations 
 \[
 \frac{\delta F[\phi_1,\phi_2]}{\delta \phi_i(x)} = 0,
 \qquad i\in\{1,2\},
 \]
 
-For a one-dimensional system, the Euler-Lagrange equations take the form
+\footnote{The constraints of mass conservation would typically require a Lagrange multiplier on the right-hand side. However, later on we will enforce mass conservation differently.}For a one-dimensional system, the Euler-Lagrange equations take the form
 \[
 \frac{\partial f}{\partial \phi_i}
 -
@@ -720,11 +729,13 @@ This suggests a fixed-point iteration scheme. Since the mapping \(T_i\) is gener
 \]
 may oscillate or diverge. Instead, we introduce a pseudo-time relaxation with step size \(0<h\le 1\),
 \[
+\begin{aligned}
 \phi_i^{n+1}(x)
-=
-\phi_i^n(x)+h\left[T_i(\phi_1^n(x),\phi_2^n(x))-\phi_i^n(x)\right]
-=
-\phi_i^n(x)+h\,G_i(\phi_1^n(x),\phi_2^n(x)),
+&=
+\phi_i^n(x)+h\left[T_i(\phi_1^n(x),\phi_2^n(x))-\phi_i^n(x)\right]\\
+&=
+\phi_i^n(x)+h\,G_i(\phi_1^n(x),\phi_2^n(x)),\\
+\end{aligned}
 \]
 where
 \[
@@ -813,57 +824,54 @@ In Fourier space, the second derivative acts as \(\partial_{xx} \to -k^2\), so t
 \]
 Thus, modes with large wavevector \(k\) are strongly damped. This suppresses the short-wavelength instabilities that limit explicit schemes and typically allows much larger time steps.
 
-For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the identity, and the semi-implicit scheme reduces to the explicit update.
+For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the identity and the semi-implicit scheme reduces to the explicit update.
 
 \clearpage
 \section{Surface tension of phase interfaces in ternary mixtures}
-In this chapter, we investigate the surface tension of interfaces in ternary mixtures composed of three distinct components (labeled 0, 1 and 2). All species have repulsive cross species interactions \(\chi_{ij}>0\).
-Without loss of generality, we will selecr component 2 to always have the weakest repulsive interactions with the other two species.
-As a result component 2 can accumulate at phase interfaces, effectively dampening the interactions between components 0 and 1.
-We systematically increase the mean concentration of component 2 starting from the dilute limit all the way to the critical point
-and examine how this dampening affects interfacial properties.
-We solve the interfacial problem numerically using the computational framework established in the previous section and additionally develop an
-analytical approximation that captures the essential physics.
-We then compare the analytical results to the numerical solutions to assess the accuracy and limitations of our theoretical approach.
-Finally, we derive the critical scaling behavior of the surface tension near the critical point.
+In this chapter, we investigate the surface tension of interfaces in ternary mixtures composed of three components, labeled 0, 1 and 2, with repulsive cross-interactions \(\chi_{ij}>0\).
+Without loss of generality, we choose component 2 to have the weakest repulsive interactions with the other two species.
+It can therefore accumulate at phase interfaces and partially screen the direct repulsion between components 0 and 1.
 
-\subsection{Determening the interfacial profiles and surface tension numerically}\label{sec:interfacial_profiles_numerical}
+This chapter is organized as follows. We first determine the interfacial profiles and surface tension numerically as the mean concentration of component 2 is
+varied along the binodal. We then introduce a class of approximate interfacial profiles that yields an analytical expression for the surface tension
+and show that this approximation retains the correct critical scaling near the critical point.
+Next, we compare these predictions with the numerical solutions, to assess the validity and limitations of the approximation and to discuss the role of interfacial adsorption.
+Finally, we highlight the importance of preferential interfacial adsorption by examining the symmetric case \(\chi_{02}=\chi_{12}\).
+
+\subsection{Determining the interfacial profiles and surface tension numerically}\label{sec:interfacial_profiles_numerical}
 \subsubsection{Model setup and numerical scheme}
-After having rescaled the free energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T \nu^{-1/3}\) the model only depends on the Flory-Huggins interaction matrix \(\chi_{ij}\)
-and the lattice size \(a\). Since the lattice size only sets the interfactial length scale, we fix \(a=1\). 
+After rescaling the free-energy density in Eq.~\ref{eq:fh_free_energy_density} by \(k_B T \nu^{-1/3}\), the model depends only on the Flory-Huggins interaction matrix \(\chi_{ij}\)
+and the lattice size \(a\). Since the lattice size merely sets the interfacial length scale, we fix \(a=1\).
 With the convention used in Eq.~\eqref{eq:fh_free_energy_density}, the gradient coefficient matrix is then
 \begin{equation}
-    \kappa_{ij} = -\chi_{ij}.
+    \tilde\kappa_{ij} = -\tilde\chi_{ij}.
 \end{equation}
-
-
 In the following, we restrict attention to interaction parameters:
 \begin{equation}
     \chi_{12}\in[0.8,1.5],\quad \chi_{02}=1.5, \quad \chi_{01}\in[2.3, 3.0]
     \label{eq:interaction_parameters}
 \end{equation}
+This range reliably produces liquid-liquid phase separation while avoiding, as far as possible, regions of three-phase coexistence.\\
 \noindent
 \begin{minipage}{0.45\textwidth}
-This range reliably produces liquid-liquid phase separation,
-while avoiding (as far as possible) regions of three-phase coexistence.
-For a chosen $\chi$-matrix and mean volume fractions, we initialize the system using the corresponding
-coexisting bulk compositions \(\phi_i^{(j)}\) for $i,j\in\{1,2\}$. These bulk phases are
-computed using the \texttt{flory} package \cite{Yicheng2025flory}
-and then used to initialize the interface as a sharp step between the two coexisting phases (see Fig.~\ref{fig:profiles_init})
+For a chosen \(\chi\)-matrix and mean volume fractions, we initialize the system using the corresponding
+coexisting bulk compositions \(\phi_i^{(j)}\) for \(i,j\in\{1,2\}\). These bulk phases are
+computed with the \texttt{flory} package \cite{Yicheng2025flory}
+and are then used to initialize the interface as a sharp step between the two coexisting phases (see Fig.~\ref{fig:profiles_init}).\\
+The spatial discretization is chosen adaptively to resolve the interface. The grid
+spacing \(\Delta x\) is set such that the interfacial region spans approximately
+\(40\) grid points. The total domain contains \(512\) grid points, which allows the fields to relax to
+their bulk values well before the domain edges.
 \end{minipage}
 \hfill
 \begin{minipage}{0.5\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/profiles_init.png}
-    \captionof{figure}{Profile initialization: dashed lines are the initial profiles and solid lines are the equilibrated profiles. Note that we have two interface regions to accommodate the periodic boundaries}
+    \captionof{figure}{Profile initialization: the dashed lines denote the initial profiles and the solid lines the equilibrated profiles. Two interfacial regions are present because of the periodic boundary conditions.}
     \label{fig:profiles_init}
 \end{minipage}\\
 
 
-The spatial discretization is chosen adaptively to resolve the interface. Thus the grid
-spacing $\Delta x$ is set such that the interfacial region spans approximately
-$40$ grid points. The total domain size is $256$ grid points such that the fields relax to
-their bulk values well before the domain edges.
 
 
 
@@ -872,7 +880,7 @@ their bulk values well before the domain edges.
 Starting from the initial step profile, we relax the system to equilibrium using the
 fixed-point iteration in Eq.~\eqref{eq:fixed_point_iteration}. Since we are only interested in the equilibrium profiles,
 the step size $h$ is chosen as large as possible while maintaining numerical stability. The semi-implicit update strongly
-suppresses high-wavenumber modes, which allows us to use $h=\mathcal{O}(10^{-1})$,
+suppresses high-wavenumber modes, which allows us to use $h=\mathcal{O}(10^{-1})$\footnote{Close to the dilute limit, smaller step sizes are required because the logarithmic terms in the free energy become large and can lead to numerical instabilities.}
 typically one to two orders of magnitude larger than in a fully explicit scheme.
 
 
@@ -881,26 +889,25 @@ satisfies
 \[
 \max_x\, \lVert \boldsymbol{\phi}^{i+1}(x)-\boldsymbol{\phi}^{i}(x)\rVert < 10^{-10}.
 \]
-Depending on interaction parameters and initialization, this criterion is reached
-after $10^3$-$10^4$ iterations.
+Depending on the interaction parameters and initialization, this criterion is reached
+after \(10^4\)-\(10^5\) iterations.
 
-We continue equilibrating the system for increased mean concentrations of the second species until the critical point beyond which two-phase coexistence no longer is feasible (Fig~\ref{fig:workflow}).\\
+We repeat this procedure for increasing mean concentrations of species 2 until the critical point, beyond which two-phase coexistence is no longer feasible (Fig.~\ref{fig:workflow}).\\
 
 \noindent
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/workflow_chapter_two.png}
-    \captionof{figure}{Select mean volume fractions along the binodal in phase space (blue dots) and equilibrate the interfacial profiles for the given mean volume fractions (insets).
-    We start at the dilute limit ($\phi_2\sim 0$) and repeat this until we reach the critical point ($\phi_2 = \phi_{2,c}$).}
+    \captionof{figure}{Workflow: Selecting volume fractions along the binodal in phase space (blue dots) and then equilibrating the interfacial profiles (insets).
+    Starting from the dilute limit (\(\phi_2\sim 0\)), we repeat this procedure until the critical point \(\phi_2 = \phi_{2,c}\) is reached.}
     \label{fig:workflow}
 \end{minipage}\\
 
-At equilibrium, the interface exhibits a smooth, sigmoid-like transition in each component.
-Species $2$ will sometimes be enriched at the interface, thus effectively screening the strongest repulsive interactions.
-Interestingly the degree of absorption at the interface increases as the repulsive interaction between species $0$ and $1$ becomes more repulsive and can even lead to a third phase.
-To give this observation some merit Huan and Olvera de la Cruz investigated the symmetric case \(\chi_{02} = \chi_{12}\), where species $2$
-is symmetric about the interface. The authors we able to show that the interfacial adsorption scales linearly with the ratio
-$\chi_{\mathrm{12}}/\chi_{\mathrm{01}}$, which matches our observation.
+At equilibrium, each component exhibits a smooth, sigmoid-like transition across the interface.
+Species \(2\) can become enriched at the interface, thereby screening the strongest repulsive interactions.
+The degree of adsorption increases as \(\chi_{01}\) increases and for sufficiently strong repulsion between species $0$ and $1$, can even promote the appearance of a third phase.
+This trend is consistent with the symmetric case \(\chi_{02} = \chi_{12}\) investigated in \cite{Huang1999}, where they showed that the interfacial adsorption of species $2$ scales with the ratio
+\(\chi_{\mathrm{01}}/\chi_{\mathrm{12}}\).
 
 
 \subsubsection{Critical scaling of the surface tension}
@@ -914,30 +921,29 @@ resulting surface tensions are shown in Fig.~\ref{fig:surface_tension_numerical}
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/st_simulation_results.png}
-    \captionof{figure}{Surface tension as a function of the chemical potential difference $\mu_{2,c}- \mu_2$
+    \captionof{figure}{Surface tension as a function of the chemical-potential difference \(\mu_{2,c}- \mu_2\)
     for various interaction parameters (colored lines) in the range specified by Eq.~\eqref{eq:interaction_parameters}.
-    The surface tension exhibits a power-law scaling $\gamma \sim (\mu_{2,c}-\mu_2)^{3/2}$ close to criticality (dashed line).\\}
+    Close to criticality, the surface tension exhibits the power-law scaling \(\gamma \sim (\mu_{2,c}-\mu_2)^{3/2}\) (dashed line).\\}
     \label{fig:surface_tension_numerical}
 \end{minipage}
 
-As the system approaches the critical point, the interface continuously vanishes, which explains why the surface tension vanishes as well.
+As the system approaches the critical point, the two coexisting phases merge continuously and with it the surface tension vanishes.
 
 Close to criticality, we observe a clear power-law dependence of the surface
 tension on the distance from the critical point, which we quantify by the chemical
-potential difference $\mu_2-\mu_{2,c}$:
+potential difference \(\mu_{2,c}-\mu_2\):
 \[
-\gamma \sim (\mu_2-\mu_{2,c})^{\delta}.
+\gamma \sim (\mu_{2,c}-\mu_2)^{\delta}.
 \]
-This scaling is observed for a wide range of interaction parameters and over several orders of magnitude
-as can be seen in Fig.~\ref{fig:surface_tension_numerical}.
+This scaling is observed for a wide range of interaction parameters and over several orders of magnitude,
+as shown in Fig.~\ref{fig:surface_tension_numerical}.
 
 Within numerical uncertainty, the critical exponent is universal across all
 interaction parameters considered and takes a value $\delta \approx 3/2$. This 
-has been confirmed with numerical fits for each individual curve for datapoints close enough to criticality \footnote{critical exponent typically deviates more than $0.1$ from $3/2$ if points are included in the fit that lay further than $10^{-2}$ from the critical point away.}.
-This is consistent with the classical mean-field prediction for binary mixtures
-derived by Cahn~\cite{Cahn1958FreeTE}. In contrast, the prefactor of the power law
+has been confirmed with fits of the numerical data close to criticality\footnote{The fitted critical exponent typically deviates by more than \(0.1\) from \(3/2\) if points farther than \(10^{-2}\) from the critical point are included in the fit.}.
+Additionally the critical exponent is consistent with the previous results \cite{Huang1996AnalyticInterface}. In contrast, the prefactor of the power law
 is not universal and varies substantially with the choice of interaction
-parameters (almost an order of magnitude in Fig.~\ref{fig:surface_tension_numerical}).
+parameters (nearly an order of magnitude in Fig.~\ref{fig:surface_tension_numerical}).
 
 
 
@@ -945,39 +951,35 @@ parameters (almost an order of magnitude in Fig.~\ref{fig:surface_tension_numeri
 
 While the critical scaling of the surface tension near the critical point provides
 important physical insight, obtaining a closed-form expression for $\gamma$ from
-the full ternary Flory-Huggins free energy is as far as we know intractable. Consequently,
+the full ternary Flory-Huggins free energy appears, as far as we know, to be intractable. Consequently,
 for each choice of interaction parameters and mean volume fractions, the surface
 tension must be computed by solving the full numerical interfacial problem.
 
 To avoid this computational cost, we now introduce an analytical approximation that
 estimates the surface tension using only the bulk volume fractions of the coexisting
-phases and the interaction parameters, therefore removing the need to equilibrate the spacially extended system.
-The approximation remains quantitatively accurate over a broad range of interacrtion parameters and has
+phases and the interaction parameters, thereby removing the need to equilibrate the spatially extended system.
+The approximation remains quantitatively accurate over a broad range of interaction parameters and has
 the correct scaling near the critical point, as we will demonstrate later.
 
 \subsubsection{Derivation of a piecewise-linear interface}
 
-\textcolor{red}{Perhaps introduce invariant quantity and then introduce the approximation.
-For example "To begin we can find a conserved quantity in our spatial system, which we will include in our approximation later."\\}
 
 \noindent
 \begin{minipage}{0.6\textwidth}
 As shown in the previous sections, interfacial profiles in ternary mixtures can be
 highly nontrivial. To make progress, we approximate the interface by a
 piecewise-linear profile that connects the two coexisting bulk phases over a finite
-interfacial width. The interfactial width is set to be the same for all species as can be seen in Fig~\ref{fig:approx_intuition}.\\
+interfacial width. In this ansatz, all species share the same interfacial width, as illustrated in Fig.~\ref{fig:approx_intuition}.\\
 
 This approximation neglects two important features of the exact solution. First, it
-assumes a common interfacial width for all components, which removes the possibility of 
-adsorption at the interface. Second, it ignores the intrinsic
+assumes a common interfacial window for all components, which removes the possibility of
+adsorption at the interface\footnote{If one species accumulates at the interface, the profiles of the other species are offset along the x-axis with respect to each other}. Second, it ignores the intrinsic
 nonlinearity of the equilibrium profiles.
 We will discuss the implications of these assumptions later on.\\
 
-We will now derive the closed form expression for the surface tension.
-To begin, we note that for a one-dimensional interface at equilibrium, the
-Euler–Lagrange equations imply the existence of a conserved quantity across the
-interface.\\
- Writing the free energy density as a sum of a local and a gradient
+Before introducing the approximation, we will introcude a conserved quantity of the equilibrium interfacial problem, which we will use in our approximation. 
+For a one-dimensional interface at equilibrium, the Euler-Lagrange equations imply the existence of a quantity that is constant across the interface.\\
+Writing the free-energy density as a sum of a local and a gradient
 contribution and adopting Einstein summation convention, we define
 \begin{equation}
     f(x)
@@ -986,17 +988,17 @@ contribution and adopting Einstein summation convention, we define
 \end{equation}
 \end{minipage}
 \hfill
-\begin{minipage}{0.3\textwidth}
+\begin{minipage}{0.35\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/approximation_intuition.png}
-    \captionof{figure}{(A) True interfacial profile compared to (B) approximate profile. \textcolor{red}{Perhaps add horizontal lines to indicate the mean volume fractions for each species.}}
+    \captionof{figure}{(A) Schematic of the true interfacial profile compared with (B) the piecewise-linear approximation. \textcolor{red}{Perhaps add horizontal lines to indicate the mean volume fractions for each species.}}
     \label{fig:approx_intuition}
 \end{minipage}\\
 
 Introducing the exchange chemical potentials $\mu_i$ and osmotic pressure $\Pi$, the
 combination
 \begin{equation}
-    f_{\mathrm{local}}(\{\phi_i(x)\})
+    0=f_{\mathrm{local}}(\{\phi_i(x)\})
     - \mu_i \phi_i(x)
     + \Pi
     - \frac{1}{2}\, \phi_i'(x)\,\kappa_{ij}\, \phi_j'(x)
@@ -1006,7 +1008,7 @@ combination
 is invariant across the interface. Here, the terms $V$ and $T$ play roles analogous
 to potential and kinetic energy in classical mechanics.
 
-To see this invariance we can take the spatial derivative of Eq.~\eqref{eq:invariant_quantity}, which yields
+To verify this invariance, we take the spatial derivative of Eq.~\eqref{eq:invariant_quantity}, which yields
 \[
 \begin{aligned}
     \frac{d}{dx} \Bigl(
@@ -1027,18 +1029,19 @@ To see this invariance we can take the spatial derivative of Eq.~\eqref{eq:invar
 \]
 where the expression in parentheses vanishes by virtue of the Euler–Lagrange
 equations. Consequently, we have found a conserved quantity in Eq.~\eqref{eq:invariant_quantity}.
+\textcolor{red}{Should I move this to the first chapter?}\\
 
 
-Shifting focus back to our approximation, we assume that each component varies linearly across an interface of width $w$,
+We now return to the piecewise-linear approximation. We assume that each component varies linearly across an interface of width $w$,
 connecting the bulk values $\phi_i^{(1)}$ and $\phi_i^{(2)}$ for $i \in \{1,2\}$. The magnitude of the
-gradient at the interface \(x=0\) is therefore approximated by
+gradient at the interface \(x=0\) is therefore given by (see Fig.~\ref{fig:approx_intuition})
 \[
-    | \phi_i'(0)| \simeq \frac{|\Delta \phi_i|}{w},
+    | \phi_i'(0)|= \frac{|\Delta \phi_i|}{w},
 \]
 where $\Delta \phi_i = \phi_i^{(2)} - \phi_i^{(1)}$ denotes the difference between the
-coexisting bulk phases. In our approximation the volume fractions at the interface are equal to the mean compositions
+coexisting bulk phases. In this approximation, the volume fractions at the interface are equal to the mean compositions
 \[
-    \phi_i(0)=\bar{\phi}_i = \tfrac{1}{2}\left(\phi_i^{(1)} + \phi_i^{(2)}\right),
+    \phi_i(0)=\bar{\phi}_i = \frac{1}{2}\left(\phi_i^{(1)} + \phi_i^{(2)}\right),
 \]
 at which the local free energy density is evaluated.
 
@@ -1063,8 +1066,7 @@ Solving for the interfacial width gives
 \]
 
 
-The denominator can be expressed using the invariant quantity
-Eq.~\eqref{eq:invariant_quantity}, evaluated at $x=0$. This leads to the
+Evaluating the invariant quantity in Eq.~\eqref{eq:invariant_quantity} at $x=0$ then allows the denominator to be written in terms of the local free energy. This leads to the
 approximate expression
 \begin{equation}
     w
@@ -1082,7 +1084,7 @@ approximate expression
     \label{eq:interface_width_approximation}
 \end{equation}
 
-The surface tension is given by Eq~\ref{eq:surface_tension_flory}
+The surface tension is given by Eq.~\ref{eq:surfacetension_flory}:
 \[
 \begin{aligned}
 \gamma
@@ -1092,17 +1094,17 @@ The surface tension is given by Eq~\ref{eq:surface_tension_flory}
 f(\phi_1(x),\phi_2(x)) 
 -\sum_i \mu_i \phi_i(x) +\Pi
 \bigg]\\
-    &=\int dx\,  \phi_i'(x)\, \kappa_{ij}\, \phi_j'(x)
+    &=\int_{-L/2}^{L/2} dx\, \frac{1}{2} \phi_i'(x)\, \kappa_{ij}\, \phi_j'(x)
 \end{aligned}
 \]
-where in the second equality we used the invariant quantity from Eq~\ref{eq:invariant_quantity}.
+where in the second equality we used the invariant quantity from Eq.~\ref{eq:invariant_quantity}.
 
 Within the linear-profile approximation, the gradients are constant across the
 interface and vanish in the bulk. The integral therefore reduces to
 \[
     \gamma
     =
-    w\, \phi_i'(0)\, \kappa_{ij}\, \phi_j'(0),
+    w\, \frac{1}{2}\phi_i'(0)\, \kappa_{ij}\, \phi_j'(0),
 \]
 Substituting the expression for $w$ from
 Eq.~\eqref{eq:interface_width_approximation} yields the approximate surface tension
@@ -1110,7 +1112,7 @@ Eq.~\eqref{eq:interface_width_approximation} yields the approximate surface tens
     \gamma
     =
     \sqrt{
-    2\left(
+    \frac{1}{2}\left(
         \Delta \phi_i\, \kappa_{ij}\, \Delta \phi_j
     \right)
     \left(
@@ -1122,29 +1124,21 @@ Eq.~\eqref{eq:interface_width_approximation} yields the approximate surface tens
     \label{eq:surface_tension_approximation}
 \end{equation}
 
-As anticipated, this expression depends only on $Delta\phi_i$ and $\bar\phi_i$ which in turn depend
-on  the bulk compositions $\{\phi_i^{(1)}, \phi_i^{(2)}\}$ of the coexisting phases.
+As anticipated, this expression depends only on \(\Delta\phi_i\) and \(\bar\phi_i\), which in turn depend
+on the bulk compositions \(\{\phi_i^{(1)}, \phi_i^{(2)}\}\) of the coexisting phases.
 Importantly, the closed-form nature of
 Eq.~\eqref{eq:surface_tension_approximation} allows derivatives of the surface
-tension with respect to order parameters to be evaluated analytically.
-
-% \subsubsection{Comparison between analytical approximation and numerical results}
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.6\linewidth]{figures/st_approx.png}
-%     \caption{Exact (blue) and approximate (red) surface tension as a function of the chemical potential for various interaction parameters. 
-%     For reference, the scaling behavior with exponent \(1.5\) is shown as a dashed line.}
-%     \label{fig:surface_tension}
-% \end{figure}
+tension with respect to the bulk volume fractions to be evaluated analytically.
 
 The quantitative comparison between the analytical approximation and the numerical
 results is shown in Fig.~\ref{fig:approximation_compare}.\\
+
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/approximation_compare.png}
-    \captionof{figure}{(A) Exact (red) and approximate (blue) surface tension for $\chi_{01}=2.5$, $\chi_{02}=1.5$, $\chi_{12}=1.4$
+    \captionof{figure}{(A) Exact (red) and approximate (blue) surface tension for \(\chi_{01}=2.5\), \(\chi_{02}=1.5\), \(\chi_{12}=1.4\)
     as a function of the chemical potential.
-    (B) Relative error $\epsilon =(\gamma_{\mathrm{approx}}-\gamma_{\mathrm{exact}})/\gamma_{\mathrm{exact}}$ where the blue data points are for the same parameters as in (A) and the gray area outlines the range of possible errors for various other interaction parameters given by Eq.~\eqref{eq:interaction_parameters}.\\}
+    (B) Relative error \(\epsilon =(\gamma_{\mathrm{approx}}-\gamma_{\mathrm{exact}})/\gamma_{\mathrm{exact}}\), where the blue data points correspond to the same parameters as in (A) and the gray area indicates the range of errors obtained for the other interaction parameters in Eq.~\eqref{eq:interaction_parameters}.\\}
 
     \label{fig:approximation_compare}
 \end{minipage}\\
@@ -1153,12 +1147,12 @@ Somewhat surprisingly, the
 approximate expression not only reproduces the correct critical scaling but also
 provides good qualitative agreement with the numerically computed surface tension
 over a wide range of parameters.
-For the parameter range considered in Eq.~\eqref{eq:interaction_parameters}, the surface tension will vary \(20\%\) to \(90\%\) from the exact value
-as can be seen in Fig.~\ref{fig:approximation_compare}.
+For the parameter range considered in Eq.~\eqref{eq:interaction_parameters}, the relative error ranges from roughly \(20\%\) to \(90\%\),
+as shown in Fig.~\ref{fig:approximation_compare} (gray area).
 Additionally, one can see that the approximation becomes more accurate as the system approaches criticality.
 
 A systematic deviation is nevertheless apparent: the analytical approximation
-consistently overestimates the exact surface tension. This behavior can be
+overestimates the exact surface tension. This behavior can be
 understood better within the variational formulation of the interfacial problem.
 Using the invariant quantity from Eq.~\eqref{eq:invariant_quantity}, the effective
 Lagrangian density of the system can be identified as
@@ -1189,26 +1183,25 @@ approximately in terms of the bulk compositions of the coexisting phases. We now
 analyze the behavior of this expression in the vicinity of the critical point, with
 the goal of deriving its asymptotic scaling form.
 
-Recall that the approximate surface tension is given by
-Eq.~\eqref{eq:surface_tension_approximation} as the product of two factors. We first
-consider the term
+Recall that Eq.~\eqref{eq:surface_tension_approximation} can be written as the square root of the product of two factors. We first
+consider the first factor in the square root
 \[
     \Delta \phi_i \,\kappa_{ij}\, \Delta \phi_j,
 \]
 which depends solely on the difference between the bulk compositions of the two
 coexisting phases.
 
-Close to the critical point, the volume fractions in the dense and dilute
-phases can be written as small deviations from the critical composition
-$\phi_{i,c}$,
-\[
-    \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2} \Delta \phi_i, \quad \phi_i^{(2)} = \phi_{i,c} - \tfrac{1}{2} \Delta \phi_i,
-\]
-where $\Delta \phi_i$ parameterizes the displacement of the coexisting phases along
-the tie line in composition space.
+% Close to the critical point, the volume fractions in the dense and dilute
+% phases can be written as small deviations from the critical composition
+% $\phi_{i,c}$,
+% \[
+%     \phi_i^{(1)} = \phi_{i,c} + \frac{1}{2} \Delta \phi_i, \quad \phi_i^{(2)} = \phi_{i,c} - \frac{1}{2} \Delta \phi_i,
+% \]
+% where $\Delta \phi_i$ parameterizes the displacement of the coexisting phases along
+% the tie line in composition space.
 
 
-In the following we will switch to vector notation, where for example \(\boldsymbol \mu = (\mu_1\, \mu_2)^T\).
+In the following, we switch to vector notation, where for example \(\boldsymbol \mu = (\mu_1\, \mu_2)^T\).
 Expanding the chemical potentials in the two coexisting phases about the critical
 point yields
 \begin{equation}
@@ -1220,7 +1213,7 @@ where $\boldsymbol{H}$ denotes the Hessian of the local free energy density eval
 at the critical composition and
 $\Delta\boldsymbol{\phi}^{(1/2)} = \boldsymbol{\phi}^{(1/2)} - \boldsymbol{\phi}_c$.
 At coexistence, the chemical potentials in the two phases must be equal,
-$\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$. Subtracting the two expansions and
+$\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$. Subtracting the expansions for the two phases and
 defining
 \[
     \Delta \boldsymbol{\phi}
@@ -1235,7 +1228,7 @@ This shows that the difference between the bulk compositions of the coexisting
 phases lies in the null space of the Hessian at the critical point.
 
 Furthermore, in the immediate vicinity of the critical point, the binodal is
-approximately linear. Consequently, the deviations
+approximately a straight line. Consequently, the deviations
 $\Delta \boldsymbol{\phi}^{(1)}$ and $\Delta \boldsymbol{\phi}^{(2)}$ are parallel to $\Delta \boldsymbol{\phi}$ and
 thus also belong to the null space of $\boldsymbol{H}$. As a result, the linear term
 in the Taylor expansion of the chemical potentials vanishes along the coexistence
@@ -1250,13 +1243,13 @@ chemical potential about the critical point. Expanding to second order yields
     \frac{1}{2}
     \left(\alpha^{(1/2)}\right)^2
     \left[
-        \frac{\partial^2 \mu_i}{\partial \phi_j \partial \phi_k}
+        \frac{\partial^2 \mu_i}{\partial \phi_j \partial \phi_k}\bigg\rvert_{\boldsymbol{\phi_c}}
         \,\Delta \phi_j \Delta \phi_k
     \right]\boldsymbol{e}_i
     + \mathcal{O}(\Delta \phi^3),
     \label{eq:second_order}
 \end{equation}
-where all derivatives are evaluated at the critical composition and we have
+where we use Einstein summation convention and we have
 introduced
 \[
     \alpha^{(1)}
@@ -1268,19 +1261,19 @@ introduced
          {\lvert \Delta \boldsymbol{\phi} \rvert}.
 \]
 
-Since again the chemical potentials must be equal in the two coexisting phases,
+Since the chemical potentials must again be equal in the two coexisting phases,
 $\boldsymbol{\mu}^{(1)}=\boldsymbol{\mu}^{(2)}$, the prefactors must satisfy
-$\left(\alpha^{(1)}\right)^2=\left(\alpha^{(2)}\right)^2$. Additionally the two phases 
+$\left(\alpha^{(1)}\right)^2=\left(\alpha^{(2)}\right)^2$. Additionally, the two phases
 must have displacements with opposite sign along the tie line, which implies
 \[
     \Delta \boldsymbol{\phi}^{(1)}
     =
     -\,\Delta \boldsymbol{\phi}^{(2)}
     =
-    \tfrac{1}{2}\,\Delta \boldsymbol{\phi}.
+    \frac{1}{2}\,\Delta \boldsymbol{\phi}.
 \]
 
-The terms inside of the brackets in Eq.~\eqref{eq:second_order} is generically
+The sum inside the brackets in Eq.~\eqref{eq:second_order} is generically
 nonzero. Consequently, the leading dependence of the chemical potential deviation on
 the distance from the critical point is
 \[
@@ -1288,15 +1281,15 @@ the distance from the critical point is
     \sim
     \lvert \Delta \boldsymbol{\phi} \rvert^2 .
 \]
-This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ is plotted against $\lvert \Delta \boldsymbol{\phi} \rvert$ on a log-log scale.
-Finally, since $\Delta \boldsymbol{\phi}$ lies in the null space of the Hessian at the
-critical point, the leading nontrivial contribution to the dot product
+This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ on a log-log scale.\\
+
+Interestingly, the leading nonvanishing contribution to the dot product
 $(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is equal to the
 third derivative of the free energy. This quantity vanishes exactly at the critical
 point, implying that $\boldsymbol{\mu}-\boldsymbol{\mu}_c$ is orthogonal to the tie
-lines in $(\phi_1,\phi_2)$ composition space.
+lines in composition space.\\
 
-We now turn to the second factor in the approximation for the surface tension,
+We now turn to the second factor in the surface-tension approximation,
 \begin{equation}
     f(\bar{\boldsymbol{\phi}})
     -\sum_i \mu_i \bar{\phi}_i
@@ -1307,18 +1300,18 @@ We now turn to the second factor in the approximation for the surface tension,
     +\sum_i \mu_i \bigl(\phi_i^{(1)} - \bar{\phi}_i\bigr),
     \label{eq:second_product}
 \end{equation}
-Where in the second equality we evaluate the pressure at $\boldsymbol \phi = \boldsymbol \phi^{(1)}$.
-For convenience we have shortened the notation of the local free energy density $f_\mathrm{local} = f$
+where in the second equality we evaluate the pressure at $\boldsymbol \phi = \boldsymbol \phi^{(1)}$.
+For convenience, we write the local free-energy density as $f_\mathrm{local} = f$.
 
 Close to the critical point, the dense-phase composition can be written as
 \[
-    \phi_i^{(1)} = \phi_{i,c} + \tfrac{1}{2}\,\Delta \phi_i ,
+    \phi_i^{(1)} = \phi_{i,c} + \frac{1}{2}\,\Delta \phi_i ,
 \]
 while the midpoint composition satisfies
 \[
     \bar{\phi}_i
     =
-    \tfrac{1}{2}\bigl(\phi_i^{(1)} + \phi_i^{(2)}\bigr)
+    \frac{1}{2}\bigl(\phi_i^{(1)} + \phi_i^{(2)}\bigr)
     =
     \phi_{i,c},
 \]
@@ -1355,32 +1348,31 @@ of the Hessian at the critical point. The cubic term vanishes because the third
 derivative of the free energy along the coexistence direction is zero at criticality.
 Consequently, the leading nonzero contribution in
 Eq.~\eqref{eq:second_product} arises from the quartic term, which is generically
-finite.
+finite\footnote{The linear term will cancel once we collect all terms.}.
 
 
 
-Finally, we revisit the higher-order expansion of the chemical potential. 
-As shown earlier, the first-order contribution vanishes and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\).
-Additionally we will see that the zeroth term will cancel with Eq~\ref{eq:free_en_taylor}.
-Therefore we will include the third-order term as the first nonzero contribution in the second product.
+Finally, we revisit the higher-order expansion of the chemical potential.
+The zeroth-order term cancels the corresponding term in Eq.~\eqref{eq:free_en_taylor}, the first-order contribution vanishes along the coexistence direction and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\).
+The leading nonzero contribution to the second product therefore comes from the third-order term in the chemical potential.
 The chemical potential can then be written as
 \begin{equation}
-   \tfrac{1}{2}\mu_i\Delta \phi_i
-   =\tfrac{1}{2}\mu_{i,c}\Delta \phi_i
+   \frac{1}{2}\mu_i\Delta \phi_i
+   =\frac{1}{2}\mu_{i,c}\Delta \phi_i
     + \frac{1}{2^4 \cdot 3!}\,
      \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
      \Delta \phi_j \Delta \phi_k \Delta \phi_l
    + \mathcal{O}(\Delta \phi^5) .
 \end{equation}
 
-Collecting terms, we find that the second factor of the surface tension approximation is equal to
+Collecting terms, we find that the second factor of the surface-tension approximation is equal to
 \begin{equation}
      \frac{1}{2^7}\,
-      \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
-      \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
-    + \mathcal{O}(\Delta \phi^5) .
+       \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
+       \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
+     + \mathcal{O}(\Delta \phi^5) .
 \end{equation}
-and using the scaling relation between the phase composition difference and the chemical potential we find that
+Using the scaling relation between the phase-composition difference and the chemical potential, we therefore obtain
 \[
     f(\bar{\boldsymbol{\phi}})
     -\sum_i \mu_i \bar{\phi}_i
@@ -1390,8 +1382,8 @@ This scaling is consistent with the numerical results shown in Fig.~\ref{fig:fac
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/factor_scaling.png}
-    \captionof{figure}{Scaling of the first $|\Delta \boldsymbol{\phi}|^2$ and second $|f(\bar{\boldsymbol{\phi}}) - \sum_i \mu_i \bar{\phi}_i + \Pi|$
-    term in the surface tension approximation, obtained from the numerical results as a function of the chemical potential difference $\mu_2-\mu_{2,c}$
+    \captionof{figure}{Scaling of the first factor \(|\Delta \boldsymbol{\phi}|^2\) and the second factor \(|f(\bar{\boldsymbol{\phi}}) - \sum_i \mu_i \bar{\phi}_i + \Pi|\)
+    in the surface-tension approximation, obtained from the numerical results as functions of the chemical potential difference \(|\boldsymbol\mu-\boldsymbol\mu_{c}|\)
     for various interaction parameters. The dashed lines indicate the expected scaling with exponents \(1\) and \(2\) respectively.\\\newline}
     \label{fig:factor_scaling}
 \end{minipage}
@@ -1409,22 +1401,22 @@ In addition, this analysis provides the scaling of the interfacial width:
     \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{-1/2} .
     \label{eq:width_scaling}
 \end{equation}
-Which diverges at the critical point, as expected.
+which diverges at the critical point, as expected.
 
 Taken together, these results provide a direct connection between the bulk
 thermodynamic quantities introduced in the previous chapter and the interfacial
-properties analyzed here. The critical scaling of the interfacial width $w \sim |\mu-\mu_c|^{-1/2}$ agrees with the 
-diverging interfacial width observed in the numerical results \textcolor{red}{Add figure in supplimentary}, while the critical exponent of the surface tension $\gamma \sim |\mu-\mu_c|^{3/2}$ is consistent
-with our numerically obtained critical exponent.
-In this sense the effective interfacial model does not introduce new critical behavior, but rather
-implies that near the critical point the interfacial properties do not depend as much on the profile shape as they do on the bulk compositions.
+properties analyzed here. The critical scaling of the interfacial width, \(w \sim |\mu-\mu_c|^{-1/2}\), agrees with the
+diverging interfacial width observed in the numerical results \textcolor{red}{Add figure in supplimentary}, while the critical exponent of the surface tension, \(\gamma \sim |\mu-\mu_c|^{3/2}\), is consistent
+with the numerically obtained exponent.
+In this sense, the effective interfacial model does not introduce new critical behavior; rather,
+it implies that near the critical point the interfacial properties depend more strongly on the bulk compositions than on the detailed profile shape.
 
 \subsubsection{Sources of error and limitations}
 
 The piecewise-linear approximation differs from the true equilibrium interfacial
 profiles in two essential ways: First, it replaces the smooth, nonlinear variation
 of the volume fractions across the interface by a linear interpolation. Second, it
-assumes that all species share a common interfacial width, thereby neglecting
+assumes that all species share a common interfacial window, thereby neglecting
 interfacial adsorption.
 
 % As shown in Fig.~\ref{fig:approximation_compare}B, the approximation performs best far from
@@ -1434,7 +1426,7 @@ interfacial adsorption.
 % The dominant source of error arises from the simplified functional form of the profile. If one
 % assumes that this error varies only weakly across phase space, one can conclude that the deviation from the equal-width assumption is the primary source of error close to the critical point, where the relative error is largest.
 
-To quantify the importance of species dependent interfacial widths, we fit a hyperbolic tangent
+To quantify the importance of species-dependent interfacial widths, we fit a hyperbolic tangent
 profile of the form
 \[
     \phi(x)
@@ -1453,8 +1445,8 @@ of the degree of interfacial adsorption.\\
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fit_profiles.png}
-    \captionof{figure}{(A) Fitting a hyperbolic tangent profile to the numerical equilibrium profiles to obtain the interface positions $x_0$ for both components.
-    (B) Relative error of the surface tension approximation (blue) and displacement between the centers of the profiles (green) as a function of the chemical potential.\\}
+    \captionof{figure}{(A) Hyperbolic tangent fits to the numerical equilibrium profiles used to extract the interface positions \(x_0\) for both components.
+    (B) Relative error of the surface-tension approximation (blue) and the displacement between the centers of the fitted profiles (green) as functions of the chemical potential.\\}
     \label{fig:fit_profiles}
     
 \end{minipage}
@@ -1465,67 +1457,58 @@ Importantly, this correlation is not restricted to the specific interaction
 parameters shown in Fig.~\ref{fig:fit_profiles}, but persists across a broad range of
 interaction strengths \textcolor{red}{Add in suplemental material}.\\
 
-One might notice that once the relative displacement between the centers of the profiles nearly vanishes, the relative error does not vanish but rather reaches a finite value.
-This suggests that even in the absence of interfacial adsorption, the simplified functional form of the profile still contributes to the error of the approximation. However, this relative error (approximately \(5\%\) in Fig.~\ref{fig:fit_profiles}B) is substantially smaller than the error observed close to the critical point (approximately \(22\%\) in Fig.~\ref{fig:fit_profiles}B), where the displacement between the centers of the profiles is largest.
-This indicates that interfacial adsorption, rather than the
+Even when the relative displacement between the centers of the profiles nearly vanishes, the relative error does not go to zero but instead approaches a finite value.
+This indicates that even in the absence of interfacial adsorption, the simplified functional form of the profile still contributes to the error of the approximation. However, this baseline error (approximately \(5\%\) in Fig.~\ref{fig:fit_profiles}B) is substantially smaller than the error observed close to the critical point (approximately \(22\%\) in Fig.~\ref{fig:fit_profiles}B), where the displacement between the centers of the profiles is largest.
+This indicates that the lack of interfacial adsorption, rather than the
 simplified functional form of the profile, is the primary limitation of the
 piecewise-linear model.\\
 
-To further investigate the role of interfacial adsorption, we can try to find an analytical expression for the interfacial absorption and include it in the approximation.
-The hope is that this will significantly reduce the error of the approximation, especially close to the critical point where the relative error is the largest.
-
-
-
-
-
-
+To better understand the role of interfacial adsorption, the next section derives an analytical expression that is then incorporated into the approximation.
 
 \subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}
-Although an analytical solution for the interfacial profile is generally not available, it is possible to derive an implicit expressions for the profile properties,
-for the symmetric case i.e. \(\chi_{01} = \chi_{02}\) and \(\phi_0^{(1)} = \phi_0^{(2)}\).
-In this case, the interaction matrix takes the form \footnote{Note that here species 0 will be absorbed at the interface, which is different from before where species 2 was absorbed.
- This is done to better match the convention used in the work of Huang and Olvera de la Cruz~\cite{Huang1996,Huang1999}.}
-\[
+We will consider the symmetric case, where \(\chi_{01} = \chi_{02}\), such that \(\phi_0^{(1)} = \phi_0^{(2)}\) and \(\phi_1^{(1)} = \phi_2^{(2)}\)\footnote{Note that here species 0 will be absorbed at the interface, which is different from before where species 2 was absorbed.
+This is done to better match the convention used in the work of Huang and Olvera de la Cruz~\cite{Huang1996,Huang1999}.}.
+Although an analytical solution for the full interfacial profile remains intractable, it is possible to derive implicit expressions for several key interfacial properties.\\
+The symmetric interaction matrix takes the form \\\[
     \begin{pmatrix}
         0 &\eta \chi& \eta\chi\\
         \eta \chi& 0&  \chi\\
         \eta\chi & \chi& 0\\
 
     \end{pmatrix}
-\]
-Where \(\chi\) is the interaction strength between the last two components and \(\eta\) modulates the interaction strength of the zeroth component with the other two and typically takes values between 0 and 1.
-This writing convention has been adopted from other work on interfacial absorption ~\cite{Huang1996,Huang1999} and allows for a direct comparison with their results.
+\]\\
+where \(\chi\) is the interaction strength between the last two components and \(\eta\) modulates the interaction strength of the zeroth component with the other two; typically, \(0 \le \eta \le 1\).
+This convention follows other work on interfacial adsorption~\cite{Huang1996,Huang1999}.
 \subsubsection{Implicit expression for the bulk phase compositions}
-The interaction matrix of the reduced two-component system is then given by:
-\textcolor{red}{reference equation from theory chapter that shows how reduced matrix is computed from 3 comp system.}
+The interaction matrix of the reduced two-component system can be obtained from the original three-component interaction matrix according to Eq.~\ref{eq:reduced_chi}, which for the symmetric case reduces to\\
 \[
     \begin{pmatrix}
          \chi_d & \chi_o \\
         \chi_o & \chi_d
     \end{pmatrix}
-\]
+\]\\
 where \(\chi_d = -2\eta\chi\) and \(\chi_o=\chi(1-2\eta)\) are the diagonal and off-diagonal elements, respectively.
-Whe choose \(\lambda = 1\) such that \(\kappa_{ij} = -\chi_{ij}\).
-The profiles are then given by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\ref{eq:fh_free_energy} leads to the following Euler–Lagrange equations:
+We choose \(\lambda = 1\) such that \(\kappa_{ij} = -\chi_{ij}\).
+The profiles are then determined by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\eqref{eq:fh_free_energy} leads to the following Euler-Lagrange equations:
 \[
 \begin{aligned}
     &-\chi_d \phi_1''(x) - \chi_o \phi_2''(x) = \chi_d \phi_1 + \chi_o \phi_2 + \ln(\phi_1) - \ln(1-\phi_1-\phi_2)-\mu_1\\
     &-\chi_o \phi_1''(x) - \chi_d  \phi_2''(x) = \chi_o \phi_1 + \chi_d \phi_2 + \ln(\phi_2) - \ln(1-\phi_1-\phi_2)-\mu_2\\
 \end{aligned}
 \]
-Where \(\mu_1=\mu_2=\mu=\chi_d\phi_1^{(1)} + \chi_o \phi_2^{(1)} + \ln(\phi_1^{(1)}) - \ln(\phi_0^{(1)})\) is the chemical potential of the coexisting phases.
-The EL equations  can be written in terms of the eigenmodes of the interaction matrix \(\phi_\pm = \tfrac{1}{2}(\phi_1 \pm \phi_2)\):
+Here \(\mu_1=\mu_2=\mu=\chi_d\phi_1^{(1)} + \chi_o \phi_2^{(1)} + \ln(\phi_1^{(1)}) - \ln(\phi_0^{(1)})\) is the exchange chemical potential.
+The Euler-Lagrange equations can be written more clearly in terms of the eigenmodes of the interaction matrix, \(\phi_\pm = \frac{1}{2}(\phi_1 \pm \phi_2)\):
 \[
 \begin{aligned}
-    &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+ + \ln(\phi_+ + \phi_-)+\ln(\phi_+ - \phi_-) -2 \ln(1-2\phi_+) - 2\mu \\
-    &\frac{2}{\phi_c} \phi_-''(x)- = -\frac{2}{\phi_c}\phi_- + \ln(\phi_+ + \phi_-)-\ln(\phi_+ - \phi_-)\\
+    &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+(x) + \ln(\phi_+ + \phi_-) + \ln(\phi_+ - \phi_-) - 2 \ln(1-2\phi_+) - 2\mu \\
+    &\frac{2}{\phi_c} \phi_-''(x) = -\frac{2}{\phi_c}\phi_-(x) + \ln(\phi_+ + \phi_-) - \ln(\phi_+ - \phi_-)\\
 \end{aligned}
 \]
-Where we define \(\chi_o - \chi_d \eqcolon 1/\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
+where we define \(\chi_o - \chi_d \eqcolon 1/\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
 
-First we will focus on the EL equation for \(\phi_-\).
-For this we can look at the equation far away from the interface, in the bulk where the curvature is zero and \(\phi_+(x\rightarrow \infty) = \bar\phi\) and \(\phi_-(x\rightarrow \infty) = \Delta \phi\) are constant.
-\(\Delta \phi = (\phi_1^{(1)}-\phi_2^{(1)})/2\) is half the difference between the bulk phases and \(\bar\phi = (\phi_1^{(1)}+\phi_2^{(1)})/2\) is the mean composition of the two bulk phases.
+We first focus on the Euler-Lagrange equation for \(\phi_-\).
+Far from the interface, the curvature vanishes and \(\phi_+(x\rightarrow \infty) = \bar\phi\) and \(\phi_-(x\rightarrow \infty) = \Delta \phi\) are constant.
+Here \(\Delta \phi = (\phi_1^{(1)}-\phi_2^{(1)})/2\) is half the difference between the bulk phases and \(\bar\phi = (\phi_1^{(1)}+\phi_2^{(1)})/2\) is their mean composition.
 The EL equation for \(\phi_-\) then reduces to
 \begin{equation}
 \begin{aligned}
@@ -1534,34 +1517,36 @@ The EL equation for \(\phi_-\) then reduces to
 \end{aligned}
 \label{eq:delta_phi}
 \end{equation}
-Thus we have obtained an implicit expression for the difference between the bulk phases, as a function of the mean composition.
-We can investigate the possible solutions better by rewriting this expression as 
+Thus we have obtained an implicit expression for the difference between the bulk phases as a function of the mean composition.
+We can understand the solution structure more easily by rewriting this expression as
 \[
 x = a \tanh(x),
 \]
-where $x=\Delta \phi / \phi_c$ and $a=\bar\phi/\phi_c$.
-If $a\leq 1$ or equivalently $\bar\phi \leq \phi_c$ the only root is $x*=0$.
+where $x\coloneq\Delta \phi / \phi_c$ and $a\coloneq\bar\phi/\phi_c$.
+If \(a\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\).
 Therefore phase separation can only occur for $\bar\phi > \phi_c$.
-Additionally one might notice that the larger $a$ gets, the larger the root $x*>0$ satisfying $x-a\tanh(x)=0$ becomes.
-The largest possible value for $a$ is in the dilute limit where $\bar\phi = 1/2$. 
-This is where phase separation is largest given by $\Delta \phi_\mathrm{max} = \tanh(\Delta\phi_\mathrm{max}/\phi_c)/2$.
+In addition, the positive root \(x^*>0\) satisfying \(x-a\tanh(x)=0\) increases with \(a\), meaning that as \(\bar\phi\) increases, so does \(\Delta \phi\).
+The largest possible value for \(\Delta \phi\) occurs in the dilute limit, where \(\bar\phi = 1/2\),
+with \(\Delta \phi_\mathrm{max}\) determined implicitly by \(\Delta \phi_\mathrm{max} = \tanh(\Delta\phi_\mathrm{max}/\phi_c)/2\).
 
 \subsubsection{Implicit expression for the interfacial absorption}
-Next we will look at the EL equation for \(\phi_+\) at the interface. Due to the anti-symmetric nature of \(\phi_-\) about the interface we have \(\phi_-(x=0)=0\) and therefore
+Next we examine the Euler-Lagrange equation for \(\phi_+\) at the interface. Due to the antisymmetric nature of \(\phi_-\) about the interface, we have \(\phi_-(x=0)=0\) and therefore
+
 \[
 \begin{aligned}
     &\frac{2}{\phi_s} \phi_+''(0) = -\frac{2}{\phi_s}\phi_+(0) + 2\ln(\phi_+(0)) - 2 \ln(1-2\phi_+(0)) - 2\mu \\
     \Rightarrow\quad&\frac{ \phi_+''(0)}{\phi_s} = -\frac{\delta\phi_+}{\phi_s} + \frac{\Delta\phi}{\phi_c} + \ln\left(\frac{\bar\phi+\delta\phi_+}{\bar\phi+\Delta\phi}\right)+\ln\left(\frac{1-2\bar\phi}{1-2(\bar\phi+\delta\phi_+)}\right) \\
 \end{aligned}
 \]
-Where we have defined \(\delta\phi_+ = \phi_+(0) - \bar\phi\). This quantity essentially .
-Now we can rearrange this to the implicit equation for \(\delta\phi_+\):
+
+where we have inserted the definition of \(\mu\) and defined the absorption amplitude \(\delta\phi_+ = \phi_+(0) - \bar\phi\).
+Rearranging the previous equation yields the following implicit relation for \(\delta\phi_+\):
 \begin{equation}
     \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Xi}\right)
     \label{eq:delta_phi_plus}
 \end{equation}
     % \delta \phi_+ = \frac{1-2\bar\phi}{2}\frac{-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}=\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
-Where we have defined 
+where we have defined
 \begin{equation}
     \Xi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
 \end{equation}
@@ -1571,29 +1556,29 @@ Dimensional analysis then implies
 \phi_+''(x) \sim \frac{\delta\phi_+}{w^2} 
 \]
 where \(w\) is the interfacial width.
-Since the interfacial width diverges at the critical point, we can conclude that in this limit 
+Since the interfacial width diverges at the critical point, we can conclude that in this limit
 \[
 a_2 = \frac{\phi_+''(x)}{\delta\phi_+} \sim \frac{1}{w^2}
 \]
-vanishes. Under the assumption $a_2 \ll 1$ the equation in \eqref{eq:delta_phi_plus} can be solved self-consistently
-once \(\Delta \phi\) is obtained from \eqref{eq:delta_phi}.
+vanishes. Under the assumption $a_2 \ll 1$ the equation in Eq.~\eqref{eq:delta_phi_plus} can be solved self-consistently
+once \(\Delta \phi\) is obtained from Eq.~\eqref{eq:delta_phi}.
 The results can be seen in Fig.~\ref{fig:absorption}.\\
 
 \begin{minipage}{\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/absorption.png}
-    \captionof{figure}{(A) Interfacial excess \(\delta \phi_+ = \phi_+(0) - \bar\phi\) for the numerical (dashed) and analytical (solid) results as a function of the chemical potential difference \(\mu_c-\mu\)
+    \includegraphics[width=0.8\textwidth]{figures/absorption.png}
+    \captionof{figure}{(A) Interfacial excess \(|\delta \phi_+| = |\phi_+(0) - \bar\phi|\) for the numerical (dashed) and analytical (solid) results as a function of the chemical-potential difference \(\mu_c-\mu\).
     The colorscale indicates the interaction strength \(\eta\) and \(\chi=2.5\).
-    Note that the analyitcal solution always overestimates \(\delta \phi_+\).
-    (B) Relative error $\epsilon_{\mathrm{approx.}}=|\delta \phi_+^{\mathrm{analytical}} - \delta \phi_+^{\mathrm{numerical}}| / |\delta \phi_+^{\mathrm{numerical}}|$ of the analytical approximation.
-    The analytical solution becomes exact near the critical point. Surprisingly the relative error seems to vanish near the dilute limit as well
-    suggesting that the curvature can be neglected in this regime.\\}
+    Note that the analytical solution always overestimates \(\delta \phi_+\).
+    (B) Relative error \(\epsilon_{\mathrm{approx.}}=|\delta \phi_+^{\mathrm{analytical}} - \delta \phi_+^{\mathrm{numerical}}| / |\delta \phi_+^{\mathrm{numerical}}|\) of the analytical approximation.
+    The analytical solution becomes exact near the critical point. Surprisingly, the relative error seems to vanish near the dilute limit as well,
+    suggesting that the curvature can be neglected in this regime as well.\\}
     \label{fig:absorption}
     
 \end{minipage}
 \subsubsection{Approximation for the interfacial profiles}
-Next we will derive the interface width, \(w = \Delta \phi /  \phi_{-}'(0)\) which will differ from the approximation in Eq.~\eqref{eq:width_scaling} due to the inclusion of absorption effects.
-In order to compute \(w\) we need to know the gradient of \(\phi_-\) at the interface, which can be obtained from the conserved quantity in Eq.~\eqref{eq:invariant_quantity}.
+Next we derive the interface width, \(w = \Delta \phi /  \phi_{-}'(0)\), which differs from the approximation in Eq.~\eqref{eq:width_scaling} because adsorption effects are now included.
+To compute \(w\), we need the gradient of \(\phi_-\) at the interface, which can be obtained from the conserved quantity in Eq.~\eqref{eq:invariant_quantity}.
 % At the interface we have \(\phi_-(0) = \phi_+'(0) = 0\).
 % The free energy density at the interface is then given by
 % \[
@@ -1613,18 +1598,18 @@ In order to compute \(w\) we need to know the gradient of \(\phi_-\) at the inte
 % \]
 \[
 \begin{aligned}
-    &f_\mathrm{loc.} - \mu 2\phi_+(0) + \Pi =\frac{(\phi_-'(0))^2}{\phi_c}\\
-    \Rightarrow\quad&\phi_-'(0) = \sqrt{\phi_c \left(f_\mathrm{loc.} - \mu 2\phi_+(0) + \Pi\right)}\\
+    &f_\mathrm{loc.}(\phi_+(0)) - \mu 2\phi_+(0) + \Pi =\frac{(\phi_-'(0))^2}{\phi_c}\\
+    \Rightarrow\quad&\phi_-'(0) = \sqrt{\phi_c \left(f_\mathrm{loc.}(\phi_+(0)) - \mu 2\phi_+(0) + \Pi\right)}\\
 \end{aligned}
 \]
-where \(f_\mathrm{loc.}\) is the local free energy density at the interface
-Finally we can write the interface width as 
+where \(f_\mathrm{loc.}\) is the local free-energy density evaluated at the interface and \(\Pi\) is the osmotic pressure.
+Finally, we can write the interface width as
 \begin{equation}
-    w = \frac{\Delta \phi}{\sqrt{\phi_c \left(f_\mathrm{loc.} - \mu 2\phi_+(0) + \Pi\right)}}
+    w = \frac{\Delta \phi}{\sqrt{\phi_c \left(f_\mathrm{loc.}(\phi_+(0)) - \mu 2\phi_+(0) + \Pi\right)}}
 \end{equation}
 
-Next we can use the analytical expressions to approximate the interfacial profiles.
-Inspired by \cite{Huang1996AnalyticInterface}, we will choose the profiles for \(\phi_\pm(x)\) to be
+We now use the analytical expressions for \(\Delta \phi, \delta \phi_+\) and \(w\) to approximate the interfacial profiles.
+Inspired by \cite{Huang1996AnalyticInterface}, we define \(\phi_\pm(x)\) as follows:
 \begin{equation}
     \begin{aligned}
         \phi_-(x) & = \Delta \phi \tanh\left(\frac{x}{w}\right)\\
@@ -1635,20 +1620,21 @@ Inspired by \cite{Huang1996AnalyticInterface}, we will choose the profiles for \
 \noindent
 \begin{minipage}{0.5\textwidth}
 The choice of the hyperbolic tangent for \(\phi_-\) is motivated by the fact that this function is antisymmetric and saturates to a constant in the bulk.
-The choice of the hyperbolic secant squared for \(\phi_+\) is motivated by the fact that this function symmetric and decays to zero in the bulk.
+The choice of the hyperbolic secant squared for \(\phi_+\) is motivated by the fact that this function is symmetric and decays to zero in the bulk.
 
-The results of this approximation can be seen in Fig.~\ref{fig:symm_profile_approx}. The choice of \(\chi\) and \(\eta\) is such that the relative error of \(\delta\phi_+\) is maximized.\\
+The results of this approximation can be seen in Fig.~\ref{fig:symm_profile_approx}.\\
 
-As one can see, the approximation matches the numerical profiles quite well, especially for \(\phi_-\) which is the profile that determines the interfacial width.
-Somewhat surprising is the fact that even though \(w\) was computed for the profile of \(\phi_-\), the width of \(\phi_+\) also matches the numerical profile quite well.
-One could probably corroborate this observation by determining the width of \(\phi_+\) as defined in \cite{Huang1996AnalyticInterface} and perhaps find that it indeed is equal to the width of \(\phi_-\).
+As Fig.~\ref{fig:symm_profile_approx} shows, the approximation matches the numerical profiles quite well, especially for \(\phi_-\).
+It is somewhat surprising that even though \(w\) was computed from the profile of \(\phi_-\), the width of \(\phi_+\) also agrees well with the numerical result.
+In \cite{Huang1996AnalyticInterface} the authors define an interfacial width specifically for \(\phi_+\).
+A direct calculation would likely show that this width coincides with that of the other profile.
 
 \end{minipage}
 \hfill
 \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/symm_profile_approx.png}
-    \captionof{figure}{Comparison of the numerical equilibrium profiles (dashed red) with the analytical approximation (solid blue) for the symmetric ternary system for \(\phi_-(x)\) (A) 
+    \captionof{figure}{Comparison of the numerical equilibrium profiles (dashed red) with the analytical approximation (solid blue) for the symmetric ternary system: \(\phi_-(x)\) in (A)
     and \(\phi_+(x)\) (B) for \(\chi=2.5\) and \(\eta=1.0\).\\}
     \label{fig:symm_profile_approx}
  
@@ -1658,6 +1644,7 @@ One could probably corroborate this observation by determining the width of \(\p
 \subsubsection{Improving the surface tension approximation}
 Finally we can use the analytical expressions for the interfacial profiles to improve the surface tension approximation.
 The 
+\textcolor{red}{More to come!}
 
 \clearpage
 
@@ -1713,7 +1700,7 @@ For the Flory-Huggins free energy, the exchange chemical potentials and osmotic 
     \mu_i(\phi_1, \phi_2) &= \frac{\partial f}{\partial \phi_i}
     = \ln(\phi_i) - \ln(\phi_0) + \sum_{j=1}^2 \chi_{ij}\phi_j,\\
     \Pi(\phi_1, \phi_2) &= -f + \sum_i \mu_i \phi_i
-    = -\ln(\phi_0) + \tfrac{1}{2}\sum_{i,j=1}^2 \phi_i \chi_{ij} \phi_j.
+    = -\ln(\phi_0) + \frac{1}{2}\sum_{i,j=1}^2 \phi_i \chi_{ij} \phi_j.
 \end{aligned}
 \]
 
@@ -1794,9 +1781,11 @@ which gives
 \[
 \boldsymbol{J}^+ = \boldsymbol{V}\,\boldsymbol{\Sigma}^+\,\boldsymbol{U}^T.
 \]
-Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the singular values that are sufficiently large, while setting the reciprocals of vanishing or very small singular values to zero. The singular value associated with the null space corresponds to the tangent direction along the binodal and should therefore not be inverted. In practice, introducing a threshold for small singular values is essential for numerical stability.
+Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the singular values that are sufficiently large, while setting the reciprocals of vanishing or very small singular values to zero.
+The singular value associated with the null space corresponds to the tangent direction along the binodal and should therefore not be inverted.
+We improve robustness by avoiding the inversion of both vanishing and near-vanishing singular values, where the latter are identified through a numeric threshold value.
 
-Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal. The projection may therefore need to be applied repeatedly until the desired accuracy is reached. Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
+Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal. The projection may therefore need to be applied repeatedly until the desired accuracy is reached. Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone, while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
 
 
 \subsection{Algorithm Considerations}
@@ -1861,7 +1850,7 @@ To capture the full binodal, the algorithm must therefore monitor the two smalle
 
 Within Flory-Huggins theory, the phase diagram of a ternary system is fully determined by the interaction parameters \(\chi_{ij}\).\footnote{Here, we restrict attention to the case of equal molecular sizes.}
 Accordingly, the only physical input required by our algorithm is the set of interaction parameters, from which the full phase diagram is constructed.
-All remaining parameters are numerical in nature: they control aspects of the implementation such as step sizes, tolerances, and convergence behavior.
+All remaining parameters are numerical in nature: they control aspects of the implementation such as step sizes, tolerances and convergence behavior.
 These parameters can be adjusted to improve the efficiency of the algorithm, but provided they are chosen within reasonable ranges, they do not significantly affect the resulting phase diagram.
 
 
@@ -1872,9 +1861,9 @@ These parameters can be adjusted to improve the efficiency of the algorithm, but
 
 \subsubsection{Computing the spinodal and binodal curve}
 
-Once the interaction parameters are specified, the spinodal curve and the critical points are computed first. For the Flory--Huggins free energy, both can be obtained analytically. Together with the dilute-limit constructions described above, these provide the initial points from which the binodal branches are traced.
+Once the interaction parameters are specified, the spinodal curve and the critical points are computed first. For the Flory-Huggins free energy, both can be obtained analytically. Together with the dilute-limit constructions described above, these provide the initial points from which the binodal branches are traced.
 
-All initial points are collected in a task list. Each task consists of a point in phase space together with a continuation direction along which the corresponding binodal branch is to be explored. The algorithm then proceeds by repeatedly selecting a task from this list and tracing the associated branch. During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events. Whenever the second-smallest singular value falls below a prescribed threshold, this indicates that an additional branch may emanate from the current point. In that case, a new task is created from the current phase-space point together with the continuation direction that is not being followed by the current branch, and this task is added to the task list.
+All initial points are collected in a task list. Each task consists of a point in phase space together with a continuation direction along which the corresponding binodal branch is to be explored. The algorithm then proceeds by repeatedly selecting a task from this list and tracing the associated branch. During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events. Whenever the second-smallest singular value falls below a prescribed threshold, this indicates that an additional branch may emanate from the current point. In that case, a new task is created from the current phase-space point together with the continuation direction that is not being followed by the current branch and this task is added to the task list.
 
 In this way, the algorithm gradually discovers and explores all connected branches of the binodal. After the branches initialized from the dilute limits and critical points have been processed, the remaining branches are generated automatically through the detected branching events. The procedure continues until the task list is empty. To avoid tracing the same branch multiple times, previously explored initial points are cached and duplicate tasks are skipped when encountered.
 
@@ -1884,7 +1873,7 @@ For a given task, computing the corresponding binodal branch means repeatedly ta
 \begin{itemize}
     \item One of the volume fractions leaves the physically admissible range between 0 and 1.
     \item A critical point is reached, which is detected when the distance between the two coexisting phases falls below a prescribed threshold.
-    \item In rare cases, the binodal can loop back onto itself, which may lead to an infinite continuation cycle. To avoid this, the distance between the current point and the initial point is monitored, and the procedure is terminated once this distance drops below a prescribed threshold.
+    \item In rare cases, the binodal can loop back onto itself, which may lead to an infinite continuation cycle. To avoid this, the distance between the current point and the initial point is monitored and the procedure is terminated once this distance drops below a prescribed threshold.
 \end{itemize}
 \end{terminationbox}
 The full workflow of the algorithm is summarized in the pseudocode below.
@@ -2029,7 +2018,7 @@ We also sampled $2500$ points in the one phase region, where we expect no coexis
 
 Of course this is not a proof that the algorithm will work for all possible interaction parameters, but it does give us confidence that the algorithm is robust and can be used to explore the replresentative phase behavior of ternary systems.
 
-\subsubsection{Case study: symmetric ternary system}
+\subsubsection{Case study: symmetric ternary system}\label{sss:case_study_symmetric_ternary}
 The symmetric ternary case is when all interactions between one species and the other species is equal \(\chi_{01}=\chi_{02}\)\footnote{For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the volume fractions.} and the interaction between the remaining two species is given by \(\chi_{12}\).
 It has the advantage that by using an ansatz one can compute the binodals analytically.
 The asatz is that one of the species is constant in both phases and the remaining two species swap their volume fractions in each phase.
@@ -2060,7 +2049,7 @@ at least qualitatively, since the results are only presented in figures. In the 
 \begin{minipage}{0.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/verify_symmetric.png}
-    \captionof{figure}{Binodal curve for the symmetric ternary system with \(\chi_{01}=\chi_{02}=1.5\) and \(\chi_{12}=2.5\). The dashed line shows the analytical solution from Eq.~\ref{eq:symmetric_implicit}, and the blue and orange points show the results from our algorithm.\\}
+    \captionof{figure}{Binodal curve for the symmetric ternary system with \(\chi_{01}=\chi_{02}=1.5\) and \(\chi_{12}=2.5\). The dashed line shows the analytical solution from Eq.~\ref{eq:symmetric_implicit} and the blue and orange points show the results from our algorithm.\\}
     \label{fig:verify_symmetric}
 \end{minipage}\\
 For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\) the spinodal crosses the binodal.
@@ -2069,16 +2058,10 @@ At \(\chi=2.746\) the three three-phase regions join to a single three-phase reg
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/symmetric_chis.png}
-    \captionof{figure}{Phase diagram for different values of \(\chi\). The orange areas are the three-phase regions, the binodal is shown in blue, the spinodal is the thick dashed line, and the critical points are the gold stars and the tie-lines are the thin striped lines. The three-phase regions are shown as shaded areas. (A) \(\chi=2.4\), (B) \(\chi=2.65\), (C) \(\chi=8/3\), (D) \(\chi=2.7\), (E) \(\chi=2.746\), (F) \(\chi=3.0\). }
+    \captionof{figure}{Phase diagram for different values of \(\chi\). The orange areas are the three-phase regions, the binodal is shown in blue, the spinodal is the thick dashed line and the critical points are the gold stars and the tie-lines are the thin striped lines. The three-phase regions are shown as shaded areas. (A) \(\chi=2.4\), (B) \(\chi=2.65\), (C) \(\chi=8/3\), (D) \(\chi=2.7\), (E) \(\chi=2.746\), (F) \(\chi=3.0\). }
     \label{fig:symmetric_chis}
 \end{minipage}\\
 
-\begin{itemize}
-\item symmetric ternary systems (\(\chi_{01} = \chi_{02} = \chi_{12}=\chi\)) offer a rich number of interesting features as one increases \(\chi\) such as
-branching bifurcations. Up to nine critical points. Binodal branches which loop back on themselves. Three three phase regions
-which join to a single three phase region, tie lines which rotate as one moves across phase space, etc.
-\item Verify with results from the literature
-\end{itemize}
 \subsubsection{Other interesting cases}
 Apart from the symmetric case there are some other interesting cases, at least from a phenomenological perspectice.
 One such case is a system where the spinodal and binodal sections span the phase diagram but don't meet meaning there is not critical point.
@@ -2126,9 +2109,12 @@ Interestingly the angles will remain the same throughout different values of $\d
     \captionof{figure}{Phase diagram for varying $\delta$ }
     \label{fig:interesting_case}
 \end{minipage}\\
+\textcolor{red}{End of this section not complete yet.}
 
 
 
+\clearpage
+\section{Discussion and Outlook}
 
 \bibliographystyle{plain}
 \bibliography{references}
