@@ -153,8 +153,8 @@ for plot_idx, ri in enumerate(rep_indices):
     mu_r = np.array(r["mu_r"])
     st = np.array(r["st"])
     c = colors[plot_idx]
-    ax.scatter(mu_r, st, s=150, color=c, edgecolor="black", zorder=10)
-    ax.plot(mu_r, st, "-", color=c, linewidth=3.5, zorder=9)
+    ax.scatter(mu_r, st, s=100, color=c, edgecolor="black", zorder=10)
+    ax.plot(mu_r, st, "-", color=c, linewidth=5.5, zorder=9)
     if mu_r_first is None:
         mu_r_first = mu_r
         print(f"chi_DS, chi_RS, chi_DR: {r['chi_DS']}, {r['chi_RS']}, {r['chi_DR']}")
@@ -167,7 +167,7 @@ if mu_r_first is not None:
         mu_plot ** (3 / 2) * 3 * np.sqrt(8 / 9 * LMD),
         color="black",
         linestyle="--",
-        linewidth=3.5,
+        linewidth=5.5,
         zorder=8,
     )
     ax.text(

@@ -154,7 +154,7 @@ fit_params = results["fit_params"]
 mid_idx = len(fit_params) // 2
 fp = fit_params[mid_idx]
 
-fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+fig, axes = plt.subplots(2, 1, figsize=(8, 10))
 
 # --- Panel A: profiles + fits ---
 ax = axes[0]
@@ -168,42 +168,42 @@ popt2 = np.array(fp["popt2"])
 popt1[2] += 2
 popt2[2] -= 2
 # ax.plot(x, profile1, "o", color="C0", markersize=3, alpha=0.6)
-ax.plot(x_fine, fit_tanh(x_fine, *popt1), "-", color="C0", linewidth=3.5)
+ax.plot(x_fine, fit_tanh(x_fine, *popt1), "-", color="C0", linewidth=7)
 # ax.plot(x, profile2, "s", color="C1", markersize=3, alpha=0.6)
-ax.plot(x_fine, fit_tanh(x_fine, *popt2), "--", color="C1", linewidth=3.5)
-ax.text(x[0] + 1, fit_tanh(x[0], *popt1) + 0.015, r"$\phi_1$", fontsize=24, color="C0")
-ax.text(x[0] + 1, fit_tanh(x[0], *popt2) - 0.02, r"$\phi_0$", fontsize=24, color="C1")
+ax.plot(x_fine, fit_tanh(x_fine, *popt2), "-", color="C1", linewidth=7)
+ax.text(x[0] + 1, fit_tanh(x[0], *popt1) + 0.015, r"$\phi_1$", fontsize=30, color="C0")
+ax.text(x[0] + 1, fit_tanh(x[0], *popt2) - 0.03, r"$\phi_0$", fontsize=30, color="C1")
 ax.axvline(
-    popt1[2], color="C0", linestyle=":", label=r"$x_0$ fit for $\phi_1$", linewidth=3.5
+    popt1[2], color="C0", linestyle=":", label=r"$x_0$ fit for $\phi_1$", linewidth=7
 )
 ax.axvline(
-    popt2[2], color="C1", linestyle=":", label=r"$x_0$ fit for $\phi_2$", linewidth=3.5
+    popt2[2], color="C1", linestyle=":", label=r"$x_0$ fit for $\phi_2$", linewidth=7
 )
 ax.set_xlabel(r"$x$")
 ax.set_ylabel(r"$\phi$")
 ax.set_xlim(100, 160)
 ax.set_xticks([100, popt1[2], popt2[2], 160])
 ax.set_xticklabels(["-L/2", "", "", "L/2"])
-ax.text(127, 0.31, r"$\Delta x_0$", fontsize=28, color="green")
-ax.text(85, 0.53, "A", color="black", fontsize=36)
+ax.text(127, 0.305, r"$\Delta x_0$", fontsize=28, color="green")
+ax.text(80, 0.53, "A", color="black", fontsize=36)
 
 # --- Panel B: del_x0 vs mu_c - mu ---
 ax = axes[1]
-ax.scatter(mu_r, del_x0, s=150, color="green", edgecolor="black", zorder=10, marker="^")
-ax.plot(mu_r, del_x0, "-", color="green", linewidth=3.5, zorder=9)
+ax.scatter(mu_r, del_x0, s=100, color="green", edgecolor="black", zorder=10, marker="^")
+ax.plot(mu_r, del_x0, "-", color="green", linewidth=7, zorder=9)
 ax.set_xlabel(r"$\mu_c - \mu$")
 ax.set_ylabel(r"$|\Delta x_0|$", color="green")
 ax.tick_params(axis="y", labelcolor="green")
 ax.set_xscale("log")
 ax.set_ylim(0, None)
-ax.text(5e-5, 1.13, "B", color="black", fontsize=36)
+ax.text(1.6e-5, 1.13, "B", color="black", fontsize=36)
 
 ax2 = ax.twinx()
 st_error = results["st_error"]
 ax2.scatter(
-    mu_r, 100 * st_error, s=150, color="blue", edgecolor="black", zorder=10, alpha=0.7
+    mu_r, 100 * st_error, s=100, color="blue", edgecolor="black", zorder=10, alpha=0.7
 )
-ax2.plot(mu_r, 100 * st_error, "--", color="blue", linewidth=3.5, zorder=9)
+ax2.plot(mu_r, 100 * st_error, "-", color="blue", linewidth=7, zorder=9)
 ax2.set_ylabel(r"$\epsilon_\mathrm{approx.}$ (%)", color="blue")
 ax2.tick_params(axis="y", labelcolor="blue")
 ax2.set_ylim(0, None)

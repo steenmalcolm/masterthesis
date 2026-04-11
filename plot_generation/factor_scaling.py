@@ -171,10 +171,10 @@ for plot_idx, ri in enumerate(rep_indices):
     factor1 = np.array(r["factor1"])
     factor2 = np.array(r["factor2"])
     c = colors[plot_idx]
-    axes[0].scatter(mu_r, factor1, s=150, color=c, edgecolor="black", zorder=10)
-    axes[0].plot(mu_r, factor1, "-", color=c, linewidth=3.5, zorder=9)
-    axes[1].scatter(mu_r, factor2, s=150, color=c, edgecolor="black", zorder=10)
-    axes[1].plot(mu_r, factor2, "-", color=c, linewidth=3.5, zorder=9)
+    axes[0].scatter(mu_r, factor1, s=100, color=c, edgecolor="black", zorder=10)
+    axes[0].plot(mu_r, factor1, "-", color=c, linewidth=4.5, zorder=9)
+    axes[1].scatter(mu_r, factor2, s=100, color=c, edgecolor="black", zorder=10)
+    axes[1].plot(mu_r, factor2, "-", color=c, linewidth=4.5, zorder=9)
     if mu_r_first is None:
         mu_r_first = mu_r
         print(f"chi_DS, chi_RS, chi_DR: {r['chi_DS']}, {r['chi_RS']}, {r['chi_DR']}")

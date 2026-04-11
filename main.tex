@@ -466,7 +466,7 @@ Pe=\frac{Lv}{D}\ll 1,
 \]
 where \(L\) is a characteristic length scale, \(v\) a characteristic velocity scale and \(D\) a characteristic diffusion coefficient.
 
-To determine the relation between the diffusive fluxes and the chemical-potential gradients, we consider the entropy production of the system. For a closed system at constant temperature and volume, the entropy change is related to the free energy change by
+To determine the relation between the diffusive fluxes and the chemical potential gradients, we consider the entropy production of the system. For a closed system at constant temperature and volume, the entropy change is related to the free energy change by
 \[
 \frac{dS}{dt} = -\frac{1}{T}\frac{dF}{dt}.
 \]
@@ -932,7 +932,7 @@ resulting surface tensions are shown in Fig.~\ref{fig:surface_tension_numerical}
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/st_simulation_results.png}
-    \captionof{figure}{Surface tension as a function of the chemical-potential difference \(\mu_{2,c}- \mu_2\)
+    \captionof{figure}{Surface tension as a function of the chemical potential difference \(\mu_{2,c}- \mu_2\)
     for various interaction parameters (colored lines) in the range specified by Eq.~\eqref{eq:interaction_parameters}.
     Close to criticality, the surface tension exhibits the power-law scaling \(\gamma \sim (\mu_{2,c}-\mu_2)^{3/2}\) (dashed line).\\}
     \label{fig:surface_tension_numerical}
@@ -1425,18 +1425,13 @@ it implies that near the critical point the interfacial properties depend more s
 
 \subsubsection{Sources of error and limitations}
 
+\noindent
+\begin{minipage}{0.5\textwidth}
 The piecewise-linear approximation differs from the true equilibrium interfacial
 profiles in two essential ways: First, it replaces the smooth, nonlinear variation
 of the volume fractions across the interface by a linear interpolation. Second, it
 assumes that all species share a common interfacial window, thereby neglecting
 interfacial adsorption.
-
-% As shown in Fig.~\ref{fig:approximation_compare}B, the approximation performs best far from
-% the critical point (smallest relative error), where the mean concentration of one of the species nearly vanishes and the
-% system effectively reduces to a binary mixture. In this regime, the two remaining
-% components indeed exhibit nearly identical interfacial widths and thus the second source of error, namely the deviation from the equal-width assumption, is negligeble.
-% The dominant source of error arises from the simplified functional form of the profile. If one
-% assumes that this error varies only weakly across phase space, one can conclude that the deviation from the equal-width assumption is the primary source of error close to the critical point, where the relative error is largest.
 
 To quantify the importance of species-dependent interfacial widths, we fit a hyperbolic tangent
 profile of the form
@@ -1452,19 +1447,22 @@ The difference between the fitted interface positions $x_0$ for the two species 
 provides a direct measure of the deviation from the equal-width assumption and thus
 of the degree of interfacial adsorption.\\
 
+The results are shown in Fig.~\ref{fig:fit_profiles}B, together with the relative error
+of the surface-tension approximation. A clear correlation is observed between the
+relative error and the displacement between the centers of the profiles of the first two components.\\
 
-\noindent
-\begin{minipage}{\textwidth}
+    
+\end{minipage}
+\hfill
+\begin{minipage}{0.47\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/fit_profiles.png}
+    \includegraphics[width=\textwidth]{figures/fit_profiles.png}
     \captionof{figure}{(A) Hyperbolic tangent fits to the numerical equilibrium profiles used to extract the interface positions \(x_0\) for both components.
     (B) Relative error of the surface-tension approximation (blue) and the displacement between the centers of the fitted profiles (green) as functions of the chemical potential.\\}
     \label{fig:fit_profiles}
     
 \end{minipage}
-The results are shown in Fig.~\ref{fig:fit_profiles}B, together with the relative error
-of the surface-tension approximation. A clear correlation is observed between the
-relative error and the displacement between the centers of the profiles of the first two components.
+
 Importantly, this correlation is not restricted to the specific interaction
 parameters shown in Fig.~\ref{fig:fit_profiles}, but persists across a broad range of
 interaction strengths \textcolor{red}{Add in suplemental material}.\\
@@ -1579,7 +1577,7 @@ The results can be seen in Fig.~\ref{fig:absorption}.\\
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.8\textwidth]{figures/absorption.png}
-    \captionof{figure}{(A) Interfacial excess \(|\delta \phi_+| = |\phi_+(0) - \bar\phi|\) for the numerical (dashed) and analytical (solid) results as a function of the chemical-potential difference \(\mu_c-\mu\).
+    \captionof{figure}{(A) Interfacial excess \(|\delta \phi_+| = |\phi_+(0) - \bar\phi|\) for the numerical (dashed) and analytical (solid) results as a function of the chemical potential difference \(\mu_c-\mu\).
     The colorscale indicates the interaction strength \(\eta\) and \(\chi=2.5\).
     Note that the analytical solution always overestimates \(\delta \phi_+\).
     (B) Relative error \(\epsilon_{\mathrm{approx.}}=|\delta \phi_+^{\mathrm{analytical}} - \delta \phi_+^{\mathrm{numerical}}| / |\delta \phi_+^{\mathrm{numerical}}|\) of the analytical approximation.

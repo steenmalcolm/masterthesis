@@ -190,26 +190,26 @@ st = np.array(r0["st"])
 st_approx = np.array(r0["st_approx"])
 
 ax = axes[0]
-ax.plot(mu_r, st, color="red", zorder=1, linewidth=2.5)
-ax.scatter(mu_r, st, color="red", edgecolor="black", s=150, zorder=2, marker="^")
-ax.plot(mu_r, st_approx, "--", color="blue", zorder=1, linewidth=2.5)
-ax.scatter(mu_r, st_approx, color="blue", edgecolor="black", s=150, zorder=2, alpha=0.7)
+ax.plot(mu_r, st, color="red", zorder=1, linewidth=4.0)
+ax.scatter(mu_r, st, color="red", edgecolor="black", s=100, zorder=2, marker="^")
+ax.plot(mu_r, st_approx, "-", color="blue", zorder=1, linewidth=4)
+ax.scatter(mu_r, st_approx, color="blue", edgecolor="black", s=100, zorder=2, alpha=0.7)
 
 ax = axes[1]
 ax.plot(
     mu_r,
     100 * np.abs(st - st_approx) / st,
-    "--",
+    "-",
     color="blue",
     zorder=1,
-    linewidth=2.5,
+    linewidth=4.0,
 )
 ax.scatter(
     mu_r,
     100 * np.abs(st - st_approx) / st,
     color="blue",
     edgecolor="black",
-    s=150,
+    s=100,
     zorder=2,
 )
 
