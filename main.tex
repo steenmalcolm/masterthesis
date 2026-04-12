@@ -967,19 +967,15 @@ correct scaling near the critical point, as we will demonstrate later.
 \noindent
 \begin{minipage}{0.6\textwidth}
 As shown in the previous sections, interfacial profiles in ternary mixtures can be
-highly nontrivial. To make progress, we approximate the interface by a
-piecewise-linear profile that connects the two coexisting bulk phases over a finite
-interfacial width. In this ansatz, all species share the same interfacial width, as illustrated in Fig.~\ref{fig:approx_intuition}.\\
+highly nontrivial. To obtain an analytically tractable approximation, we represent
+the interface by a piecewise-linear profile that connects the two coexisting bulk
+phases over a finite interfacial width. In this ansatz, all species share the same
+interfacial width, as illustrated in Fig.~\ref{fig:approx_intuition}.\\
 
-This approximation neglects two important features of the exact solution. First, it
-assumes a common interfacial window for all components, which removes the possibility of
-adsorption at the interface. This is because the accumulation of one species shifts the
-profiles of the other species relative to each other along the x-axis.
-Second, it ignores the intrinsic nonlinearity of the equilibrium profiles.
-We will discuss the implications of these assumptions later on.\\
-
-Before introducing the approximation, we will introduce a conserved quantity of the equilibrium interfacial problem, which we will use in our approximation. 
-For a one-dimensional interface at equilibrium, the Euler-Lagrange equations imply the existence of a quantity that is constant across the interface.\\
+To derive the corresponding approximation for the surface tension, it is useful to
+first identify a conserved quantity of the equilibrium interfacial problem. For a
+one-dimensional interface at equilibrium, the Euler-Lagrange equations imply the
+existence of a quantity that is constant across the interface.\\
 Writing the free-energy density as a sum of a local and a gradient
 contribution and adopting Einstein summation convention, we define
 \begin{equation}
@@ -1033,7 +1029,14 @@ equations. Consequently, we have found a conserved quantity in Eq.~\eqref{eq:inv
 \textcolor{red}{Should I move this to the first chapter?}\\
 
 
-We now return to the piecewise-linear approximation. We assume that each component varies linearly across an interface of width $w$,
+We now return to the piecewise-linear approximation. Its simplicity comes at the
+cost of two important assumptions. First, by imposing a common interfacial window
+for all components, it excludes adsorption at the interface, since the accumulation
+of one species would shift the profiles of the others relative to one another along
+the \(x\)-axis. Second, it neglects the intrinsic nonlinearity of the equilibrium
+profiles. We will discuss the implications of these assumptions later on.
+
+Within this ansatz, each component varies linearly across an interface of width $w$,
 connecting the bulk values $\phi_i^{(1)}$ and $\phi_i^{(2)}$ for $i \in \{1,2\}$. The magnitude of the
 gradient at the interface \(x=0\) is therefore given by (see Fig.~\ref{fig:approx_intuition})
 \[
@@ -1144,17 +1147,16 @@ results is shown in Fig.~\ref{fig:approximation_compare}.\\
     \label{fig:approximation_compare}
 \end{minipage}\\
 
-Somewhat surprisingly, the
-approximate expression not only reproduces the correct critical scaling but also
-provides good qualitative agreement with the numerically computed surface tension
-over a wide range of parameters.
+Despite its simplicity, the approximate expression not only reproduces the correct
+critical scaling but also provides good qualitative agreement with the numerically
+computed surface tension over a wide range of parameters.
 For the parameter range considered in Eq.~\eqref{eq:interaction_parameters}, the relative error ranges from roughly \(20\%\) to \(90\%\),
 as shown in Fig.~\ref{fig:approximation_compare} (gray area).
 Additionally, one can see that the approximation becomes more accurate as the system approaches criticality.
 
 A systematic deviation is nevertheless apparent: the analytical approximation
-overestimates the exact surface tension. This behavior can be
-understood better within the variational formulation of the interfacial problem.
+overestimates the exact surface tension. The origin of this bias can be understood
+from the variational structure of the interfacial problem.
 Using the invariant quantity from Eq.~\eqref{eq:invariant_quantity}, the effective
 Lagrangian density of the system can be identified as
 
@@ -1282,7 +1284,7 @@ the distance from the critical point is
     \sim
     \lvert \Delta \boldsymbol{\phi} \rvert^2 .
 \]
-This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ on a log-log scale.\\
+This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert^2$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ on a log-log scale.\\
 
 Interestingly, the leading nonvanishing contribution to the dot product
 $(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is equal to the
@@ -1356,12 +1358,13 @@ finite\footnote{The linear term will cancel once we collect all terms.}.
 Finally, we revisit the higher-order expansion of the chemical potential.
 The zeroth-order term cancels the corresponding term in Eq.~\eqref{eq:free_en_taylor}, the first-order contribution vanishes along the coexistence direction and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\).
 The leading nonzero contribution to the second product therefore comes from the third-order term in the chemical potential.
-The chemical potential can then be written as
+The contraction with the phase-composition difference can then be written as
 \begin{equation}
    \frac{1}{2}\mu_i\Delta \phi_i
    =\frac{1}{2}\mu_{i,c}\Delta \phi_i
     + \frac{1}{2^4 \cdot 3!}\,
-     \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
+     \frac{\partial^4 f}{\partial \phi_i \partial \phi_j \partial \phi_k \partial \phi_l}\,
+     \Delta \phi_i
      \Delta \phi_j \Delta \phi_k \Delta \phi_l
    + \mathcal{O}(\Delta \phi^5) .
 \end{equation}
@@ -1369,7 +1372,7 @@ The chemical potential can then be written as
 Collecting terms, we find that the second factor of the surface-tension approximation is equal to
 \begin{equation}
      \frac{1}{2^7}\,
-       \frac{\delta^4 f}{\delta \phi_i \delta \phi_j \delta \phi_k \delta \phi_l}\,
+       \frac{\partial^4 f}{\partial \phi_i \partial \phi_j \partial \phi_k \partial \phi_l}\,
        \Delta \phi_i \Delta \phi_j \Delta \phi_k \Delta \phi_l
      + \mathcal{O}(\Delta \phi^5) .
 \end{equation}
@@ -1405,9 +1408,9 @@ In addition, this analysis provides the scaling of the interfacial width:
 which diverges at the critical point, as expected.
 
 Taken together, these results provide a direct connection between the bulk
-thermodynamic quantities introduced in the previous chapter and the interfacial
-properties analyzed here. The critical scaling of the interfacial width, \(w \sim |\mu-\mu_c|^{-1/2}\), agrees with the
-diverging interfacial width observed in the numerical results \textcolor{red}{Add figure in supplimentary}, while the critical exponent of the surface tension, \(\gamma \sim |\mu-\mu_c|^{3/2}\), is consistent
+thermodynamic quantities introduced earlier in this thesis and the interfacial
+properties analyzed here. The critical scaling of the interfacial width, \(w \sim |\boldsymbol{\mu}-\boldsymbol{\mu}_c|^{-1/2}\), agrees with the
+diverging interfacial width observed in the numerical results \textcolor{red}{Add figure in supplimentary}, while the critical exponent of the surface tension, \(\gamma \sim |\boldsymbol{\mu}-\boldsymbol{\mu}_c|^{3/2}\), is consistent
 with the numerically obtained exponent.
 In this sense, the effective interfacial model does not introduce new critical behavior; rather,
 it implies that near the critical point the interfacial properties depend more strongly on the bulk compositions than on the detailed profile shape.
