@@ -934,7 +934,7 @@ potential difference of species 2, \(\mu_{2,c}-\mu_2\):
 \[
 \gamma \sim (\mu_{2,c}-\mu_2)^{\delta}.
 \]
-Along the binodals considered here, \(\mu_2\) provides a convenient scalar parametrization of the distance from criticality. In the asymptotic analysis below, we show that this scaling can be expressed more generally in terms of the full chemical-potential distance \(|\boldsymbol{\mu}-\boldsymbol{\mu}_c|\).
+Along the binodals considered here, \(\mu_2\) provides a convenient scalar parametrization of the distance from criticality. In the asymptotic analysis below, we show that this scaling can be expressed more generally in terms of the full chemical-potential distance \(|\boldsymbol\mu_c - \boldsymbol{\mu}|\).
 This scaling is observed for a wide range of interaction parameters and over several orders of magnitude,
 as shown in Fig.~\ref{fig:surface_tension_numerical}.
 
@@ -1185,6 +1185,7 @@ In the previous section, we showed that the surface tension can be expressed
 approximately in terms of the bulk compositions of the coexisting phases. We now
 analyze the behavior of this expression in the vicinity of the critical point, with
 the goal of deriving its asymptotic scaling form.
+To do so, we analyze the two factors in Eq.~\eqref{eq:surface_tension_approximation} separately and then combine their critical scalings.
 
 Recall that Eq.~\eqref{eq:surface_tension_approximation} can be written, up to a constant prefactor, as the square root of the product of two factors. We first
 consider the first factor in the square root
@@ -1193,15 +1194,6 @@ consider the first factor in the square root
 \]
 which depends solely on the difference between the bulk compositions of the two
 coexisting phases.
-
-% Close to the critical point, the volume fractions in the dense and dilute
-% phases can be written as small deviations from the critical composition
-% $\phi_{i,c}$,
-% \[
-%     \phi_i^{(1)} = \phi_{i,c} + \frac{1}{2} \Delta \phi_i, \quad \phi_i^{(2)} = \phi_{i,c} - \frac{1}{2} \Delta \phi_i,
-% \]
-% where $\Delta \phi_i$ parameterizes the displacement of the coexisting phases along
-% the tie line in composition space.
 
 
 In the following, we switch to vector notation, where for example \(\boldsymbol \mu = (\mu_1\, \mu_2)^T\).
@@ -1238,8 +1230,7 @@ in the Taylor expansion of the chemical potentials vanishes along the coexistenc
 direction and higher-order terms control the leading behavior near criticality.
 
 
-We now turn to the leading nonvanishing contribution in the Taylor expansion of the
-chemical potential about the critical point. Expanding to second order yields
+The linear term therefore vanishes along the coexistence direction, so the leading dependence near criticality is determined by the second-order term in the Taylor expansion of the chemical potential:
 \begin{equation}
  \boldsymbol{\mu}^{(1/2)} - \boldsymbol{\mu}_c
     =
@@ -1280,19 +1271,13 @@ The sum inside the brackets in Eq.~\eqref{eq:second_order} is generically
 nonzero. Consequently, the leading dependence of the chemical potential deviation on
 the distance from the critical point is
 \[
-    \lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert
+    \lvert \boldsymbol{\mu}_c-\boldsymbol{\mu} \rvert
     \sim
     \lvert \Delta \boldsymbol{\phi} \rvert^2 .
 \]
-This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert^2$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ on a log-log scale.\\
+This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert^2$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}_c-\boldsymbol{\mu} \rvert$ on a log-log scale.\\
 
-Interestingly, the lowest-order contribution to the dot product
-$(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is proportional to the
-third derivative of the free energy. This contribution vanishes exactly at the critical
-point, implying that $\boldsymbol{\mu}-\boldsymbol{\mu}_c$ is orthogonal to the tie
-lines in composition space.\\
-
-We now turn to the second factor in the surface-tension approximation,
+We now turn to the second factor in the surface-tension approximation. To determine its scaling, we first rewrite it in a convenient form, then expand the free-energy and chemical-potential contributions separately, and finally collect the leading terms:
 \begin{equation}
     f(\bar{\boldsymbol{\phi}})
     -\sum_i \mu_i \bar{\phi}_i
@@ -1306,7 +1291,7 @@ We now turn to the second factor in the surface-tension approximation,
 where in the second equality we evaluate the pressure at $\boldsymbol \phi = \boldsymbol \phi^{(1)}$.
 For convenience, we write the local free-energy density as $f_\mathrm{local} = f$.
 
-Close to the critical point, the dense-phase composition can be written as
+We begin with the free-energy term. Close to the critical point, the dense-phase composition can be written as
 \[
     \phi_i^{(1)} = \phi_{i,c} + \frac{1}{2}\,\Delta \phi_i ,
 \]
@@ -1355,7 +1340,7 @@ finite\footnote{The linear term will cancel once we collect all terms.}.
 
 
 
-Finally, we revisit the higher-order expansion of the chemical potential.
+We next consider the chemical-potential contribution by revisiting the higher-order expansion of the chemical potential.
 The zeroth-order term cancels the corresponding term in Eq.~\eqref{eq:free_en_taylor}, the first-order contribution vanishes along the coexistence direction and the second-order term is orthogonal to \(\Delta \boldsymbol{\phi}\).
 The leading nonzero contribution to the second product therefore comes from the third-order term in the chemical potential.
 The contraction with the phase-composition difference can then be written as
@@ -1380,9 +1365,9 @@ Using the scaling relation between the phase-composition difference and the chem
 \[
     f(\bar{\boldsymbol{\phi}})
     -\sum_i \mu_i \bar{\phi}_i
-    + \Pi \propto |\Delta \boldsymbol{\phi}|^4 \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^2 .
+    + \Pi \propto |\Delta \boldsymbol{\phi}|^4 \;\propto\; |\boldsymbol{\mu}_c- \boldsymbol{\mu}|^2 .
 \]
-This scaling is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}B, where the second factor of the surface tension approximation is again plotted against the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ on a log-log scale.\\
+This scaling is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}B, where the second factor of the surface tension approximation is again plotted against the chemical potential difference $\lvert \boldsymbol{\mu}_c-\boldsymbol{\mu}\rvert$ on a log-log scale.\\
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/factor_scaling.png}
@@ -1392,25 +1377,26 @@ This scaling is consistent with the numerical results shown in Fig.~\ref{fig:fac
     \label{fig:factor_scaling}
 \end{minipage}
 
-Combining this result with the scaling of the first factor, we conclude that near the critical point the surface tension obeys
+We have therefore shown that the first factor scales as \(|\boldsymbol{\mu}_c - \boldsymbol{\mu}|\), while the second factor scales as \(|\boldsymbol{\mu}_c - \boldsymbol{\mu}|^2\). Combining these results, we conclude that near the critical point the surface tension obeys
 \[
-    \gamma \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{3/2} .
+    \gamma \;\propto\; |\boldsymbol{\mu}_c - \boldsymbol{\mu}|^{3/2} .
 \]
 
-In addition, this analysis provides the scaling of the interfacial width:
+
+The same scaling analysis also yields the scaling of the interfacial width:
 \begin{equation}
     w 
     = \frac{\sqrt{\Delta \phi_i \,\tilde\kappa_{ij}\,\Delta \phi_j}}
            {\sqrt{ \phi_i'(0) \,\tilde\kappa_{ij}\,\phi_j'(0)}}
-    \;\propto\; |\boldsymbol{\mu} - \boldsymbol{\mu}_c|^{-1/2} .
+    \;\propto\; |\boldsymbol{\mu}_c - \boldsymbol{\mu}|^{-1/2} .
     \label{eq:width_scaling}
 \end{equation}
 which diverges at the critical point, as expected.
 
 Taken together, these results provide a direct connection between the bulk
 thermodynamic quantities introduced earlier in this thesis and the interfacial
-properties analyzed here. The critical scaling of the interfacial width, \(w \sim |\boldsymbol{\mu}-\boldsymbol{\mu}_c|^{-1/2}\), agrees with the
-diverging interfacial width observed in the numerical results \textcolor{red}{Add figure in supplimentary}, while the critical exponent of the surface tension, \(\gamma \sim |\boldsymbol{\mu}-\boldsymbol{\mu}_c|^{3/2}\), is consistent
+properties analyzed here. The critical scaling of the interfacial width, \(w \sim |\boldsymbol{\mu}_c-\boldsymbol{\mu}|^{-1/2}\), agrees with the
+diverging interfacial width observed in the numerical results \textcolor{red}{Add figure in supplimentary}, while the critical exponent of the surface tension, \(\gamma \sim |\boldsymbol{\mu}_c-\boldsymbol{\mu}|^{3/2}\), is consistent
 with the numerically obtained exponent.
 In this sense, the effective interfacial model does not introduce new critical behavior; rather,
 it implies that near the critical point the interfacial properties depend more strongly on the bulk compositions than on the detailed profile shape.
@@ -1425,7 +1411,7 @@ of the volume fractions across the interface by a linear interpolation. Second, 
 assumes that all species share a common interfacial window, thereby neglecting
 interfacial adsorption.
 
-To quantify the importance of species-dependent interfacial widths, we fit a hyperbolic tangent
+To quantify the importance of interfacial adsorption, we fit a hyperbolic tangent
 profile of the form
 \[
     \phi(x)
@@ -1434,14 +1420,13 @@ profile of the form
     \tanh\!\left(\frac{x - x_0}{w}\right)
     + \bar{\phi}
 \]
-to the numerical equilibrium profiles of both component 1 and component 0 (Fig.~\ref{fig:fit_profiles}A).
-The difference between the fitted interface positions $x_0$ for the two species then
-provides a direct measure of the deviation from the equal-width assumption and thus
-of the degree of interfacial adsorption.\\
+to the numerical equilibrium profiles of components 1 and 0 for the symmetric case shown in Fig.~\ref{fig:fit_profiles}A, where \(\chi_{02}=\chi_{12}\).
+On this symmetry line, exchanging species \(0\) and \(1\) leaves the free energy invariant, so the corresponding equilibrium profiles have the same fitted interfacial width.
+Interfacial adsorption is therefore captured by the relative shift of their centers, and the difference between the fitted interface positions \(x_0\) for the two species provides a direct measure of the degree of adsorption.\\
 
 The results are shown in Fig.~\ref{fig:fit_profiles}B, together with the relative error
 of the surface-tension approximation. A clear correlation is observed between the
-relative error and the displacement between the centers of the profiles of the first two components.\\
+relative error and the displacement between the centers of the profiles of components 0 and 1.\\
 
     
 \end{minipage}
@@ -1450,7 +1435,7 @@ relative error and the displacement between the centers of the profiles of the f
     \centering
     \includegraphics[width=\textwidth]{figures/fit_profiles.png}
     \captionof{figure}{(A) Hyperbolic tangent fits to the numerical equilibrium profiles used to extract the interface positions \(x_0\) for both components.
-    (B) Relative error of the surface-tension approximation (blue) and the displacement between the centers of the fitted profiles (green) as functions of the chemical potential.\\}
+    (B) Relative error of the surface-tension approximation (blue) and the displacement between the centers of the fitted profiles (green) as functions of \(|\boldsymbol\mu_c - \boldsymbol{\mu}|\).\\}
     \label{fig:fit_profiles}
     
 \end{minipage}
@@ -1459,7 +1444,7 @@ Importantly, this correlation is not restricted to the specific interaction
 parameters shown in Fig.~\ref{fig:fit_profiles}, but persists across a broad range of
 interaction strengths \textcolor{red}{Add in suplemental material}.\\
 
-Even when the relative displacement between the centers of the profiles nearly vanishes, the relative error does not go to zero but instead approaches a finite value.
+Even when the displacement between the centers of the profiles nearly vanishes, the relative error does not go to zero but instead approaches a finite value.
 This indicates that even in the absence of interfacial adsorption, the simplified functional form of the profile still contributes to the error of the approximation. However, this baseline error (approximately \(5\%\) in Fig.~\ref{fig:fit_profiles}B) is substantially smaller than the error observed close to the critical point (approximately \(22\%\) in Fig.~\ref{fig:fit_profiles}B), where the displacement between the centers of the profiles is largest.
 This indicates that the lack of interfacial adsorption, rather than the
 simplified functional form of the profile, is the primary limitation of the
