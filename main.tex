@@ -1042,7 +1042,7 @@ gradient at the interface \(x=0\) is therefore given by (see Fig.~\ref{fig:appro
 \[
     | \phi_i'(0)|= \frac{|\Delta \phi_i|}{w},
 \]
-where $\Delta \phi_i = \phi_i^{(2)} - \phi_i^{(1)}$ denotes the difference between the
+where $\Delta \phi_i = \phi_i^{(1)} - \phi_i^{(2)}$ denotes the difference between the
 coexisting bulk phases. In this approximation, the volume fractions at the interface are equal to the midpoint compositions
 \[
     \phi_i(0)=\bar{\phi}_i = \frac{1}{2}\left(\phi_i^{(1)} + \phi_i^{(2)}\right),
@@ -1286,9 +1286,9 @@ the distance from the critical point is
 \]
 This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert^2$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}-\boldsymbol{\mu}_c \rvert$ on a log-log scale.\\
 
-Interestingly, the leading nonvanishing contribution to the dot product
-$(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is equal to the
-third derivative of the free energy. This quantity vanishes exactly at the critical
+Interestingly, the lowest-order contribution to the dot product
+$(\boldsymbol{\mu}-\boldsymbol{\mu}_c)^T \Delta \boldsymbol{\phi}$ is proportional to the
+third derivative of the free energy. This contribution vanishes exactly at the critical
 point, implying that $\boldsymbol{\mu}-\boldsymbol{\mu}_c$ is orthogonal to the tie
 lines in composition space.\\
 
@@ -1386,7 +1386,7 @@ This scaling is consistent with the numerical results shown in Fig.~\ref{fig:fac
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/factor_scaling.png}
-    \captionof{figure}{Scaling of the first factor \(|\Delta \boldsymbol{\phi}|^2\) and the second factor \(|f(\bar{\boldsymbol{\phi}}) - \sum_i \mu_i \bar{\phi}_i + \Pi|\)
+    \captionof{figure}{Scaling of the quantity \(|\Delta \boldsymbol{\phi}|^2\), which is proportional to the first factor, and the second factor \(|f(\bar{\boldsymbol{\phi}}) - \sum_i \mu_i \bar{\phi}_i + \Pi|\)
     in the surface-tension approximation, obtained from the numerical results as functions of the chemical potential difference \(|\boldsymbol\mu-\boldsymbol\mu_{c}|\)
     for various interaction parameters. The dashed lines indicate the expected scaling with exponents \(1\) and \(2\) respectively.\\\newline}
     \label{fig:factor_scaling}
