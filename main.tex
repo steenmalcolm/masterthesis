@@ -1572,8 +1572,7 @@ and therefore \(a_2\) vanishes as the critical point is approached, where the in
 \end{minipage}
 
 \subsubsection{Approximation for the interfacial profiles}
-Next we derive the interface width, \(w = \Delta \phi /  \phi_{-}'(0)\), which differs from the earlier approximation in Eq.~\eqref{eq:interface_width_approximation} because adsorption effects are now included.
-To compute \(w\), we need the gradient of \(\phi_-\) at the interface, which can be obtained from the conserved quantity in Eq.~\eqref{eq:invariant_quantity}.
+We next derive the interfacial width \(w = \Delta \phi / \phi_-'(0)\), which extends the earlier approximation in Eq.~\eqref{eq:interface_width_approximation} by including adsorption effects. To compute \(w\), we evaluate the conserved quantity in Eq.~\eqref{eq:invariant_quantity} at the interface.
 At the interface, we have \(\phi_-(0)=0\) and, by symmetry of \(\phi_+\), also \(\phi_+'(0)=0\).
 % At the interface we have \(\phi_-(0) = \phi_+'(0) = 0\).
 % The free energy density at the interface is then given by
@@ -1598,32 +1597,25 @@ At the interface, we have \(\phi_-(0)=0\) and, by symmetry of \(\phi_+\), also \
     \Rightarrow\quad&\phi_-'(0) = \sqrt{\phi_c \left(f_\mathrm{local}(\phi_+(0)) - \mu 2\phi_+(0) + \Pi\right)}\\
 \end{aligned}
 \]
-where \(f_\mathrm{local}\) is the local free-energy density evaluated at the interface and \(\Pi\) is the osmotic pressure.
-Finally, we can write the interface width as
+Here \(f_\mathrm{local}\) is the local free-energy density evaluated at the interface and \(\Pi\) is the osmotic pressure. The interfacial width therefore becomes
 \begin{equation}
     w = \frac{\Delta \phi}{\sqrt{\phi_c \left(f_\mathrm{local}(\phi_+(0)) - \mu 2\phi_+(0) + \Pi\right)}}
 \end{equation}
 
-We now use the analytical expressions for \(\Delta \phi, \delta \phi_+\) and \(w\) to approximate the interfacial profiles.
-Inspired by \cite{Huang1996AnalyticInterface}, we define \(\phi_\pm(x)\) as follows:
+Using the resulting expressions for \(\Delta \phi\), \(\delta \phi_+\), and \(w\), we approximate the interfacial profiles as
 \begin{equation}
     \begin{aligned}
-        \phi_-(x) & = \Delta \phi \tanh\left(\frac{x}{w}\right)\\
+        \phi_-(x) & = \Delta \phi \tanh\left(\frac{x}{w}\right),\\
         \phi_+(x) & = \bar\phi + \delta\phi_+ \sech^2\left(\frac{x}{w}\right)
     \end{aligned}
 \end{equation}
 
 \noindent
 \begin{minipage}{0.5\textwidth}
-The choice of the hyperbolic tangent for \(\phi_-\) is motivated by the fact that this function is antisymmetric and saturates to a constant in the bulk.
-The choice of the hyperbolic secant squared for the excess part of \(\phi_+\), i.e. \(\phi_+(x)-\bar\phi\), is motivated by the fact that this function is symmetric and decays to zero in the bulk.
 
-The results of this approximation can be seen in Fig.~\ref{fig:symm_profile_approx}.\\
+For \(\phi_-(x)\), we use a hyperbolic tangent profile, since it is antisymmetric and saturates in the bulk. For the excess part of \(\phi_+(x)\), i.e. \(\phi_+(x)-\bar\phi\), we use a \(\sech^2\) form. This profile is symmetric and localized at the interface.
 
-As Fig.~\ref{fig:symm_profile_approx} shows, the approximation matches the numerical profiles quite well, especially for \(\phi_-\).
-It is somewhat surprising that even though \(w\) was computed from the profile of \(\phi_-\), the width of \(\phi_+\) also agrees well with the numerical result.
-In \cite{Huang1996AnalyticInterface} the authors define an interfacial width specifically for \(\phi_+\).
-A direct calculation should show that this width coincides with that of \(\phi_-\).
+As shown in Fig.~\ref{fig:symm_profile_approx}, the approximation matches the numerical profiles quite well, especially for \(\phi_-\). Although \(w\) is derived from \(\phi_-\), it also appears to capture the width of \(\phi_+\) accurately, suggesting that a single width is sufficient for both modes.
 
 \end{minipage}
 \hfill
