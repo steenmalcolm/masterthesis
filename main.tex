@@ -166,7 +166,7 @@ In general the spinodal lies inside the binodal, since local instability implies
 \end{minipage}\\
 
 
-\subsubsection{Critical point}
+\subsubsection{Critical point}\label{sss:critical_point}
 
 The critical point is the endpoint of the binodal curve at which the two
 coexisting phases become identical. At this point the difference between the
@@ -1750,6 +1750,7 @@ In other words, the local direction along the binodal is given by the null space
 The tangential step derived above follows the local direction of the binodal, but it is only accurate to first order.
 As a result, the predicted point generally deviates from the coexistence manifold by an error of order \(\|\delta\boldsymbol{\phi}\|^2\).
 If left uncorrected, this error accumulates over many steps and can eventually lead to a noticeable drift away from the binodal.
+
 One way to reduce this drift is to take smaller tangential steps, but this also increases the number of iterations required to trace out the curve.
 A more efficient approach is therefore to add a correction step that projects the predicted point back onto the coexistence manifold.
 
@@ -1760,12 +1761,12 @@ Linearizing the coexistence conditions as in Eq.~\ref{eq:binodal_step} gives
 \approx
 \boldsymbol{E}(\boldsymbol{\phi}) + \boldsymbol{J}\,\delta\boldsymbol{\phi}.
 \]
-To recover a point on the binodal to first order, we require the right-hand side to vanish, which leads to
+We therefore seek a correction that cancels the residual coexistence error to first order, which leads to
 \[
 \boldsymbol{J}\,\delta\boldsymbol{\phi} + \boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}.
 \]
 
-Because \(\boldsymbol{J}\) has a nontrivial null space, this equation does not have a unique solution: one may always add a component along the tangent direction without changing the first-order satisfaction of the coexistence conditions. To select a unique correction, we choose the minimum-norm solution,
+Because \(\boldsymbol{J}\) has a nontrivial null space, this equation does not have a unique solution: one may always add a component along the tangent direction without changing the first-order satisfaction of the coexistence conditions. To keep the correction separate from motion along the binodal, we choose the minimum-norm solution,
 \[
 \delta\boldsymbol{\phi}_n = -\boldsymbol{J}^+ \boldsymbol{E}(\boldsymbol{\phi}),
 \]
@@ -1774,7 +1775,7 @@ where
 
 denotes the Moore-Penrose pseudoinverse of \(\boldsymbol{J}\). This choice makes the correction step orthogonal to the null space of \(\boldsymbol{J}\), so that it does not introduce any additional motion along the binodal. In this way, the tangential step and the projection step remain cleanly separated.
 
-In practice, the pseudoinverse is computed using the singular value decomposition
+In practice, we compute the pseudoinverse using the singular value decomposition
 \[
 \boldsymbol{J} = \boldsymbol{U}\,\boldsymbol{\Sigma}\,\boldsymbol{V}^T,
 \]
@@ -1788,7 +1789,9 @@ We improve robustness by avoiding the inversion of both vanishing and near-vanis
 
 Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal.
 The projection may therefore need to be applied repeatedly until the desired accuracy is reached.
-Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone, while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
+Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough.
+
+Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone. At the same time, it still traces out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
 
 
 \subsection{Algorithm Considerations}
@@ -1798,25 +1801,21 @@ The stepping scheme requires an initial point on, or sufficiently close to, the 
 In our implementation, we consider two qualitatively different types of starting points:
 the dilute limit of one species, in which the ternary system effectively reduces to a binary one,
 and the critical point, which represents a distinct thermodynamic state rather than a dilute-limit construction.
-For the Flory-Huggins free energy, both types of initial points can be determined analytically, making them well suited for initializing the algorithm. These two initialization strategies may, however, lead to duplicate traces of the same binodal section, as illustrated in Fig.~\ref{fig:tracer_schematics}C.
+For the Flory-Huggins free-energy density, both types of initial points can be determined analytically, making them well suited for initializing the algorithm.
 
-For illustrative purposes, we consider the dilute limit of species \(0\), although the same construction applies to the other species after relabeling the volume fractions.
+For illustrative purposes, we consider the dilute limit of species \(0\), although the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.
 If the repulsive interaction between the remaining two species is sufficiently strong, \(\chi_{12} > 2\), the coexisting phases of the corresponding binary system are determined by the coexistence condition
 \[
 \ln(\phi) - \ln(1-\phi) + \chi_{12}(1-2\phi) = 0,
 \]
 where \(\phi\) denotes the volume fraction of one species and the other has volume fraction \(1-\phi\).
-A corresponding initial point for the ternary system is then given by
+This binary coexistence pair then provides an approximate ternary initialization:
 \[
 (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})
 =
 (\phi-\epsilon,\, 1-\phi-\epsilon,\, 1-\phi-\epsilon,\, \phi-\epsilon),
 \]
-so that
-\[
-\phi_0^{(1)} = \phi_0^{(2)} = 2\epsilon
-\]
-is small.
+for which \(\phi_0^{(1)} = \phi_0^{(2)} = 2\epsilon\) is small.
 This places the system sufficiently close to the ternary binodal for the projection step to bring it onto the coexistence manifold and thus initialize the stepping scheme.
 Because the initial point lies very close to the boundary of the composition space, applying the full projection step can occasionally move the system outside this domain and thereby cause numerical difficulties.
 To avoid this, we damp the projection step and update the phase-space point according to
@@ -1827,19 +1826,29 @@ where \(\alpha \approx 10^{-2}\) is a small tunable parameter that can be adjust
 Finally, since the null vector of the Jacobian is only defined up to an overall sign, the tangential direction must be chosen such that the trajectory points away from the boundary.
 
 The critical point provides a second possible initialization.
-It can also be determined analytically by locating the point in phase space at which the second and third derivatives of the free energy vanish (see Section~\ref{sec:critical_points}).
-Near the critical point, several singular values of the Jacobian become small, which makes the tangential direction obtained from the Jacobian numerically less robust.
-However, because the binodal and spinodal meet at the critical point, the tangent to the binodal can instead be inferred from the null vector of the Hessian of the free energy.
+It can also be determined analytically by locating the critical composition in composition space at which the second and third derivatives of the free-energy density vanish (see Section~\ref{sss:critical_point}). The corresponding phase-space initialization is then obtained by assigning this critical composition to both phases.
 
+Near the critical point, several singular values of the Jacobian become small, which makes the tangential direction obtained from the Jacobian numerically less robust.
+Because the binodal and spinodal meet at the critical point, the tangent direction in composition space can instead be inferred from the null vector of the Hessian of the free-energy density. This direction is then mapped to the corresponding phase-space tangent as follows:
+
+\[
+\delta\boldsymbol{\phi}_t = (\delta\phi_1, \delta\phi_2, -\delta\phi_1, -\delta\phi_2)^T,
+\]
+where \((\delta\phi_1,\delta\phi_2)^T\) denotes the null vector of the Hessian at the critical composition. The overall sign and normalization are arbitrary.
 
 \subsubsection{Handling binodal branching events}
 
-While developing this algorithm, we encountered an interesting case in the symmetric ternary system discussed in Section~\ref{sss:case_study_symmetric_ternary}. There, the spinodal appeared to cross the binodal, which would imply that part of the binodal is locally unstable while remaining globally stable.
-This, of course, is not possible and suggests the existence of additional binodal branches enclosing the spinodal curve.
+In the symmetric ternary system discussed in Section~\ref{sss:case_study_symmetric_ternary}, we encountered a case in which the spinodal appeared to cross the binodal.
+This would imply that part of the binodal is locally unstable while remaining globally stable, which is not possible.
+The natural conclusion is therefore that additional binodal branches must exist and enclose the spinodal.
 
-A clue to the origin of these additional branches became apparent when we examined the singular values of the Jacobian along the binodal. At certain points, not only the smallest singular value but also the second-smallest approached zero. This indicates that the null space of the Jacobian becomes degenerate, so that more than one local stepping direction is possible. Geometrically, this corresponds to a branching point of the binodal curve, as shown schematically in Fig.~\ref{fig:tracer_schematics}B.
+A useful diagnostic emerged from the singular values of the Jacobian along the binodal.
+At certain points, not only the smallest singular value but also the second smallest approached zero.
+In this case, the null space of the Jacobian becomes degenerate, so that more than one local stepping direction is possible.
+Geometrically, this corresponds to a branching point of the binodal curve, as shown schematically in Fig.~\ref{fig:tracer_schematics}B.
 
-To capture the full binodal, the algorithm must therefore monitor the two smallest singular values of the Jacobian. When such a degeneracy is detected, the procedure is split and both directions are followed in order to trace all branches of the binodal.\\
+To capture the full binodal, the algorithm must therefore monitor the two smallest singular values of the Jacobian.
+When such a degeneracy is detected, the continuation is split and both directions are followed in order to trace all branches of the binodal.\\
 
 \begin{minipage}{0.95\textwidth}
     \centering
@@ -1849,9 +1858,9 @@ To capture the full binodal, the algorithm must therefore monitor the two smalle
 \end{minipage}\\
 
 \subsubsection{Identification of three-phase regions}
-Next we can look for intersecting points of two branches of the binodal.
-These intersecting points are special because they correspond to points in phase space where two tie lines go in different directions,
-which means that three coexisting phases can exist at the same time.\\
+Next we look for intersections of two sections of the binodal.
+Such intersections signal the presence of points in phase space where two tie lines go in different directions,
+which in turn indicates the existence of a three-phase region. (see Fig.~\ref{fig:tracer_schematics}D)\\
 
 \noindent
 \begin{minipage}{0.1\textwidth}
@@ -1863,30 +1872,24 @@ which means that three coexisting phases can exist at the same time.\\
     \captionof{figure}{The three-phase region (red plane) provides a better convexification of the free energy surface (yellow surface) than the two-phase tie lines (black lines).\\}
     \label{fig:three_phase_intuition}
 \end{minipage}\hfill
-\\If a point lies inside a three-phase region, it can be represented as a convex combination of three coexisting compositions.
-Geometrically, this corresponds to a common tangent plane that touches the free energy surface at three distinct points.
-Although such a point may also lie on a tie line and therefore admit a two-phase decomposition, this configuration is not thermodynamically optimal.
-The corresponding tie line provides only a partial convexification of the free energy surface. In contrast, the tangent plane associated with three-phase
-coexistence yields a lower free energy, as it constitutes the full convex envelope in this region.
+\\The thermodynamic meaning of this construction is as follows. If a point lies inside a three-phase region, it can be represented as a linear combination of three coexisting compositions.
+Geometrically, this corresponds to a common tangent plane that touches the free energy surface at three distinct points (see Fig.~\ref{fig:three_phase_intuition}).
+Although some points in this part of phase space may also admit a two-phase decomposition, such constructions provide only a partial convexification of the free energy surface, whereas the tangent plane associated with three-phase
+coexistence yields a lower free energy, as it represents the full convex envelope in this region.
 Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation
-and the system will partition into three coexisting phases (see figure~\ref{fig:three_phase_intuition}).
+and the system will partition into three coexisting phases (see Fig.~\ref{fig:three_phase_intuition}).
 
-We do not need to consider the possibility of four or more coexisting phases, because according to Gibbs phase rule, in a ternary system we can have at most three coexisting phases.
+Finally, we do not need to consider the possibility of four or more coexisting phases, because within the present ternary setting Gibbs phase rule permits at most three coexisting phases. 
 
 
 
 \subsection{Implementation}
 
 Within Flory-Huggins theory, the phase diagram of a ternary system is fully determined by the interaction parameters \(\chi_{ij}\).\footnote{Here, we restrict attention to the case of equal molecular sizes.}
-Accordingly, the only physical input required by our algorithm is the set of interaction parameters, from which the full phase diagram is constructed.
-All remaining parameters are numerical in nature: they control aspects of the implementation such as step sizes, tolerances and convergence behavior.
-These parameters can be adjusted to improve the efficiency of the algorithm, but provided they are chosen within reasonable ranges, they do not significantly affect the resulting phase diagram.
+Accordingly, the only physical input required by our algorithm is the set of interaction parameters from which the phase diagram is constructed.
+All other parameters are numerical and control aspects of the implementation such as step sizes, tolerances and convergence behavior.
+When chosen appropriately, they do not change the underlying phase behavior, but they do affect how robustly and completely the phase diagram is reconstructed.
 
-
-% \subsection{Implementation}
-% The phase diagram of a ternary system in the Flory-Huggins theory is uniquely determined by the interaction parameters \(\chi_{ij}\).
-% For our algorithm this has the effect that the user only needs to provide the interaction parameters and the algorithm will compute the entire phase diagram.
-% All other parameters only define the numerical details which can be tuned to optimize the performance of the algorithm but do not affect the results in a significant way as long as they are within reasonable ranges.
 
 \subsubsection{Computing the spinodal and binodal curve}
 
