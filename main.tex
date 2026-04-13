@@ -1891,15 +1891,15 @@ All other parameters are numerical and control aspects of the implementation suc
 When chosen appropriately, they do not change the underlying phase behavior, but they do affect how robustly and completely the phase diagram is reconstructed.
 
 
-\subsubsection{Computing the spinodal and binodal curve}
+\subsubsection{Computing the phase diagram}
 
-Once the interaction parameters are specified, the spinodal curve and the critical points are computed first. For the Flory-Huggins free energy, both can be obtained analytically. Together with the dilute-limit constructions described above, these provide the initial points from which the binodal branches are traced.
+Once the interaction parameters are specified, the spinodal curve and the critical points are computed first. For the Flory-Huggins free-energy density, both can be obtained analytically. Together with the dilute-limit constructions described above, these determine the initial continuation tasks from which the binodal branches are traced. Here, a continuation task is the pair \((\boldsymbol{\phi}, \delta\boldsymbol{\phi}_t)\), consisting of a phase-space point \(\boldsymbol{\phi}\) and a continuation direction \(\delta\boldsymbol{\phi}_t\) that specifies which local branch to follow.
 
-All initial points are collected in a task list. Each task consists of a point in phase space together with a continuation direction along which the corresponding binodal branch is to be explored. The algorithm then proceeds by repeatedly selecting a task from this list and tracing the associated branch. During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events. Whenever the second-smallest singular value falls below a prescribed threshold, this indicates that an additional branch may emanate from the current point. In that case, a new task is created from the current phase-space point together with the continuation direction that is not being followed by the current branch and this task is added to the task list.
+All initial continuation tasks are collected in a task list. The algorithm then proceeds by repeatedly selecting a task from this list and tracing the associated branch. During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events. Whenever the second smallest singular value falls below a prescribed threshold, this indicates that an additional branch may emanate from the current point. In that case, a new continuation task is created from the current phase-space point together with the continuation direction that is not being followed by the current branch and this task is added to the task list.
 
-In this way, the algorithm gradually discovers and explores all connected branches of the binodal. After the branches initialized from the dilute limits and critical points have been processed, the remaining branches are generated automatically through the detected branching events. The procedure continues until the task list is empty. To avoid tracing the same branch multiple times, previously explored initial points are cached and duplicate tasks are skipped when encountered.
+In this way, the algorithm gradually discovers and explores all connected branches of the binodal. After the branches initialized from the dilute limits and critical points have been processed, the remaining branches are generated automatically through the detected branching events. The procedure continues until the task list is empty. To avoid tracing the same branch multiple times, previously explored continuation tasks are cached and duplicate tasks are skipped when encountered.
 
-For a given task, computing the corresponding binodal branch means repeatedly taking a tangential step along the binodal and then projecting the predicted point back onto the coexistence manifold using the pseudoinverse of the Jacobian. This continuation is repeated until one of the following termination criteria is met:
+For a given continuation task, computing the corresponding binodal branch means repeatedly taking a tangential step along the binodal and then projecting the predicted point back onto the coexistence manifold using the pseudoinverse of the Jacobian. This continuation is repeated until one of the following termination criteria is met:
 
 \begin{terminationbox}
 \begin{itemize}
@@ -1911,38 +1911,35 @@ For a given task, computing the corresponding binodal branch means repeatedly ta
 The full workflow of the algorithm is summarized in the pseudocode below.
 
 
-\begin{tcolorbox}[colback=blue!6,colframe=blue!45!black,arc=2.5mm,title={Pseudocode: Computing the binodal curve},fonttitle=\bfseries]
+\begin{tcolorbox}[colback=blue!6,colframe=blue!45!black,arc=2.5mm,title={Pseudocode: Computing the phase diagram},fonttitle=\bfseries]
 \begin{algorithmic}[1]
-\State $\mathrm{task\_list} \gets [\ ]$
+\State $\mathrm{task\_list} \gets \mathrm{ComputeInitialTasks}(\chi)$
 \State $\mathrm{history\_list} \gets [\ ]$
-\State $\mathrm{initial\_points} \gets \mathrm{ComputeInitialPoints}(\chi)$
-\ForAll{$p \in \mathrm{initial\_points}$}
-    \State $\mathrm{task\_list}.\mathrm{append}(p)$
-\EndFor
 \While{$\mathrm{task\_list}$ is not empty}
-    \State $p_0 \gets \mathrm{task\_list}.\mathrm{pop\_first}()$
-    \If{$\mathrm{InHistory}(p_0, \mathrm{history\_list})$}
+    \State $\mathrm{task}_0 \gets \mathrm{task\_list}.\mathrm{pop\_first}()$
+    \If{$\mathrm{InHistory}(\mathrm{task}_0, \mathrm{history\_list})$}
         \State \textbf{continue}
     \EndIf
-    \State $\mathrm{history\_list}.\mathrm{append}(p_0)$
-    \State $(\mathrm{section}, \mathrm{branch\_points}) \gets \mathrm{ComputeBinodalSection}(p_0)$
+    \State $\mathrm{history\_list}.\mathrm{append}(\mathrm{task}_0)$
+    \State $(\mathrm{section}, \mathrm{branch\_tasks}) \gets \mathrm{ComputeBinodalSection}(\mathrm{task}_0)$
     \State $\mathrm{StoreSection}(\mathrm{section})$
-    \ForAll{$q \in \mathrm{branch\_points}$}
+    \ForAll{$q \in \mathrm{branch\_tasks}$}
         \State $\mathrm{task\_list}.\mathrm{append}(q)$
     \EndFor
 \EndWhile
 
 \Statex
-\Function{ComputeBinodalSection}{$p_0$}
-    \State $p \gets p_0$, $\mathrm{section} \gets [p_0]$, $\mathrm{sv\_list} \gets [\ ]$
+\Function{ComputeBinodalSection}{$\mathrm{task}_0$}
+    \State $(p, d) \gets \mathrm{task}_0$
+    \State $\mathrm{section} \gets [p]$, $\mathrm{sv\_list} \gets [\ ]$
     \While{termination criteria are not met}
-        \State Take tangential step from $p$ and project back to binodal
+        \State Take tangential step from $p$ along $d$ and project back to binodal
         \State $\sigma \gets \mathrm{SingularValuesOfJacobian}(p)$
         \State $\mathrm{sv\_list}.\mathrm{append}(\sigma)$
         \State Append updated point to $\mathrm{section}$
     \EndWhile
-    \State $\mathrm{branch\_points} \gets \mathrm{DetectBranchPoints}(\mathrm{section}, \mathrm{sv\_list})$
-    \State \Return $(\mathrm{section}, \mathrm{branch\_points})$
+    \State $\mathrm{branch\_tasks} \gets \mathrm{DetectBranchPoints}(\mathrm{section}, \mathrm{sv\_list})$
+    \State \Return $(\mathrm{section}, \mathrm{branch\_tasks})$
 \EndFunction
 \end{algorithmic}
 \end{tcolorbox}
