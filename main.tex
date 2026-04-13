@@ -1454,19 +1454,25 @@ piecewise-linear model.\\
 To further analyze interfacial adsorption, we now derive analytical expressions for several interfacial properties.
 
 \subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}
-We will consider the symmetric case, where \(\chi_{01} = \chi_{02}\), such that \(\phi_0^{(1)} = \phi_0^{(2)}\) and \(\phi_1^{(1)} = \phi_2^{(2)}\)\footnote{Note that here species 0 will be absorbed at the interface, which is different from before where species 2 was absorbed.
-This is done to better match the convention used in the work of Huang and Olvera de la Cruz~\cite{Huang1996,Huang1999}.}.
-Although an analytical solution for the full interfacial profile remains intractable, it is possible to derive implicit expressions for several key interfacial properties.\\
-The symmetric interaction matrix takes the form \\\[
+We now consider the symmetric case \(\chi_{01}=\chi_{02}\). In this case, symmetry implies
+\[
+    \phi_0^{(1)} = \phi_0^{(2)}, \qquad
+    \phi_1^{(1)} = \phi_2^{(2)}, \qquad
+    \phi_2^{(1)} = \phi_1^{(2)}.
+\]
+While an analytical solution for the full interfacial profile remains intractable, several key interfacial properties can still be derived implicitly.\footnote{Here species 0 can become absorbed at the interface, in contrast to the earlier convention where species 2 played this role.}
+The corresponding symmetric interaction matrix is
+\[
     \begin{pmatrix}
         0 &\eta \chi& \eta\chi\\
         \eta \chi& 0&  \chi\\
         \eta\chi & \chi& 0\\
 
     \end{pmatrix}
-\]\\
-where \(\chi\) is the interaction strength between the last two components and \(\eta\) modulates the interaction strength of the zeroth component with the other two; typically, \(0 \le \eta \le 1\).
-This convention follows other work on interfacial adsorption~\cite{Huang1996,Huang1999}.
+\]
+where \(\chi\) denotes the interaction strength between components 1 and 2, and \(\eta\) modulates the interaction strength of component 0 with the other two species. We typically restrict attention to \(0 \le \eta \le 1\).
+This parametrization follows earlier work on interfacial adsorption~\cite{Huang1996,Huang1999}.
+
 \subsubsection{Implicit expression for the bulk phase compositions}
 The interaction matrix of the reduced two-component system can be obtained from the original three-component interaction matrix according to Eq.~\ref{eq:reduced_chi}, which for the symmetric case reduces to\\
 \[
@@ -1475,8 +1481,8 @@ The interaction matrix of the reduced two-component system can be obtained from 
         \chi_o & \chi_d
     \end{pmatrix}
 \]\\
-where \(\chi_d = -2\eta\chi\) and \(\chi_o=\chi(1-2\eta)\) are the diagonal and off-diagonal elements, respectively.
-We choose \(\lambda = 1\) such that \(\kappa_{ij} = -\chi_{ij}\).
+where \(\chi_d = -2\eta\chi\) and \(\chi_o=\chi(1-2\eta)\) are the diagonal and off-diagonal elements, respectively. To keep the notation compact, we suppress tildes on the reduced interaction and gradient coefficients throughout this subsection.
+Setting the lattice size to \(a = 1\), the reduced gradient coefficients satisfy \(\kappa_{ij} = -\chi_{ij}\).
 The profiles are then determined by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\eqref{eq:fh_free_energy} leads to the following Euler-Lagrange equations:
 \[
 \begin{aligned}
@@ -1508,13 +1514,13 @@ The EL equation for \(\phi_-\) then reduces to
 Thus we have obtained an implicit expression for the difference between the bulk phases as a function of the mean composition.
 We can understand the solution structure more easily by rewriting this expression as
 \[
-x = a \tanh(x),
+x = b \tanh(x),
 \]
-where $x\coloneq\Delta \phi / \phi_c$ and $a\coloneq\bar\phi/\phi_c$.
-If \(a\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\).
+where $x\coloneq\Delta \phi / \phi_c$ and $b\coloneq\bar\phi/\phi_c$.
+If \(b\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\).
 Therefore phase separation can only occur for $\bar\phi > \phi_c$.
-In addition, the positive root \(x^*>0\) satisfying \(x-a\tanh(x)=0\) increases with \(a\), meaning that as \(\bar\phi\) increases, so does \(\Delta \phi\).
-The largest possible value for \(\Delta \phi\) occurs in the dilute limit, where \(\bar\phi = 1/2\),
+In addition, the positive root \(x^*>0\) satisfying \(x-b\tanh(x)=0\) increases with \(b\), meaning that as \(\bar\phi\) increases, so does \(\Delta \phi\).
+The largest possible value for \(\Delta \phi\) occurs in the binary-mixture limit \(\phi_0 \to 0\), where \(\bar\phi = 1/2\),
 with \(\Delta \phi_\mathrm{max}\) determined implicitly by \(\Delta \phi_\mathrm{max} = \tanh(\Delta\phi_\mathrm{max}/\phi_c)/2\).
 
 \subsubsection{Implicit expression for the interfacial absorption}
@@ -1559,7 +1565,7 @@ The results can be seen in Fig.~\ref{fig:absorption}.\\
     The colorscale indicates the interaction strength \(\eta\) and \(\chi=2.5\).
     Note that the analytical solution always overestimates \(\delta \phi_+\).
     (B) Relative error \(\epsilon_{\mathrm{approx.}}=|\delta \phi_+^{\mathrm{analytical}} - \delta \phi_+^{\mathrm{numerical}}| / |\delta \phi_+^{\mathrm{numerical}}|\) of the analytical approximation.
-    The analytical solution becomes exact near the critical point. Surprisingly, the relative error seems to vanish near the dilute limit as well,
+    The analytical solution becomes exact near the critical point. Surprisingly, the relative error seems to vanish near the binary-mixture limit \((\phi_0 \to 0)\) as well,
     suggesting that the curvature can be neglected in this regime as well.\\}
     \label{fig:absorption}
     
