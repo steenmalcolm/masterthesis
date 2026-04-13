@@ -56,7 +56,7 @@ Phase separation in multicomponent fluids provides a general physical framework 
 In this chapter, we develop the theoretical basis for the ternary phase-separating system studied in this thesis. We begin with the thermodynamics of incompressible mixtures and derive the conditions for local and global stability, which define the spinodal, binodal and critical point. We then introduce a mean-field lattice description that leads to a Flory-Huggins free-energy functional with gradient terms, allowing spatially heterogeneous states and diffuse interfaces to be described on a continuum level. Building on this free-energy framework, we formulate the diffusive dynamics of phase separation in terms of coupled Cahn-Hilliard equations for the conserved volume fractions. We further discuss the thermodynamic definition of surface tension in ternary systems and, finally, outline the numerical methods used to compute equilibrium profiles and interfacial properties. Together, these results establish the theoretical framework that will be used throughout the remainder of this thesis to analyze phase behavior, interface formation and relaxation dynamics in ternary mixtures.
 
 \subsection{Thermodynamics of a ternary mixture}
-We begin by considering the a complex mixture of three components at constant temperature \(T\), Volume \(V\) and particle numbers \(N_0, N_1, N_2\). This system is best described by the Helmholtz free energy.
+We begin by considering the a complex mixture of three components at constant temperature \(T\), Volume \(V\) and particle numbers \(N_0, N_1, N_2\). This system is best described by the Helmholtz free energy,
 \(F=U-TS\).
 For simplicity, we only consider an incompressible fluid with constant volume and molecular volume \(\nu\).
 We also enforce the null-void condition meaning that vacancies caused by removing one particle must be filled by another particle.
@@ -70,7 +70,7 @@ Thus the free energy can be written as \(F(\phi_1, \phi_2)\).
 
 
 \subsubsection{Local stability analysis}
-In a homogeneous system the total free energy is equal to \(F = V f(\phi_1, \phi_2)\). The local stability of this system is determined by the curvature of the free energy density \(f(\phi_1,\phi_2)\).
+In a homogeneous system the total free energy is equal to \(F = V f(\phi_1, \phi_2)\), where \(f(\phi_1,\phi_2)\) is the free energy density. The local stability of this system is determined by the curvature of \(f(\phi_1,\phi_2)\).
 To make this precise we consider small spatial fluctuations \(\delta \phi_1(\mathbf{r})\) and \(\delta \phi_2(\mathbf{r})\) around a homogeneous state \((\phi_1,\phi_2)\). Since the total number of particles is conserved, these fluctuations satisfy
 \[
     \int_V \delta \phi_i(\mathbf{r})\, d\mathbf{r} = 0, \qquad i \in \{1,2\}.
@@ -1602,7 +1602,11 @@ Here \(f_\mathrm{local}\) is the local free-energy density evaluated at the inte
     w = \frac{\Delta \phi}{\sqrt{\phi_c \left(f_\mathrm{local}(\phi_+(0)) - \mu 2\phi_+(0) + \Pi\right)}}
 \end{equation}
 
-Using the resulting expressions for \(\Delta \phi\), \(\delta \phi_+\), and \(w\), we approximate the interfacial profiles as
+
+\noindent
+\begin{minipage}{0.5\textwidth}
+Using the resulting expressions for \(\Delta \phi\), \(\delta \phi_+\), and \(w\), we approximate the interfacial profiles as\\
+
 \begin{equation}
     \begin{aligned}
         \phi_-(x) & = \Delta \phi \tanh\left(\frac{x}{w}\right),\\
@@ -1610,16 +1614,13 @@ Using the resulting expressions for \(\Delta \phi\), \(\delta \phi_+\), and \(w\
     \end{aligned}
 \end{equation}
 
-\noindent
-\begin{minipage}{0.5\textwidth}
-
 For \(\phi_-(x)\), we use a hyperbolic tangent profile, since it is antisymmetric and saturates in the bulk. For the excess part of \(\phi_+(x)\), i.e. \(\phi_+(x)-\bar\phi\), we use a \(\sech^2\) form. This profile is symmetric and localized at the interface.
 
 As shown in Fig.~\ref{fig:symm_profile_approx}, the approximation matches the numerical profiles quite well, especially for \(\phi_-\). Although \(w\) is derived from \(\phi_-\), it also appears to capture the width of \(\phi_+\) accurately, suggesting that a single width is sufficient for both modes.
 
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}{0.46\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/symm_profile_approx.png}
     \captionof{figure}{Comparison of the numerical equilibrium profiles (dashed red) with the analytical approximation (solid blue) for the symmetric ternary system: \(\phi_-(x)\) in (A)
@@ -1633,7 +1634,7 @@ As shown in Fig.~\ref{fig:symm_profile_approx}, the approximation matches the nu
 Finally we can use the analytical expressions for the interfacial profiles to improve the surface tension approximation.
 The surface tension approximation in Eq.~\eqref{eq:surface_tension_approximation} can be rewritten as
 \[
-\gamma \approx \sqrt{(\kappa_{ij}\Delta \phi_i \Delta \phi_j)\,(f(\bar\phi+\delta\phi_+) -2\mu_i( \bar{\phi} + \delta\phi_+)+ \Pi)}
+\gamma \approx \sqrt{(\sum_{i,j}\Delta \phi_i\kappa_{ij} \Delta \phi_j)\,(f(\bar\phi+\delta\phi_+) -2\mu_i( \bar{\phi} + \delta\phi_+)+ \Pi)}
 \]
 Where now instead of using the mean composition \(\bar\phi\) we use the composition at the interface \(\bar\phi + \delta\phi_+\) including the effect of interfacial adsorption.
 The results of this improved approximation can be seen in Fig.~\ref{fig:st_symmetric_approx}.\\
@@ -1646,28 +1647,28 @@ The results of this improved approximation can be seen in Fig.~\ref{fig:st_symme
 \end{minipage}
 
 Clearly the approximation that includes interfacial adsorption effects performs much better and is essentially constant across phase space, with a relative error of approximately \(6\%\).
-As predicted the main source of error after accounting for interfacial adsorption is the simplified functional form of the profile, which contributes a baseline error of approximately \(5\%\) as shown in Fig.~\ref{fig:fit_profiles}B.
+After accounting for interfacial adsorption, the remaining deviation from the true surface tension is likely due to the simplified functional form of the profile, which appears to contribute a baseline error for all values of the chemical potential difference.
 
 \clearpage
 
 \section{Fast Binodal Construction}
-In the previous chapter, we examined the interfacial profiles of ternary systems. 
-To accelerate convergence to equilibrium, the system was initialized using the bulk compositions of the coexisting phases. 
-These compositions were computed using the \texttt{flory} Python package \cite{Yicheng2025flory}, which at first provided a practical solution. 
-However, after optimizing the numerical schemes used for the interfacial profile calculations, the precomputation of the bulk coexistence compositions became the main computational bottleneck.
+In the previous chapter, we examined interfacial profiles in ternary systems. 
+To accelerate convergence to equilibrium, the interface was initialized as a sharp step between coexisting bulk phases. 
+These bulk compositions were computed using the \texttt{flory} Python package \cite{Yicheng2025flory}, which initially provided a practical solution. 
+However, after optimizing the numerical scheme for the interfacial profile calculations, this precomputation became the dominant computational bottleneck.
 
-The way the system was explored was by iteratively stepping through phase space.
-Since successive points lie close to one another, this naturally suggests using the knowledge of the coexistence compositions from one step to approximate the compositions for the next,
-thereby accelerating convergence to the next point on the binodal curve.
+Because the system was explored by stepping along the binodal, successive coexistence points are close to one another (see Fig.~\ref{fig:workflow}).
+This suggests using the coexistence compositions from one step as an initial approximation for the next,
+thereby accelerating convergence along the binodal.
 
-This intuition motivates the method presented in this section, which enables rapid construction of the binodal of a ternary system in phase space.
+This observation motivates the method developed in this section, which enables rapid construction of ternary binodals. 
 
 
 \subsection{Tracing out the binodal curve in phase space}
-To motivate the algorithm, it is useful to view the binodal geometrically in phase space. 
-Each point on the binodal corresponds to a pair of coexisting phase compositions, while the coexistence conditions restrict which pairs are physically admissible. 
-As a result, the set of allowed coexistence states forms a lower-dimensional structure in the full composition space that can be traced continuously from one point to the next. 
-This way of looking at the problem helps in understanding the construction method described below. The overall continuation strategy and the special cases discussed in this section are summarized schematically in Fig.~\ref{fig:tracer_schematics}.
+To motivate the algorithm, we view the binodal geometrically in phase space. 
+Each point on the binodal represents a pair of coexisting phase compositions which satisfy the coexistence conditions. 
+The binodal therefore forms a lower-dimensional structure in the full phase space that can be traced continuously from one coexistence state to the next. 
+This geometric viewpoint forms the basis of the continuation method developed below. The overall strategy and the special cases discussed in this section are summarized schematically in Fig.~\ref{fig:tracer_schematics}. 
 
 
 \subsubsection{Coexistence conditions}
@@ -1677,50 +1678,41 @@ A coexistence state of two phases in a ternary system can be represented by a po
 \boldsymbol\phi = (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})^T,
 \]
 where the superscript labels the phase and the subscript labels the species.
-These coordinates are not independent, but must satisfy the coexistence conditions: the exchange chemical potentials of the two species and the osmotic pressure must be equal in both phases,
-\[
-\begin{aligned}
-    \mu_i(\phi_1^{(1)}, \phi_2^{(1)}) &= \mu_i(\phi_1^{(2)}, \phi_2^{(2)}), \qquad i=1,2,\\
-    \Pi(\phi_1^{(1)}, \phi_2^{(1)}) &= \Pi(\phi_1^{(2)}, \phi_2^{(2)}).
-\end{aligned}
-\]
-The coexistence conditions can be compactly written as
-\[
-\boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0},
-\]
-where
+These coordinates are not independent, but must satisfy the coexistence conditions introduced in Eq.~\eqref{eq:coexistence_conditions}. In particular, the two independent exchange chemical potentials and the osmotic pressure must be equal in both phases. Defining
 \[
 \boldsymbol{E}
 =
-(\mu_1^{(1)}-\mu_1^{(2)},\, \mu_2^{(1)}-\mu_2^{(2)},\, \Pi^{(1)}-\Pi^{(2)})^T
+(\mu_1^{(1)}-\mu_1^{(2)},\, \mu_2^{(1)}-\mu_2^{(2)},\, \Pi^{(1)}-\Pi^{(2)})^T,
+\]
+these conditions can be written compactly as
+\[
+\boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}.
 \]
 
 
-For the Flory-Huggins free energy, the exchange chemical potentials and osmotic pressure are given by
+For the Flory-Huggins free-energy density, the exchange chemical potentials and osmotic pressure are given by
 \[
 \begin{aligned}
     \mu_i(\phi_1, \phi_2) &= \frac{\partial f}{\partial \phi_i}
-    = \ln(\phi_i) - \ln(\phi_0) + \sum_{j=1}^2 \chi_{ij}\phi_j,\\
+    = \ln(\phi_i) - \ln(\phi_0) + \sum_{j=1}^2 \tilde\chi_{ij}\phi_j,\\
     \Pi(\phi_1, \phi_2) &= -f + \sum_i \mu_i \phi_i
-    = -\ln(\phi_0) + \frac{1}{2}\sum_{i,j=1}^2 \phi_i \chi_{ij} \phi_j.
+    = -\ln(\phi_0) + \frac{1}{2}\sum_{i,j=1}^2 \phi_i \tilde\chi_{ij} \phi_j.
 \end{aligned}
 \]
 
-The algorithm described in the following sections starts from a point on the binodal, that is, from a phase-space point \(\boldsymbol\phi\) that satisfies these coexistence conditions.
+The algorithm described in the following sections starts from such a coexistence state \(\boldsymbol\phi\). 
 
 
 \subsubsection{Tangential step along the binodal}
 
-Suppose that the bulk compositions of the two coexisting phases are known for a given point
-\(\boldsymbol{\phi}\) in phase space.
-A natural question is whether one can take a small step away from this point while remaining on the binodal curve.
+Suppose that a coexistence state \(\boldsymbol{\phi}\) on the binodal is known. We ask whether one can take a small step away from this point while remaining on the binodal.
 For a sufficiently small displacement
 \[
 \delta\boldsymbol{\phi}
 =
 (\delta\phi_1^{(1)}, \delta\phi_2^{(1)}, \delta\phi_1^{(2)}, \delta\phi_2^{(2)})^T,
 \]
-the coexistence conditions can be expanded to first order as
+linearizing the coexistence conditions gives
 \begin{equation}
 \boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi})
 =
@@ -1743,22 +1735,26 @@ where \(\boldsymbol{J}\) is the Jacobian matrix defined as
 \end{pmatrix}.
 \]
 
-Since \(\boldsymbol{\phi}\) already lies on the binodal, the term \(\boldsymbol{E}(\boldsymbol{\phi})\) vanishes.
-To remain on the binodal to first order, the displacement must therefore satisfy
+Since \(\boldsymbol{\phi}\) already lies on the binodal, we have \(\boldsymbol{E}(\boldsymbol{\phi})=\boldsymbol{0}\). Remaining on the binodal to first order therefore requires
 \[
 \boldsymbol{J}\,\delta\boldsymbol{\phi} = \boldsymbol{0}.
 \]
 In other words, the local direction along the binodal is given by the null space of the Jacobian,
 \[
-\delta\boldsymbol{\phi_t} \propto \operatorname{null}(\boldsymbol{J}).
+\delta\boldsymbol{\phi_t} \in \operatorname{null}(\boldsymbol{J}).
 \]
 
 
 \subsubsection{Projecting back onto the coexistence manifold}
 
-The tangential step derived above follows the local direction of the binodal, but it is only accurate to first order. As a result, the predicted point generally deviates from the coexistence manifold by an error of order \(\delta\boldsymbol{\phi}^2\). If left uncorrected, this error accumulates over many steps and can eventually lead to a noticeable drift away from the binodal. One way to reduce this drift is to take smaller tangential steps, but this also increases the number of iterations required to trace out the curve. A more efficient approach is therefore to add a correction step that projects the predicted point back onto the coexistence manifold.
+The tangential step derived above follows the local direction of the binodal, but it is only accurate to first order.
+As a result, the predicted point generally deviates from the coexistence manifold by an error of order \(\|\delta\boldsymbol{\phi}\|^2\).
+If left uncorrected, this error accumulates over many steps and can eventually lead to a noticeable drift away from the binodal.
+One way to reduce this drift is to take smaller tangential steps, but this also increases the number of iterations required to trace out the curve.
+A more efficient approach is therefore to add a correction step that projects the predicted point back onto the coexistence manifold.
 
-Suppose that \(\boldsymbol{\phi}\) is close to, but not exactly on, the binodal. Linearizing the coexistence conditions as in Eq.~\ref{eq:binodal_step} gives
+Suppose that \(\boldsymbol{\phi}\) is close to, but not exactly on, the binodal.
+Linearizing the coexistence conditions as in Eq.~\ref{eq:binodal_step} gives
 \[
 \boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi})
 \approx
@@ -1771,9 +1767,12 @@ To recover a point on the binodal to first order, we require the right-hand side
 
 Because \(\boldsymbol{J}\) has a nontrivial null space, this equation does not have a unique solution: one may always add a component along the tangent direction without changing the first-order satisfaction of the coexistence conditions. To select a unique correction, we choose the minimum-norm solution,
 \[
-\delta\boldsymbol{\phi_n} = -\boldsymbol{J}^+ \boldsymbol{E}(\boldsymbol{\phi}),
+\delta\boldsymbol{\phi}_n = -\boldsymbol{J}^+ \boldsymbol{E}(\boldsymbol{\phi}),
 \]
-where \(\boldsymbol{J}^+\) denotes the Moore-Penrose pseudoinverse of \(\boldsymbol{J}\). This choice makes the correction step orthogonal to the null space of \(\boldsymbol{J}\), so that it does not introduce any additional motion along the binodal. In this way, the tangential step and the projection step remain cleanly separated.
+where 
+\[\boldsymbol{J}^+ = \boldsymbol{J^T}(\boldsymbol{J}\boldsymbol{J^T})^{-1}\]
+
+denotes the Moore-Penrose pseudoinverse of \(\boldsymbol{J}\). This choice makes the correction step orthogonal to the null space of \(\boldsymbol{J}\), so that it does not introduce any additional motion along the binodal. In this way, the tangential step and the projection step remain cleanly separated.
 
 In practice, the pseudoinverse is computed using the singular value decomposition
 \[
@@ -1785,7 +1784,7 @@ which gives
 \]
 Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the singular values that are sufficiently large, while setting the reciprocals of vanishing or very small singular values to zero.
 The singular value associated with the null space corresponds to the tangent direction along the binodal and should therefore not be inverted.
-We improve robustness by avoiding the inversion of both vanishing and near-vanishing singular values, where the latter are identified through a numeric threshold value.
+We improve robustness by avoiding the inversion of both vanishing and near-vanishing singular values, where the latter are identified through a numerical threshold value.
 
 Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal. The projection may therefore need to be applied repeatedly until the desired accuracy is reached. Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone, while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
 
@@ -1846,6 +1845,32 @@ To capture the full binodal, the algorithm must therefore monitor the two smalle
     \captionof{figure}{Schematic illustration of the main steps and characteristic events in the algorithm, shown in the \(\phi_1\)-\(\phi_2\) phase space. (A) Successive tangential (green arrow) and projection (red arrow) steps; the projection step may need to be repeated. (B) Branching event: an initial binodal section (blue) splits into a second section (orange) when the Jacobian becomes degenerate. (C) Duplicate binodal sections obtained when tracing is initiated either from the dilute limit (blue points) or from the critical point (orange points). The stars denote the initial points of the tracing processes. (D) The crossing of two binodal branches indicates a three-phase region (red triangle).}
     \label{fig:tracer_schematics}
 \end{minipage}\\
+
+\subsubsection{Identification of three-phase regions}
+Next we can look for intersecting points of two branches of the binodal.
+These intersecting points are special because they correspond to points in phase space where two tie lines go in different directions,
+which means that three coexisting phases can exist at the same time.\\
+
+\noindent
+\begin{minipage}{0.1\textwidth}
+\end{minipage}\hfill
+
+\begin{minipage}{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/three_phase_intuition.png}
+    \captionof{figure}{The three-phase region (red plane) provides a better convexification of the free energy surface (yellow surface) than the two-phase tie lines (black lines).\\}
+    \label{fig:three_phase_intuition}
+\end{minipage}\hfill
+\\If a point lies inside a three-phase region, it can be represented as a convex combination of three coexisting compositions.
+Geometrically, this corresponds to a common tangent plane that touches the free energy surface at three distinct points.
+Although such a point may also lie on a tie line and therefore admit a two-phase decomposition, this configuration is not thermodynamically optimal.
+The corresponding tie line provides only a partial convexification of the free energy surface. In contrast, the tangent plane associated with three-phase
+coexistence yields a lower free energy, as it constitutes the full convex envelope in this region.
+Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation
+and the system will partition into three coexisting phases (see figure~\ref{fig:three_phase_intuition}).
+
+We do not need to consider the possibility of four or more coexisting phases, because according to Gibbs phase rule, in a ternary system we can have at most three coexisting phases.
+
 
 
 \subsection{Implementation}
@@ -1921,32 +1946,6 @@ The full workflow of the algorithm is summarized in the pseudocode below.
 After all binodal branches have been computed, one needs to remove duplicates, which can occur, for example, if tracing is started both at the boundary of the phase diagram and at the critical point of the same binodal section (see Fig.~\ref{fig:tracer_schematics}C).
 Once all duplicates are removed, one can look for intersecting points of two branches of the binodal, as this is where two tie lines go in different directions, which means that we have three coexisting phases (see Fig.~\ref{fig:tracer_schematics}D).
 Once the algorithm has completed we are left with a set of spinodal and binodal branches, as well as the dividing lines between the one phase, two phase and three phase regions in phase space.
-
-\subsubsection{Identification of three-phase regions}
-Once we have removed duplicates, we can look for intersecting points of two branches of the binodal.
-These intersecting points are special because they correspond to points in phase space where two tie lines go in different directions,
-which means that three coexisting phases can exist at the same time.\\
-
-\noindent
-\begin{minipage}{0.1\textwidth}
-\end{minipage}\hfill
-
-\begin{minipage}{0.8\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/three_phase_intuition.png}
-    \captionof{figure}{The three-phase region (red plane) provides a better convexification of the free energy surface (yellow surface) than the two-phase tie lines (black lines).\\}
-    \label{fig:three_phase_intuition}
-\end{minipage}\hfill
-\\If a point lies inside a three-phase region, it can be represented as a convex combination of three coexisting compositions.
-Geometrically, this corresponds to a common tangent plane that touches the free energy surface at three distinct points.
-Although such a point may also lie on a tie line and therefore admit a two-phase decomposition, this configuration is not thermodynamically optimal.
-The corresponding tie line provides only a partial convexification of the free energy surface. In contrast, the tangent plane associated with three-phase
-coexistence yields a lower free energy, as it constitutes the full convex envelope in this region.
-Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation
-and the system will partition into three coexisting phases (see figure~\ref{fig:three_phase_intuition}).
-
-We do not need to consider the possibility of four or more coexisting phases, because according to Gibbs phase rule, in a ternary system we can have at most three coexisting phases.
-
 
 
 \subsubsection{Numerical details}  
