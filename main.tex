@@ -1521,7 +1521,12 @@ This form shows immediately that if \(b\leq 1\), or equivalently \(\bar\phi \leq
 \]
 
 \subsubsection{Implicit expression for the interfacial excess amplitude}
-Next we examine the Euler-Lagrange equation for \(\phi_+\) at the interface. Due to the antisymmetric nature of \(\phi_-\) about the interface, we have \(\phi_-(x=0)=0\) and therefore
+We now derive an implicit equation for the interfacial-excess amplitude
+\[
+\delta\phi_+ = \phi_+(0) - \bar\phi,
+\]
+which measures the peak height of the excess profile at the interface center. By contrast, the total interfacial adsorption would be obtained by integrating the excess profile across the interface.
+To this end, we evaluate the Euler-Lagrange equation for \(\phi_+\) at the interface. Because \(\phi_-\) is antisymmetric about the interface, we have \(\phi_-(0)=0\), and the equation reduces to
 
 \[
 \begin{aligned}
@@ -1530,31 +1535,28 @@ Next we examine the Euler-Lagrange equation for \(\phi_+\) at the interface. Due
 \end{aligned}
 \]
 
-where we have inserted the definition of \(\mu\) and defined the interfacial-excess amplitude \(\delta\phi_+ = \phi_+(0) - \bar\phi\). This quantity measures the peak height of the excess profile at the interface center.
-By contrast, the total interfacial adsorption would be obtained by integrating the excess profile across the interface.
-Rearranging the previous equation yields the following implicit relation for \(\delta\phi_+\):
+where in the second line we have inserted the definition of \(\mu\). Rearranging this relation yields the implicit equation
 \begin{equation}
     \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Xi}\right)
     \label{eq:delta_phi_plus}
 \end{equation}
     % \delta \phi_+ = \frac{1-2\bar\phi}{2}\frac{-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}=\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
-where we have defined
+To write the result compactly, we introduce the shorthand
 \begin{equation}
     \Xi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
 \end{equation}
 where \(a_2 = \phi_+''(0)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface relative to the excess amplitude.
-A simple scaling estimate then gives
+
+To assess the importance of this curvature term, we use the scaling estimate
 \[
 \phi_+''(0) \sim \frac{\delta\phi_+}{w^2} 
 \]
 where \(w\) is the interfacial width.
-Since the interfacial width diverges at the critical point, we can conclude that in this limit
+This implies
 \[
 a_2 = \frac{\phi_+''(0)}{\delta\phi_+} \sim \frac{1}{w^2}
 \]
-vanishes. Under the assumption $|a_2| \ll 1$, Eq.~\eqref{eq:delta_phi_plus} can then be solved self-consistently
-once \(\Delta \phi\) is obtained from Eq.~\eqref{eq:delta_phi}.
-The resulting interfacial-excess amplitudes are shown in Fig.~\ref{fig:absorption}.\\
+and therefore \(a_2\) vanishes as the critical point is approached, where the interfacial width diverges. Under the assumption $|a_2| \ll 1$, Eq.~\eqref{eq:delta_phi_plus} can then be solved self-consistently once \(\Delta \phi\) is obtained from Eq.~\eqref{eq:delta_phi}. Solving these two equations yields the analytical predictions shown in Fig.~\ref{fig:absorption}.\\
 
 \begin{minipage}{\textwidth}
     \centering
@@ -1568,6 +1570,7 @@ The resulting interfacial-excess amplitudes are shown in Fig.~\ref{fig:absorptio
     \label{fig:absorption}
     
 \end{minipage}
+
 \subsubsection{Approximation for the interfacial profiles}
 Next we derive the interface width, \(w = \Delta \phi /  \phi_{-}'(0)\), which differs from the approximation in Eq.~\eqref{eq:width_scaling} because adsorption effects are now included.
 To compute \(w\), we need the gradient of \(\phi_-\) at the interface, which can be obtained from the conserved quantity in Eq.~\eqref{eq:invariant_quantity}.
