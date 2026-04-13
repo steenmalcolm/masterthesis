@@ -1786,7 +1786,9 @@ Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the sing
 The singular value associated with the null space corresponds to the tangent direction along the binodal and should therefore not be inverted.
 We improve robustness by avoiding the inversion of both vanishing and near-vanishing singular values, where the latter are identified through a numerical threshold value.
 
-Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal. The projection may therefore need to be applied repeatedly until the desired accuracy is reached. Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone, while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
+Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal.
+The projection may therefore need to be applied repeatedly until the desired accuracy is reached.
+Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough. Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone, while still tracing out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
 
 
 \subsection{Algorithm Considerations}
