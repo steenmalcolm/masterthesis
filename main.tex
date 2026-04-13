@@ -1491,7 +1491,7 @@ The profiles are then determined by the variational principle \(\delta F/\delta 
 \end{aligned}
 \]
 Here \(\mu_1=\mu_2=\mu=\chi_d\phi_1^{(1)} + \chi_o \phi_2^{(1)} + \ln(\phi_1^{(1)}) - \ln(\phi_0^{(1)})\) is the exchange chemical potential.
-The Euler-Lagrange equations can be written more clearly in terms of the eigenmodes of the interaction matrix, \(\phi_\pm = \frac{1}{2}(\phi_1 \pm \phi_2)\):
+Because the reduced interaction matrix is symmetric, it is natural to diagonalize the problem by introducing the eigenmodes \(\phi_\pm = \frac{1}{2}(\phi_1 \pm \phi_2)\). The Euler-Lagrange equations then become
 \[
 \begin{aligned}
     &\frac{2}{\phi_s} \phi_+''(x) = -\frac{2}{\phi_s}\phi_+(x) + \ln(\phi_+ + \phi_-) + \ln(\phi_+ - \phi_-) - 2 \ln(1-2\phi_+) - 2\mu \\
@@ -1500,8 +1500,7 @@ The Euler-Lagrange equations can be written more clearly in terms of the eigenmo
 \]
 where we define \(\chi_o - \chi_d \eqcolon 1/\phi_c\) and \(\chi_o+\chi_d \eqcolon -1/\phi_s\).\\
 
-We first focus on the Euler-Lagrange equation for \(\phi_-\).
-Far from the interface, the curvature vanishes and \(\phi_+(x\rightarrow \infty) = \bar\phi\) and \(\phi_-(x\rightarrow \infty) = \Delta \phi\) are constant.
+To determine the coexisting bulk compositions, we first analyze the Euler-Lagrange equation for \(\phi_-\) in the bulk. In this regime, gradient terms vanish and the fields approach the constants \(\phi_+(x\rightarrow \infty) = \bar\phi\) and \(\phi_-(x\rightarrow \infty) = \Delta \phi\).
 Here \(\Delta \phi = (\phi_1^{(1)}-\phi_2^{(1)})/2\) is half the difference between the bulk phases and \(\bar\phi = (\phi_1^{(1)}+\phi_2^{(1)})/2\) is their mean composition.
 The EL equation for \(\phi_-\) then reduces to
 \begin{equation}
@@ -1511,19 +1510,17 @@ The EL equation for \(\phi_-\) then reduces to
 \end{aligned}
 \label{eq:delta_phi}
 \end{equation}
-Thus we have obtained an implicit expression for the difference between the bulk phases as a function of the mean composition.
-We can understand the solution structure more easily by rewriting this expression as
+Thus, Eq.~\eqref{eq:delta_phi} provides an implicit relation between the phase-composition difference \(\Delta\phi\) and the mean composition \(\bar\phi\). To understand its solution structure, we rewrite it as
 \[
 x = b \tanh(x),
 \]
 where $x\coloneq\Delta \phi / \phi_c$ and $b\coloneq\bar\phi/\phi_c$.
-If \(b\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\).
-Therefore phase separation can only occur for $\bar\phi > \phi_c$.
-In addition, the positive root \(x^*>0\) satisfying \(x-b\tanh(x)=0\) increases with \(b\), meaning that as \(\bar\phi\) increases, so does \(\Delta \phi\).
-The largest possible value for \(\Delta \phi\) occurs in the binary-mixture limit \(\phi_0 \to 0\), where \(\bar\phi = 1/2\),
-with \(\Delta \phi_\mathrm{max}\) determined implicitly by \(\Delta \phi_\mathrm{max} = \tanh(\Delta\phi_\mathrm{max}/\phi_c)/2\).
+This form shows immediately that if \(b\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\). Hence phase separation is only possible for $\bar\phi > \phi_c$. For \(\bar\phi>\phi_c\), the positive root \(x^*>0\) satisfying \(x-b\tanh(x)=0\) increases monotonically with \(b\), so \(\Delta \phi\) also increases with \(\bar\phi\). Its maximal value is reached in the binary-mixture limit \(\phi_0 \to 0\), where \(\bar\phi = 1/2\), and is determined implicitly by
+\[
+\Delta \phi_\mathrm{max} = \frac{1}{2}\tanh\left(\frac{\Delta\phi_\mathrm{max}}{\phi_c}\right).
+\]
 
-\subsubsection{Implicit expression for the interfacial absorption}
+\subsubsection{Implicit expression for the interfacial excess amplitude}
 Next we examine the Euler-Lagrange equation for \(\phi_+\) at the interface. Due to the antisymmetric nature of \(\phi_-\) about the interface, we have \(\phi_-(x=0)=0\) and therefore
 
 \[
@@ -1533,7 +1530,8 @@ Next we examine the Euler-Lagrange equation for \(\phi_+\) at the interface. Due
 \end{aligned}
 \]
 
-where we have inserted the definition of \(\mu\) and defined the absorption amplitude \(\delta\phi_+ = \phi_+(0) - \bar\phi\).
+where we have inserted the definition of \(\mu\) and defined the interfacial-excess amplitude \(\delta\phi_+ = \phi_+(0) - \bar\phi\). This quantity measures the peak height of the excess profile at the interface center.
+By contrast, the total interfacial adsorption would be obtained by integrating the excess profile across the interface.
 Rearranging the previous equation yields the following implicit relation for \(\delta\phi_+\):
 \begin{equation}
     \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Xi}\right)
@@ -1544,24 +1542,24 @@ where we have defined
 \begin{equation}
     \Xi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
 \end{equation}
-where \(a_2 = \delta\phi_+''(0)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface.
-Dimensional analysis then implies
+where \(a_2 = \phi_+''(0)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface relative to the excess amplitude.
+A simple scaling estimate then gives
 \[
-\phi_+''(x) \sim \frac{\delta\phi_+}{w^2} 
+\phi_+''(0) \sim \frac{\delta\phi_+}{w^2} 
 \]
 where \(w\) is the interfacial width.
 Since the interfacial width diverges at the critical point, we can conclude that in this limit
 \[
-a_2 = \frac{\phi_+''(x)}{\delta\phi_+} \sim \frac{1}{w^2}
+a_2 = \frac{\phi_+''(0)}{\delta\phi_+} \sim \frac{1}{w^2}
 \]
-vanishes. Under the assumption $a_2 \ll 1$ the equation in Eq.~\eqref{eq:delta_phi_plus} can be solved self-consistently
+vanishes. Under the assumption $|a_2| \ll 1$, Eq.~\eqref{eq:delta_phi_plus} can then be solved self-consistently
 once \(\Delta \phi\) is obtained from Eq.~\eqref{eq:delta_phi}.
-The results can be seen in Fig.~\ref{fig:absorption}.\\
+The resulting interfacial-excess amplitudes are shown in Fig.~\ref{fig:absorption}.\\
 
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.8\textwidth]{figures/absorption.png}
-    \captionof{figure}{(A) Interfacial excess \(|\delta \phi_+| = |\phi_+(0) - \bar\phi|\) for the numerical (dashed) and analytical (solid) results as a function of the chemical potential difference \(\mu_c-\mu\).
+    \captionof{figure}{(A) Interfacial-excess amplitude \(|\delta \phi_+| = |\phi_+(0) - \bar\phi|\) for the numerical (dashed) and analytical (solid) results as a function of the chemical potential difference \(\mu_c-\mu\).
     The colorscale indicates the interaction strength \(\eta\) and \(\chi=2.5\).
     Note that the analytical solution always overestimates \(\delta \phi_+\).
     (B) Relative error \(\epsilon_{\mathrm{approx.}}=|\delta \phi_+^{\mathrm{analytical}} - \delta \phi_+^{\mathrm{numerical}}| / |\delta \phi_+^{\mathrm{numerical}}|\) of the analytical approximation.
