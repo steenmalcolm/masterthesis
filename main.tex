@@ -2049,9 +2049,9 @@ We also sampled $2500$ points in the one-phase region, where no coexistence comp
 Of course, this is not a proof that the algorithm will work for all possible interaction parameters, but it does provide strong empirical evidence that the algorithm is robust and suitable for exploring representative ternary phase behavior.
 
 \subsubsection{Case study: symmetric ternary system}\label{sss:case_study_symmetric_ternary}
-The symmetric ternary case is when all interactions between one species and the other species is equal \(\chi_{01}=\chi_{02}\)\footnote{For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.} and the interaction between the remaining two species is given by \(\chi_{12}\).
-It has the advantage that by using an ansatz one can compute the binodals analytically.
-The ansatz is that one of the species is constant in both phases and the remaining two species swap their volume fractions in each phase.
+The symmetric ternary case is defined by equal interactions of one species with the other two, \(\chi_{01}=\chi_{02}\)\footnote{For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.}, while the interaction between the remaining two species is given by \(\chi_{12}\).
+An advantage of this case is that the binodals can be computed analytically using a simple ansatz.
+We assume that one species has the same composition in both phases, while the remaining two species exchange their volume fractions between phases.
 If, for example, species 0 is constant, then 
 \[
 \begin{aligned}
@@ -2068,13 +2068,13 @@ For this case the coexistence condition for the exchange chemical potential simp
 
 \noindent
 \begin{minipage}{0.45\textwidth}
-Thus for given \(\phi^{(1)}\) we can find \(\phi^{(2)}\) by solving the implicit equation Eq.~\ref{eq:symmetric_implicit}.
-The results can be seen in Fig.~\ref{fig:verify_symmetric}. As one can see in the bottom panel, the difference between the exact and algorithmic
+Thus, for a given \(\phi^{(1)}\), we can find \(\phi^{(2)}\) by solving the implicit equation Eq.~\ref{eq:symmetric_implicit}.
+The results are shown in Fig.~\ref{fig:verify_symmetric}. In the bottom panel, the difference between the exact and algorithmic
 results is nearly zero. We repeated this for many different \(\chi_{12} > 2\) values and the results are all in good agreement.
 It is therefore safe to conclude that the algorithm is able to accurately capture the binodal curve for this symmetric ternary system.\\
-Next we can look at the special case, where all interactions are equal \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\).
-In this case there have been some analytical results obtained in previous work \cite{Huang1995PhaseSeparation} which we can also use to verify our algorithm,
-at least qualitatively, since the results are only presented in figures. In the paper the authors look at several parameter regimes for the interaction strengths and find a rich variety for the range \(\chi \in [2, 3]\).
+Next we turn to the special case in which all interactions are equal, \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\).
+For this fully symmetric system, previous work \cite{Huang1995PhaseSeparation} provides analytical results that can be used to verify our algorithm, at least qualitatively, since the results are presented only in figures.
+In that work, the authors consider several interaction regimes and find a rich variety of phase-diagram topologies for \(\chi \in [2, 3]\).
 \end{minipage}
 \hfill
 \begin{minipage}{0.5\textwidth}
@@ -2087,18 +2087,23 @@ For \(2<\chi<2.575\) three binodal sections exist originating from the three dil
 Beyond this point, additional binodal sections appear and enclose the spinodal again.
 Additionally, the number of critical points increases from $3$ to $9$. In the regime \(2.575< \chi < 2.7\) there are three three-phase regions (Fig.~\ref{fig:symmetric_chis}B).
 At \(\chi = 8/3\) the spinodal sections collide and $6$ of the $9$ critical points disappear (Fig.~\ref{fig:symmetric_chis}C).
-For \(\chi > 8/3\) there are only three critical points left (Fig.~\ref{fig:symmetric_chis}D).
-Finally at \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E). As one increases \(\chi\) further, the three-phase region grows in size (Fig.~\ref{fig:symmetric_chis}F).\\
+For \(\chi > 8/3\) there are only three critical points left (Fig.~\ref{fig:symmetric_chis}D).\\
+
+Finally at \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E)\footnote{Note that the critical points still exist within the three phase region.}.
+As one increases \(\chi\) further, the three-phase region grows in size (Fig.~\ref{fig:symmetric_chis}F).
+Overall, the sequence of topological changes obtained from our algorithm is in good qualitative agreement with the results reported in \cite{Huang1995PhaseSeparation}.\\
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/symmetric_chis.png}
-    \captionof{figure}{Phase diagram for different values of \(\chi\). The orange areas are the three-phase regions, the binodal is shown in blue, the spinodal is the thick dashed line and the critical points are the gold stars and the tie-lines are the thin striped lines. The three-phase regions are shown as shaded areas. (A) \(\chi=2.4\), (B) \(\chi=2.65\), (C) \(\chi=8/3\), (D) \(\chi=2.7\), (E) \(\chi=2.746\), (F) \(\chi=3.0\). }
+    \captionof{figure}{Phase diagram for different values of \(\chi\).
+    The orange triangles are the three-phase regions, the binodal is shown in blue, the spinodal is the thick dashed line and the critical points are the gold stars and the tie-lines are the thin striped lines.
+    (A) \(\chi=2.4\), (B) \(\chi=2.65\), (C) \(\chi=8/3\), (D) \(\chi=2.7\), (E) \(\chi=2.746\), (F) \(\chi=3.0\). }
     \label{fig:symmetric_chis}
 \end{minipage}\\
 
 \subsubsection{Other interesting cases}
-Apart from the symmetric case there are some other interesting cases, at least from a phenomenological perspectice.
-One such case is a system where the spinodal and binodal sections span the phase diagram but don't meet meaning there is not critical point.
+Apart from the symmetric case there are some other interesting cases, at least from a phenomenological perspective.
+One such case is a system where the spinodal and binodal sections span the phase diagram but do not meet, meaning that there is no critical point.
 In these cases the binodal/spinodal originates at one dilute limit and ends at another.
 Here one can differentiate qualitatively between systems, where the binodal looks concave or convex (Fig.~\ref{fig:interesting_case}A-C)
 To further investigate these types of systems it makes sense to look at interaction matrices with the following form
@@ -2112,17 +2117,17 @@ To further investigate these types of systems it makes sense to look at interact
 
 
 Where we set $\chi<0$ constant and vary $\delta$. Systems with a concave binodal (Fig.~\ref{fig:interesting_case}A) appear for $\delta<0$.
-This makes sense if one consideres that for $\delta<0$ the cross-species interaction is more repelling than the same-species interaction. Thus if we start at the dilute limit and the solvent is added (i.e. we move towards the center of the phase diagram) the repelling force is damped and phase separation is weaker.
-If $\delta=0$ cross-species interactions are the same as as same-species and thus the binodal/spinodal are straight.
+This makes sense if one considers that for $\delta<0$ the cross-species interaction is more repelling than the same-species interaction. Thus if we start at the dilute limit and the solvent is added (i.e. we move towards the center of the phase diagram) the repelling force is damped and phase separation is weaker.
+If $\delta=0$ cross-species interactions are the same as same-species interactions and thus the binodal/spinodal are straight.
 Lastly if $\delta > 0$ the system favors cross-species interactions and thus as the solvent increases cross-species interactions decrease and phase-separation increases.
 If one increase $\delta>-\chi-4$, phase separation no longer occurs at the boundary and we find the next interesting class of phase diagrams.
-In this class the binodal/spinodal is fully contained inside of the admissible domain and does not intersect with the boundaries. 
-Instead of no critical points there are now two critical points on opposite ends of phase space. 
-For $\delta\gg\chi$ the phasediagram will barely change its shape. This is because the enthropic part become negligable in the free energy compared to the enthalpic part, which is dominated by $\delta$.
-In this limit the free energy is approximately given by
+In this class the binodal/spinodal is fully contained inside the admissible domain and does not intersect the boundaries. 
+Instead of no critical points there are now two critical points on opposite sides of the phase diagram. 
+For $\delta\gg|\chi|$ the phase diagram barely changes its shape. This is because the entropic part becomes negligible in the free-energy density compared to the enthalpic part, which is dominated by $\delta$.
+In this limit the free-energy density is approximately given by
 \[
 \begin{aligned}
-    F  &= \delta\sum_{ij}\phi_i A_{ij} \phi_j,\quad i,j \in \{1,2\}\\
+    f  &= \delta\sum_{ij}\phi_i A_{ij} \phi_j,\quad i,j \in \{1,2\}\\
 \boldsymbol A &=
 \begin{pmatrix}
 1& -1\\
@@ -2130,7 +2135,7 @@ In this limit the free energy is approximately given by
 \end{pmatrix}
 \end{aligned}
 \]
-And thus the by changing $\delta$ we only change the overall scale of the free energy, which does not affect the coexistence conditions.
+and thus, by changing $\delta$, we only change the overall scale of the free-energy density, which does not affect the coexistence conditions.
 
 \begin{minipage}{0.95\textwidth}
     \centering
@@ -2140,7 +2145,7 @@ And thus the by changing $\delta$ we only change the overall scale of the free e
 \end{minipage}\\
 
 One may also notice that the vertical tie-line at the center of the phase diagram is the same for all values of $\delta$. 
-The tie-line is given by the relation \(\phi_1 = \phi_2 = \phi\). Thus the free energy simplifies to
+We can find the tie-line given the ansatz \(\phi_1 = \phi_2 = \phi\). Thus the free energy simplifies to
 \[
  2\phi \ln(\phi) + (1-2\phi) \ln(1-2\phi) + 2\chi \phi^2.
 \]
