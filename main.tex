@@ -838,7 +838,7 @@ Thus, modes with large wavevector \(k\) are strongly damped. This suppresses the
 For \(h\to 0\), the operator \((1-h\lambda\partial_{xx})^{-1}\) approaches the identity and the semi-implicit scheme reduces to the explicit update.
 
 \clearpage
-\section{Surface tension of phase interfaces in ternary mixtures}
+\section{Surface tension of phase interfaces in ternary mixtures}\label{s:surface_tension}
 In this chapter, we investigate the surface tension of interfaces in ternary mixtures composed of three components, labeled 0, 1 and 2, with repulsive cross-interactions \(\chi_{ij}>0\).
 Without loss of generality, we choose component 2 to have the weakest repulsive interactions with the other two species.
 It can therefore accumulate at phase interfaces and partially screen the direct repulsion between components 0 and 1.
@@ -1901,13 +1901,23 @@ When chosen appropriately, they do not change the underlying phase behavior, but
 
 \subsubsection{Computing the phase diagram}
 
-Once the interaction parameters are specified, the spinodal curve and the critical points are computed first. For the Flory-Huggins free-energy density, both can be obtained analytically (see Section \ref{ss:thermodynamics}). Together with the dilute-limit constructions described above, these determine the initial continuation tasks from which the binodal sections are traced. A continuation task is the pair \((\boldsymbol{\phi}, \delta\boldsymbol{\phi}_t)\), consisting of a phase-space point \(\boldsymbol{\phi}\) and a continuation direction \(\delta\boldsymbol{\phi}_t\) specifying which local section to follow.
+Once the interaction parameters are specified, the spinodal curve and the critical points are computed first.
+For the Flory-Huggins free-energy density, both can be obtained analytically (see Subsection~\ref{ss:thermodynamics}).
+Together with the dilute-limit constructions described above, the critical points determine the initial continuation tasks from which the binodal sections are traced.
+A continuation task is the pair \((\boldsymbol{\phi}, \delta\boldsymbol{\phi}_t)\), consisting of a phase-space point \(\boldsymbol{\phi}\) and a continuation direction \(\delta\boldsymbol{\phi}_t\) specifying which local section to follow.
 
-All initial continuation tasks are collected in a task list. The algorithm then repeatedly selects a task from this list and traces the associated section. During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events. Whenever the second smallest singular value falls below a prescribed threshold, this signals that an additional section may emanate from the current point. In that case, a new continuation task is created from the current phase-space point together with the continuation direction not being followed by the current section, and this task is added to the task list.
+All initial continuation tasks are collected in a task list.
+The algorithm then repeatedly selects a task from this list and traces the associated section.
+During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events.
+Whenever the second smallest singular value falls below a prescribed threshold, this signals that an additional section may emanate from the current point.
+In that case, a new continuation task is created from the current phase-space point together with the continuation direction not being followed by the current section, and this task is added to the task list.
 
-In this way, the algorithm gradually discovers and explores all connected sections of the binodal. After the sections initialized from the dilute limits and critical points have been processed, the remaining sections are generated automatically through the detected branching events. The procedure continues until the task list is empty. To avoid tracing the same section multiple times, previously explored continuation tasks are cached and duplicate tasks are skipped when encountered.
+In this way, the algorithm gradually discovers and explores all connected sections of the binodal.
+After the sections initialized from the dilute limits and critical points have been processed, the remaining sections are generated automatically through the detected branching events.
+The procedure continues until the task list is empty. To avoid tracing the same section multiple times, previously explored continuation tasks are cached and duplicate tasks are skipped when encountered.
 
-Executing a continuation task means repeatedly taking a tangential step along the binodal and then projecting the predicted point back onto the coexistence manifold using the pseudoinverse of the Jacobian. This continuation is repeated until one of the following termination criteria is met:
+Executing a continuation task means repeatedly taking a tangential step along the binodal and then projecting the predicted point back onto the coexistence manifold using the pseudoinverse of the Jacobian.
+This continuation is repeated until one of the following termination criteria is met:
 
 \begin{terminationbox}
 \begin{itemize}
@@ -1960,8 +1970,8 @@ The full workflow of the algorithm is summarized below.
 
 \subsubsection{Post processing}
 After all binodal sections have been computed, one needs to remove duplicates, which can occur, for example, if tracing is started both at the boundary of the phase diagram and at the critical point of the same binodal section (see Fig.~\ref{fig:tracer_schematics}C).
-Once all duplicates are removed, one can look for intersecting points of two sections of the binodal, as this is where two tie lines go in different directions, which means that we have three coexisting phases (see Fig.~\ref{fig:tracer_schematics}D).
-Once the algorithm has completed we are left with a set of spinodal and binodal sections, as well as the dividing lines between the one phase, two phase and three phase regions in phase space.
+Once all duplicates are removed, one can look for intersecting points of two sections of the binodal, since such intersections signal the existence of a three-phase region (see Fig.~\ref{fig:tracer_schematics}D).
+Once the algorithm has completed we are left with a set of spinodal and binodal sections, as well as the dividing lines between the one phase, two phase and three phase regions in composition space.
 
 
 \subsubsection{Numerical details}  
@@ -2001,40 +2011,48 @@ For instance, decreasing the branching threshold of $10^{-3}$ suppresses false p
 
 \subsection{Results and validation}
 \subsubsection{Validation of the algorithm}
-There are a few things we can verify. The obvious one is to check if the two phase coexistence compositions that we have found fulfill the coexistence conditions. Due to the projection step this is always guaranteed.
-Since three phase compositions are composed of the union of two two phase compositions, the coexistence conditions are also guaranteed for three phase coexistence compositions.
-So what else can be checked?
-It could happen that the algorithm does not find all possible phase separated states in our phase diagram, when for exmple a branching event was not triggered.
-In order to check for this inconsistency we need to compute the coexistence composition using a different method. Before developing this algorithm we used the 
-\texttt{flory} package \cite{Yicheng2025flory} to in the previous chapter compute the coexistence compositions, so now we could use it to compare it against.
-To this end we constructed a 3D grid for the chi parameter \(\chi_{ij} \in [-5, 5]\) for \(i,j \in \{0,1,2\}\) and built $1000$ phase diagrams for these interaction matrices.
-We would then sample random points in phase space and compare the coexistence compositions for that point from our algorithm to the \texttt{flory} package.
-The sampling of the two and three phase regions was based on the size of the two and three phase regions in phase space. We therefore sampled $20000$ two phase points, out of which \texttt{flory} would also find a two phase coexistence composition.
-In all instances the coexistence compositions were nearly identical with a free energy difference of less than $10^{-6}$. The only notable difference was near critical points, where the \texttt{flory} package would sometimes find more phases,
-likely due to the fact that near the critical point the singular values of the Jacobian become small. 
+There are several aspects of the algorithm that can be verified. The most immediate check is whether the two-phase coexistence compositions obtained from the continuation scheme satisfy the coexistence conditions.
+Owing to the projection step, this is the case up to numerical tolerance.
+The same holds for three-phase coexistence compositions, since they are constructed from pairs of two-phase coexistence states.
+
+A more demanding question is whether the algorithm identifies all phase-separated states in the phase diagram.
+In principle, it could miss part of the diagram if, for example, a branching event were not detected.
+To test for this possibility, we compare our results against an independent method.
+Before developing the present algorithm, we used the \texttt{flory} package \cite{Yicheng2025flory} in the chapter \ref{s:surface_tension} to compute coexistence compositions, and we now use it here as a reference.
+
+To this end, we constructed a three-dimensional grid over the interaction parameters \(\chi_{01}, \chi_{02}, \chi_{12} \in [-5, 5]\) and generated $1000$ phase diagrams for the corresponding interaction matrices.
+We then sampled random points in composition space and compared the coexistence compositions predicted by our algorithm with those obtained from \texttt{flory}.
+The numbers of sampled points in the two- and three-phase regions were chosen in proportion to the respective areas of these regions in composition space. 
+
+In total, we sampled $20000$ two-phase points. For the overwhelming majority of these, \texttt{flory} likewise identified a two-phase coexistence composition.
+In those cases, the coexistence compositions were nearly identical.
+The only notable deviations occurred near critical points, where \texttt{flory} sometimes identified a larger number of phases, likely because distinct phases become nearly identical there and are therefore harder to distinguish numerically.
+Nonetheless the free-energy differences were below $10^{-6}$.\footnote{In the parameter regime considered here, all contributions to the Flory-Huggins free-energy density are of order unity, so a difference of $10^{-6}$ is negligible on this scale.}
 
 \noindent
 \begin{minipage}{0.45\textwidth}
-For the three phase points we sampled $1000$ out of which same as for the two-phase case the difference was negligible (the difference between the free energies was of order $10^{-6}$).
-The only noticeble discrepancy between the two methods was near the boundary of a three phase region, where the \texttt{flory} package would sometimes find a two phase coexistence composition yielding a slightly higher free energy than the three phase coexistence composition found by our algorithm (see Fig.~\ref{fig:flory_fails}).
+For the three-phase region, we sampled $1000$ points and again found negligible differences, with free-energy differences of order $10^{-6}$.
+The only noticeable discrepancy between the two methods occurred near the boundary of a three-phase region.
+There, the \texttt{flory} package would sometimes find a two-phase coexistence composition yielding a slightly higher free energy than the three-phase coexistence composition found by our algorithm (see Fig.~\ref{fig:flory_fails}).
 
-We also sampled $2500$ points in the one phase region, where we expect no coexistence compositions. In all cases the \texttt{flory} package also found no coexistence compositions, which is consistent with our results.
+
+We also sampled $2500$ points in the one-phase region, where no coexistence compositions are expected. In nearly all cases, the \texttt{flory} package likewise found no coexistence compositions, the exception being near the critical point, where \texttt{flory} would sometimes identify multiple phases.
 \end{minipage}
 \hfill
 \begin{minipage}{0.5\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/flory_fails.png}
-    \captionof{figure}{Comparison of the coexistence compositions obtained from our algorithm and the \texttt{flory} package for points in the three phase region (orange area). The green points correspond to correct predictions from the \texttt{flory} package, while the red crosses indicate cases where two phase compositions were found yielding a higher free energy.}
+    \captionof{figure}{Comparison of the coexistence compositions obtained from our algorithm and the \texttt{flory} package for points in the three-phase region (orange area). The green points correspond to correct predictions from the \texttt{flory} package, while the red crosses indicate cases where two-phase compositions were found that yield a slightly higher free energy.}
     \label{fig:flory_fails}
 \end{minipage}\\
 
-Of course this is not a proof that the algorithm will work for all possible interaction parameters, but it does give us confidence that the algorithm is robust and can be used to explore the replresentative phase behavior of ternary systems.
+Of course, this is not a proof that the algorithm will work for all possible interaction parameters, but it does provide strong empirical evidence that the algorithm is robust and suitable for exploring representative ternary phase behavior.
 
 \subsubsection{Case study: symmetric ternary system}\label{sss:case_study_symmetric_ternary}
-The symmetric ternary case is when all interactions between one species and the other species is equal \(\chi_{01}=\chi_{02}\)\footnote{For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the volume fractions.} and the interaction between the remaining two species is given by \(\chi_{12}\).
+The symmetric ternary case is when all interactions between one species and the other species is equal \(\chi_{01}=\chi_{02}\)\footnote{For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.} and the interaction between the remaining two species is given by \(\chi_{12}\).
 It has the advantage that by using an ansatz one can compute the binodals analytically.
-The asatz is that one of the species is constant in both phases and the remaining two species swap their volume fractions in each phase.
-If for example species 0 in constant then 
+The ansatz is that one of the species is constant in both phases and the remaining two species swap their volume fractions in each phase.
+If, for example, species 0 is constant, then 
 \[
 \begin{aligned}
 \phi_0^{(1)}& = \phi_0^{(2)},\\
@@ -2051,10 +2069,11 @@ For this case the coexistence condition for the exchange chemical potential simp
 \noindent
 \begin{minipage}{0.45\textwidth}
 Thus for given \(\phi^{(1)}\) we can find \(\phi^{(2)}\) by solving the implicit equation Eq.~\ref{eq:symmetric_implicit}.
-The results can be seen in Fig.~\ref{fig:verify_symmetric}. As one can see in the bottom pannel the difference between the exact and algorithmic
+The results can be seen in Fig.~\ref{fig:verify_symmetric}. As one can see in the bottom panel, the difference between the exact and algorithmic
 results is nearly zero. We repeated this for many different \(\chi_{12} > 2\) values and the results are all in good agreement.
 It is therefore safe to conclude that the algorithm is able to accurately capture the binodal curve for this symmetric ternary system.\\
-Next we can look at the special case, where all interactions are equal \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\). In this case there have been some analytical results obtained in previous work \cite{Huang1995PhaseSeparation} which we can also use to verify our algorithm,
+Next we can look at the special case, where all interactions are equal \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\).
+In this case there have been some analytical results obtained in previous work \cite{Huang1995PhaseSeparation} which we can also use to verify our algorithm,
 at least qualitatively, since the results are only presented in figures. In the paper the authors look at several parameter regimes for the interaction strengths and find a rich variety for the range \(\chi \in [2, 3]\).
 \end{minipage}
 \hfill
@@ -2064,9 +2083,12 @@ at least qualitatively, since the results are only presented in figures. In the 
     \captionof{figure}{Binodal curve for the symmetric ternary system with \(\chi_{01}=\chi_{02}=1.5\) and \(\chi_{12}=2.5\). The dashed line shows the analytical solution from Eq.~\ref{eq:symmetric_implicit} and the blue and orange points show the results from our algorithm.\\}
     \label{fig:verify_symmetric}
 \end{minipage}\\
-For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\) the spinodal crosses the binodal.
-Therefore new binodal sections branch off and enclose the spinodal curve again. Additionally here the number of critical points increases from $3$ to $9$. In the regime \(2.575< \chi < 2.7\) there are three three-phase regions (Fig~\ref{fig:symmetric_chis}B). At \(\chi = 8/3\) the spinodal sections collide and $6$ of the $9$ critical points disappear (Fig.~\ref{fig:symmetric_chis}C). For \(\chi > 8/3\) there are only three critical points left (Fig~\ref{fig:symmetric_chis}D).
-At \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E). As one increases \(\chi\) further, the three-phase region grows in size (Fig~\ref{fig:symmetric_chis}F).\\
+For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig.~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\), one of the binodal sections intersects the spinodal.
+Beyond this point, additional binodal sections appear and enclose the spinodal again.
+Additionally, the number of critical points increases from $3$ to $9$. In the regime \(2.575< \chi < 2.7\) there are three three-phase regions (Fig.~\ref{fig:symmetric_chis}B).
+At \(\chi = 8/3\) the spinodal sections collide and $6$ of the $9$ critical points disappear (Fig.~\ref{fig:symmetric_chis}C).
+For \(\chi > 8/3\) there are only three critical points left (Fig.~\ref{fig:symmetric_chis}D).
+Finally at \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E). As one increases \(\chi\) further, the three-phase region grows in size (Fig.~\ref{fig:symmetric_chis}F).\\
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/symmetric_chis.png}
