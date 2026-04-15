@@ -1431,13 +1431,13 @@ it implies that near the critical point the interfacial properties depend more s
 
 \subsubsection{Sources of error and limitations}
 
-\noindent
-\begin{minipage}{0.5\textwidth}
 The piecewise-linear approximation differs from the true equilibrium interfacial
 profiles in two essential ways: First, it replaces the smooth, nonlinear variation
 of the volume fractions across the interface by a linear interpolation. Second, it
 assumes that all species share a common interfacial window, thereby neglecting
-interfacial adsorption.
+interfacial adsorption.\\
+\noindent
+\begin{minipage}{0.5\textwidth}
 
 To quantify the importance of interfacial adsorption, we fit a hyperbolic tangent
 profile of the form
@@ -1447,11 +1447,12 @@ profile of the form
     \frac{\Delta \phi}{2}\,
     \tanh\!\left(\frac{x - x_0}{w}\right)
     + \bar{\phi}
-\]
+\]\\
 to the numerical equilibrium profiles of components 1 and 0 for the symmetric case shown in Fig.~\ref{fig:fit_profiles}A, where \(\chi_{02}=\chi_{12}\).
-On this symmetry line, exchanging species \(0\) and \(1\) leaves the free energy invariant.
-The corresponding equilibrium profiles therefore have the same fitted interfacial width.
-Interfacial adsorption is then captured by the relative shift of their centers, and the difference between the fitted interface positions \(x_0\) for the two species provides a direct measure of the degree of adsorption.\\
+A tentative measure of the degree of interfacial adsorption is the displacement between the centers of the fitted profiles of components 0 and 1, which we denote by \(\Delta x_0\).
+The interpretation of this measure becomes clear in the limiting cases.
+For \(\Delta x_0 = 0\), the profile of component 2 remains constant across the interface, indicating the absence of interfacial adsorption.
+In contrast, when \(\Delta x_0 \gg w\), a third phase develops in the interfacial region, corresponding to the opposite limit of interfacial adsorption.\\
 
 The results are shown in Fig.~\ref{fig:fit_profiles}B, together with the relative error
 of the surface-tension approximation. A clear correlation is observed between the
@@ -1460,7 +1461,7 @@ relative error and the displacement between the centers of the profiles of compo
     
 \end{minipage}
 \hfill
-\begin{minipage}{0.47\textwidth}
+\begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fit_profiles.png}
     \captionof{figure}{(A) Hyperbolic tangent fits to the numerical equilibrium profiles for the symmetric case \(\chi_{02}=\chi_{12}\), used to extract the interface positions \(x_0\) for components 0 and 1.
@@ -1471,25 +1472,21 @@ relative error and the displacement between the centers of the profiles of compo
 
 Importantly, within the symmetric family \(\chi_{02}=\chi_{12}\), this correlation is not restricted to the specific interaction
 parameters shown in Fig.~\ref{fig:fit_profiles}, but is also observed for other
-interaction strengths \textcolor{red}{Add in supplemental material}.\\
+interaction strengths.\\
 
-Even when the displacement between the centers of the profiles nearly vanishes, the relative error does not go to zero but instead approaches a finite value.
-This indicates that even in the absence of interfacial adsorption, the simplified functional form of the profile still contributes to the error of the approximation. However, this baseline error (approximately \(5\%\) in Fig.~\ref{fig:fit_profiles}B) is substantially smaller than the error observed close to the critical point (approximately \(22\%\) in Fig.~\ref{fig:fit_profiles}B), where the displacement between the centers of the profiles is largest.
-This indicates that the lack of interfacial adsorption, rather than the
+One thing to note is that even when the displacement between the centers of the profiles nearly vanishes, the relative error does not go to zero but instead approaches a finite value.
+This indicates that in the absence of interfacial adsorption, the simplified functional form of the profile still contributes to the error of the approximation. However, this baseline error (approximately \(5\%\) in Fig.~\ref{fig:fit_profiles}B) is substantially smaller than the error observed close to the critical point (approximately \(22\%\) in Fig.~\ref{fig:fit_profiles}B), where the displacement between the centers of the profiles is largest.
+Therefore in conclusion, we have found that interfacial adsorption, rather than the
 simplified functional form of the profile, is the primary limitation of the
 piecewise-linear model.\\
 
 To further analyze interfacial adsorption, we now derive analytical expressions for several interfacial properties.
 
 \subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}\label{sec:symmetric_case}
-We now consider the symmetric case \(\chi_{01}=\chi_{02}\). In this case, symmetry implies
-\[
-    \phi_0^{(1)} = \phi_0^{(2)}, \qquad
-    \phi_1^{(1)} = \phi_2^{(2)}, \qquad
-    \phi_2^{(1)} = \phi_1^{(2)}.
-\]
-While an analytical solution for the full interfacial profile remains intractable, several key interfacial properties can still be derived implicitly.\footnote{Here species 0 can become absorbed at the interface, in contrast to the earlier convention where species 2 played this role.}
-The corresponding symmetric interaction matrix is
+In this section we will consider the symmetric case, which corresponds to \(\chi_{01}=\chi_{02}\).
+The symmetric case has the advantage over the general case, that one can exploit the symmetry to derive analytical expressions for key interfacial properties, which corresponds.
+This will allow us to gain a deeper understanding of the interfacial behavior and the sources of error in the piecewise-linear approximation.\\
+The symmetric interaction matrix can be written as
 \[
     \begin{pmatrix}
         0 &\eta \chi& \eta\chi\\
@@ -1499,7 +1496,8 @@ The corresponding symmetric interaction matrix is
     \end{pmatrix}
 \]
 where \(\chi\) denotes the interaction strength between components 1 and 2, and \(\eta\) modulates the interaction strength of component 0 with the other two species. We typically restrict attention to \(0 \le \eta \le 1\).
-This parametrization follows earlier work on interfacial adsorption~\cite{Huang1996,Huang1999}.
+Here species 0 can become adsorbed at the interface which follows earlier work on interfacial adsorption~\cite{Huang1996,Huang1999}, in contrast to the earlier convention where species 2 played this role,
+
 
 \subsubsection{Implicit expression for the bulk phase compositions}
 The interaction matrix of the reduced two-component system can be obtained from the original three-component interaction matrix according to Eq.~\ref{eq:reduced_chi}, which for the symmetric case reduces to\\
@@ -1511,7 +1509,7 @@ The interaction matrix of the reduced two-component system can be obtained from 
 \]\\
 where \(\chi_d = -2\eta\chi\) and \(\chi_o=\chi(1-2\eta)\) are the diagonal and off-diagonal elements, respectively. To keep the notation compact, we suppress tildes on the reduced interaction and gradient coefficients throughout this subsection.
 Setting the lattice size to \(a = 1\), the reduced gradient coefficients satisfy \(\kappa_{ij} = -\chi_{ij}\).
-The profiles are then determined by the variational principle \(\delta F/\delta \phi_i = 0\), which for the Flory-Huggins free energy in Eq.~\eqref{eq:fh_free_energy} leads to the following Euler-Lagrange equations:
+The profiles are then determined by the variational principle \(\delta F/\delta \phi_i = \mu_i\), which for the Flory-Huggins free energy in Eq.~\eqref{eq:fh_free_energy} leads to the following Euler-Lagrange equations:
 \[
 \begin{aligned}
     &-\chi_d \phi_1''(x) - \chi_o \phi_2''(x) = \chi_d \phi_1 + \chi_o \phi_2 + \ln(\phi_1) - \ln(1-\phi_1-\phi_2)-\mu_1\\
@@ -1543,7 +1541,7 @@ Thus, Eq.~\eqref{eq:delta_phi} provides an implicit relation between the phase-c
 x = b \tanh(x),
 \]
 where $x\coloneq\Delta \phi / \phi_c$ and $b\coloneq\bar\phi/\phi_c$.
-This form shows immediately that if \(b\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\). Hence phase separation is only possible for $\bar\phi > \phi_c$. For \(\bar\phi>\phi_c\), the positive root \(x^*>0\) satisfying \(x-b\tanh(x)=0\) increases monotonically with \(b\), so \(\Delta \phi\) also increases with \(\bar\phi\). Its maximal value is reached in the binary-mixture limit \(\phi_0 \to 0\), where \(\bar\phi = 1/2\), and is determined implicitly by
+This form shows immediately that if \(b\leq 1\), or equivalently \(\bar\phi \leq \phi_c\), the only root is \(x^*=0\). Hence phase separation is only possible for $\bar\phi > \phi_c$. For \(\bar\phi>\phi_c\), the positive root \(x^*>0\) satisfying \(x-b\tanh(x)=0\) increases monotonically with \(b\), so \(\Delta \phi\) also increases with \(\bar\phi\). The maximal value of \(\Delta \phi\) is reached in the binary-mixture limit \(\phi_0 \to 0\), where \(\bar\phi = 1/2\), and is determined implicitly by
 \[
 \Delta \phi_\mathrm{max} = \frac{1}{2}\tanh\left(\frac{\Delta\phi_\mathrm{max}}{\phi_c}\right).
 \]
@@ -1565,7 +1563,7 @@ To this end, we evaluate the Euler-Lagrange equation for \(\phi_+\) at the inter
 
 where in the second line we have inserted the definition of \(\mu\). Rearranging this relation yields the implicit equation
 \begin{equation}
-    \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Xi}\right)
+    \delta \phi_+ =\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Xi}\right).
     \label{eq:delta_phi_plus}
 \end{equation}
     % \delta \phi_+ = \frac{1-2\bar\phi}{2}\frac{-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}=\frac{1-2\bar\phi}{2}\left(1- \frac{1}{1-2\bar\phi+2(\bar\phi+\Delta\phi)\Pi}\right)
@@ -1574,8 +1572,10 @@ To write the result compactly, we introduce the shorthand
     \Xi = \exp\left(\frac{\delta \phi_+}{\phi_s}(1+a_2) - \frac{\Delta \phi}{\phi_c}\right)
 \end{equation}
 where \(a_2 = \phi_+''(0)/\delta\phi_+\) measures the curvature of \(\phi_+\) at the interface relative to the excess amplitude.
+In principle, one would need another equation to determine \(a_2\) in order to solve Eq.~\eqref{eq:delta_phi_plus} self-consistently.
+However, we will find that the curvature term can be neglected in the vicinity of the critical point.
 
-To assess the importance of this curvature term, we use the scaling estimate
+To assess the importance of the curvature term, we use the scaling estimate
 \[
 \phi_+''(0) \sim \frac{\delta\phi_+}{w^2} 
 \]
@@ -1591,9 +1591,9 @@ and therefore \(a_2\) vanishes as the critical point is approached, where the in
     \includegraphics[width=0.8\textwidth]{figures/absorption.png}
     \captionof{figure}{(A) Interfacial-excess amplitude \(|\delta \phi_+| = |\phi_+(0) - \bar\phi|\) for the numerical (dashed) and analytical (solid) results as a function of the chemical potential difference \(\mu_c-\mu\).
     The colorscale indicates the interaction strength \(\eta\) and \(\chi=2.5\).
-    Note that the analytical solution always overestimates \(\delta \phi_+\).
+    Note that the analytical solution always overestimates \(|\delta \phi_+|\).
     (B) Relative error \(\epsilon_{\mathrm{approx.}}=|\delta \phi_+^{\mathrm{analytical}} - \delta \phi_+^{\mathrm{numerical}}| / |\delta \phi_+^{\mathrm{numerical}}|\) of the analytical approximation.
-    The analytical solution becomes exact near the critical point. Surprisingly, the relative error seems to vanish near the binary-mixture limit \((\phi_0 \to 0)\) as well,
+    The analytical solution becomes exact near the critical point. Surprisingly, the relative error seems to vanish near the binary-mixture limit \((\phi_0 \to 0)\),
     suggesting that the curvature can be neglected in this regime as well.\\}
     \label{fig:absorption}
     
@@ -1642,7 +1642,8 @@ Using the resulting expressions for \(\Delta \phi\), \(\delta \phi_+\), and \(w\
     \end{aligned}
 \end{equation}
 
-For \(\phi_-(x)\), we use a hyperbolic tangent profile, since it is antisymmetric and saturates in the bulk. For the excess part of \(\phi_+(x)\), i.e. \(\phi_+(x)-\bar\phi\), we use a \(\sech^2\) form. This profile is symmetric and localized at the interface.
+For \(\phi_-(x)\), we use a hyperbolic tangent profile, since it is antisymmetric and saturates in the bulk. For the excess part of \(\phi_+(x)\), i.e. \(\phi_+(x)-\bar\phi\), we use a \(\sech^2\) form.
+This profile is symmetric and has a peak at the interface.
 
 As shown in Fig.~\ref{fig:symm_profile_approx}, the approximation matches the numerical profiles quite well, especially for \(\phi_-\). Although \(w\) is derived from \(\phi_-\), it also appears to capture the width of \(\phi_+\) accurately, suggesting that a single width is sufficient for both modes.
 
@@ -1659,10 +1660,10 @@ As shown in Fig.~\ref{fig:symm_profile_approx}, the approximation matches the nu
 
 
 \subsubsection{Improving the surface tension approximation}
-Finally we can use the analytical expressions for the interfacial profiles to improve the surface tension approximation.
+Finally we can use the analytical expressions for the interfacial properties to improve the surface tension approximation.
 The surface tension approximation in Eq.~\eqref{eq:surface_tension_approximation} can be rewritten as
 \[
-\gamma \approx \sqrt{(\sum_{i,j}\Delta \phi_i\kappa_{ij} \Delta \phi_j)\,(f(\bar\phi+\delta\phi_+) -2\mu_i( \bar{\phi} + \delta\phi_+)+ \Pi)}
+\gamma \approx \sqrt{(\Delta \phi_i\kappa_{ij} \Delta \phi_j)\,(f(\bar\phi+\delta\phi_+) -2\mu_i( \bar{\phi} + \delta\phi_+)+ \Pi)}
 \]
 Where now instead of using the mean composition \(\bar\phi\) we use the composition at the interface \(\bar\phi + \delta\phi_+\) including the effect of interfacial adsorption.
 The results of this improved approximation can be seen in Fig.~\ref{fig:st_symmetric_approx}.\\
@@ -1675,7 +1676,7 @@ The results of this improved approximation can be seen in Fig.~\ref{fig:st_symme
 \end{minipage}
 
 Clearly the approximation that includes interfacial adsorption effects performs much better and is essentially constant across phase space, with a relative error of approximately \(6\%\).
-After accounting for interfacial adsorption, the remaining deviation from the true surface tension is likely due to the simplified functional form of the profile, which appears to contribute a baseline error for all values of the chemical potential difference.
+After accounting for interfacial adsorption, the remaining deviation from the true surface tension is likely due to the simplified functional form of the profile, which appears to contribute a baseline error for all values of \(\eta\).
 
 \clearpage
 
