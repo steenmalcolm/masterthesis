@@ -1923,10 +1923,11 @@ When such a degeneracy is detected, the continuation is split and both direction
 \end{minipage}\\
 
 \subsubsection{Identification of three-phase regions}
-Next we look for intersections of two sections of the binodal.
-Such intersections signal the presence of a composition at which two tie lines share a common endpoint.
+We now identify three-phase regions by searching for intersections between distinct sections of the binodal.
+Such an intersection indicates the existence of a composition that serves as a common endpoint of two tie lines.
 If one composition coexists with two others in this way, then all three compositions satisfy the same coexistence conditions and therefore represent three coexisting phases.
-Geometrically, the three coexisting phases define a common tangent plane that touches the free energy surface at three distinct points (orange triangle in Fig.~\ref{fig:three_phase_intuition}).
+
+Geometrically, these three phases define a common tangent plane that touches the free-energy surface at three distinct points and forms the convex envelope of the free-energy surface in this region, shown by the orange triangle in Fig.~\ref{fig:three_phase_intuition}.
 \noindent
 \begin{minipage}{0.1\textwidth}
 \end{minipage}\hfill
@@ -1934,40 +1935,48 @@ Geometrically, the three coexisting phases define a common tangent plane that to
 \begin{minipage}{0.8\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/three_phase_intuition.png}
-    \captionof{figure}{Free energy surface (gray contours) in composition space. The three-phase region (orange triangle) provides a better convexification of the free energy surface than the two-phase tie line (blue line).
-    Therefore a three-phase decomposition always yields a lower free energy \(f_3\) than a two-phase decomposition \(f_2\).\\}
+    \captionof{figure}{Free-energy surface (gray contours) in composition space. The three-phase region (orange triangle) provides a better convexification of the free-energy surface than the two-phase tie line (blue line). Therefore, a three-phase decomposition always yields a lower free energy \(f_3\) than a two-phase decomposition \(f_2\).\\}
     \label{fig:three_phase_intuition}
 \end{minipage}\hfill
-\\The key thermodynamic point is that the three-phase decomposition yields a lower free energy than any competing two-phase decomposition in this region.
-To see this, we will first use the lever rule to decompose a composition \(\boldsymbol{\phi}\) into two \(N_p=2\) or three \(N_p=3\) coexisting phases, according to
+\\The key thermodynamic point is that, within this region, a three-phase decomposition yields a lower free energy than any competing two-phase decomposition.
+To show this, consider a composition \(\boldsymbol{\phi}\) decomposed by the lever rule into either \(N_p=2\) or \(N_p=3\) coexisting phases,
 \[
 \boldsymbol{\phi} = \sum_{i=1}^{N_p} \lambda_{i,N_p} \boldsymbol{\phi}^{(i,N_p)},
 \qquad
-\sum_{i=1}^3 \lambda_{i,N_p} = 1,
+\sum_{i=1}^{N_p} \lambda_{i,N_p} = 1,
 \qquad
 \lambda_{i,N_p} > 0.
 \]
-For the three-phase decomposition, any point inside of the triangle must adheres to the following relation:
+Here, \(\boldsymbol{\phi}^{(i,N_p)}\) denotes the composition of phase \(i\) in an \(N_p\)-phase decomposition, and \(\lambda_{i,N_p}\) the corresponding lever-rule coefficients, i.e. the phase fractions.
+
+For a three-phase decomposition, any composition inside the coexistence triangle satisfies
 \begin{equation}
 f(\boldsymbol\phi) \geq \sum_{i=1}^3 \lambda_{i,3} f(\boldsymbol{\phi}^{(i,3)}) \eqcolon f_3,
 \label{eq:three_phase_free_energy}
 \end{equation}
-where the \(\lambda_{i,3}\) are the lever-rule coefficients for the three-phase decomposition.
-This means that the free energy of the original composition is higher than the free energy of the three-phase decomposition.
-By contrast, any two-phase decomposition yields a larger free energy, according to the following relation:
+where the \(\lambda_{i,3}\) are the corresponding lever-rule coefficients.
+Thus, the free energy of the original composition is bounded from below by that of the three-phase decomposition.
+
+Now consider an arbitrary two-phase decomposition of the same composition. Its free energy is
 \[
-f_2 \coloneq \sum_{i=1}^2 \lambda_{i,2} f(\boldsymbol{\phi}^{(i,2)}) \geq \sum_{i=1}^2 \lambda_{i,2}\sum_{j=1}^3 \bar\lambda_{ij,3} f(\boldsymbol{\phi}^{(j,3)}) = \sum_{j=1}^3 \lambda_{j,3} f(\boldsymbol{\phi}^{(j,3)}) = f_3.
+f_2 \coloneq \sum_{i=1}^2 \lambda_{i,2} f(\boldsymbol{\phi}^{(i,2)})
+\geq
+\sum_{i=1}^2 \lambda_{i,2}\sum_{j=1}^3 \bar\lambda_{ij,3} f(\boldsymbol{\phi}^{(j,3)})
+=
+\sum_{j=1}^3 \lambda_{j,3} f(\boldsymbol{\phi}^{(j,3)})
+=
+f_3.
 \]
-where in the second step applied the three-phase decomposition for each of the \(\boldsymbol\phi^{(i,2)}\) according to Eq.~\eqref{eq:three_phase_free_energy} and in the third step we defined use the relation
+In the second step, each two-phase composition \(\boldsymbol{\phi}^{(i,2)}\) was itself decomposed into the three coexisting phases using Eq.~\eqref{eq:three_phase_free_energy}. In the third step, we introduced the relation
 \[
 \lambda_{j,3} = \sum_{i=1}^2 \lambda_{i,2} \bar\lambda_{ij,3}.
 \]
-Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation. A visual illustration of this point is provided in Fig.~\ref{fig:three_phase_intuition}
-where the three-phase region (orange triangle) lays below the two-phase tie line (blue line) in terms of free energy.
+
+
+Consequently, whenever a three-phase construction exists, it is energetically favored over any two-phase separation.
+This is illustrated in Fig.~\ref{fig:three_phase_intuition}, where the orange triangle lies below the blue tie line in free energy.
 
 Finally, we do not need to consider the possibility of four or more coexisting phases, because within the present ternary setting Gibbs phase rule \cite{GibbsPhaseRule} permits at most three coexisting phases. 
-
-
 
 \subsection{Implementation}
 
@@ -1982,11 +1991,12 @@ When chosen appropriately, they do not change the underlying phase behavior, but
 Once the interaction parameters are specified, the spinodal curve and the critical points are computed first.
 For the Flory-Huggins free-energy density, both can be obtained analytically (see Subsection~\ref{ss:thermodynamics}).
 Together with the dilute-limit constructions described above, the critical points determine the initial continuation tasks from which the binodal sections are traced.
-A continuation task is the pair \((\boldsymbol{\phi}, \delta\boldsymbol{\phi}_t)\), consisting of a phase-space point \(\boldsymbol{\phi}\) and a continuation direction \(\delta\boldsymbol{\phi}_t\) specifying which local section to follow.
+A continuation task is the pair \((\boldsymbol{\phi}, \delta\boldsymbol{\phi}_t)\), consisting of a four dimensional phase-space point \(\boldsymbol{\phi}\) and a continuation direction \(\delta\boldsymbol{\phi}_t\) specifying which local section to follow.
 
 All initial continuation tasks are collected in a task list.
 The algorithm then repeatedly selects a task from this list and traces the associated section.
 During this tracing process, the singular values of the Jacobian are monitored in order to detect branching events.
+To avoid stepping over a branching event, the tangential step size is adjusted dynamically according to the value of the second smallest singular value.
 Whenever the second smallest singular value falls below a prescribed threshold, this signals that an additional section may emanate from the current point.
 In that case, a new continuation task is created from the current phase-space point together with the continuation direction not being followed by the current section, and this task is added to the task list.
 
@@ -2012,22 +2022,22 @@ The full workflow of the algorithm is summarized below.
 \State $\mathrm{task\_list} \gets \mathrm{ComputeInitialTasks}(\chi)$
 \State $\mathrm{history\_list} \gets [\ ]$
 \While{$\mathrm{task\_list}$ is not empty}
-    \State $\mathrm{task}_0 \gets \mathrm{task\_list}.\mathrm{pop\_first}()$
-    \If{$\mathrm{InHistory}(\mathrm{task}_0, \mathrm{history\_list})$}
+    \State $\mathrm{task} \gets \mathrm{task\_list}.\mathrm{pop\_first}()$
+    \If{$\mathrm{InHistory}(\mathrm{task}, \mathrm{history\_list})$}
         \State \textbf{continue}
     \EndIf
-    \State $\mathrm{history\_list}.\mathrm{append}(\mathrm{task}_0)$
-    \State $(\mathrm{section}, \mathrm{branch\_tasks}) \gets \mathrm{ComputeBinodalSection}(\mathrm{task}_0)$
+    \State $\mathrm{history\_list}.\mathrm{append}(\mathrm{task})$
+    \State $(\mathrm{section}, \mathrm{branch\_tasks}) \gets \mathrm{ComputeBinodalSection}(\mathrm{task})$
     \State $\mathrm{StoreSection}(\mathrm{section})$
-    \ForAll{$\mathrm{task} \in \mathrm{branch\_tasks}$}
-        \State $\mathrm{task\_list}.\mathrm{append}(\mathrm{task})$
+    \ForAll{$\mathrm{task_new} \in \mathrm{branch\_tasks}$}
+        \State $\mathrm{task\_list}.\mathrm{append}(\mathrm{task_new})$
     \EndFor
 \EndWhile
 \State $\mathrm{PostProcessing}()$
 
 \Statex
-\Function{ComputeBinodalSection}{$\mathrm{task}_0$}
-    \State $(p, d) \gets \mathrm{task}_0$
+\Function{ComputeBinodalSection}{$\mathrm{task}$}
+    \State $(p, d) \gets \mathrm{task}$
     \State $\sigma \gets \mathrm{SingularValuesOfJacobian}(p)$
     \State $\mathrm{section} \gets [p]$, $\mathrm{sv\_list} \gets [\ ]$
     \While{termination criteria are not met}
@@ -2049,13 +2059,26 @@ The full workflow of the algorithm is summarized below.
 \subsubsection{Post processing}
 After all binodal sections have been computed, one needs to remove duplicates, which can occur, for example, if tracing is started both at the boundary of the phase diagram and at the critical point of the same binodal section (see Fig.~\ref{fig:tracer_schematics}C).
 Once all duplicates are removed, one can look for intersecting points of two sections of the binodal, since such intersections signal the existence of a three-phase region (see Fig.~\ref{fig:tracer_schematics}D).
-Once the algorithm has completed we are left with a set of spinodal and binodal sections, as well as the dividing lines between the one phase, two phase and three phase regions in composition space.
+
 
 
 
 \subsection{Results and validation}
+The resulting phase diagram consists of the spinodal and binodal sections together with the dividing lines between the one-phase, two-phase, and three-phase regions in composition space.
+An example can be seen in Fig.~\ref{fig:algo_example_diagram}B.\\
+Figure~\ref{fig:algo_example_diagram}A serves as a guide to reading ternary phase diagrams.
+
+\noindent
+\begin{minipage}{0.95\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/algo_example_diagram.png}
+    \captionof{figure}{(A) Ternary diagram, with axes \(\phi_0\) on the right diagonal, \(\phi_1\) on the left diagonal and \(\phi_2\) on the horizontal axis. The red star is at \((\phi_0\,\phi_1\,\phi_2)^T=(0.2\,0.5\,0.3)^T\) and the green star is at \((\phi_0\,\phi_1\,\phi_2)^T=(0.9\,0.1\,0.0)^T\). Note that the sum of the three volume fractions is always 1.\\
+     (B) Phase diagram for \((\chi_{01},\chi_{02},\chi_{12})=(2.6,2.9,2.7)\), showing the spinodal (thick dashed line), binodal (blue line), three-phase region (orange areas), critical point (gold stars) and tie-lines (gray dashed lines).}
+    \label{fig:algo_example_diagram}
+\end{minipage}
+
+
 \subsubsection{Validation of the algorithm}
-\textcolor{red}{branching bei chi = 2.565 ist eine aenderung der Anzahl an Loesungen von nicht linearem System}
 There are several aspects of the algorithm that can be verified. The most immediate check is whether the two-phase coexistence compositions obtained from the continuation scheme satisfy the coexistence conditions.
 Owing to the projection step, this is the case up to numerical tolerance.
 The same holds for three-phase coexistence compositions, since they are constructed from pairs of two-phase coexistence states.
