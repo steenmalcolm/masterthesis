@@ -117,17 +117,20 @@ and
 \]
 where \(\bar\phi_i\) is the mean volume fraction of species \(i\). Therefore the six variables reduce to three independent variables, which can be chosen as \(\phi_1^{(1)}, \phi_2^{(1)}, V_1\).
 Minimizing the free energy in Eq.~\ref{eq:free_energy_two_phase} with respect to these three variables yields the coexistence conditions
-\[
+\begin{equation}
     \begin{aligned}
         \frac{\partial f}{\partial \phi_1}(\phi_1^{(1)},\phi_2^{(1)}) &= \frac{\partial f}{\partial \phi_1}(\phi_1^{(2)},\phi_2^{(2)}) \\
         \frac{\partial f}{\partial \phi_2}(\phi_1^{(1)},\phi_2^{(1)}) &= \frac{\partial f}{\partial \phi_2}(\phi_1^{(2)},\phi_2^{(2)}) \\
         \sum_{i=1}^2 \phi_i^{(1)} \frac{\partial f}{\partial \phi_i}(\phi_1^{(1)},\phi_2^{(1)}) - f(\phi_1^{(1)},\phi_2^{(1)}) &= \sum_{i=1}^2 \phi_i^{(2)} \frac{\partial f}{\partial \phi_i}(\phi_1^{(2)},\phi_2^{(2)}) - f(\phi_1^{(2)},\phi_2^{(2)})
     \end{aligned}
-\]
+    \label{eq:coexistence_conditions_derivation}
+\end{equation}
+
 Identifying the exchange chemical potentials \(\mu_i = \frac{\partial f}{\partial \phi_i}\) and the osmotic pressure
-\[
+\begin{equation}
     \Pi = \sum_{i=1}^2 \phi_i \frac{\partial f}{\partial \phi_i} - f,
-\]
+    \label{eq:osmotic_pressure}
+\end{equation}
 we see that at coexistence the chemical potentials and osmotic pressure of both phases need to be equal.
 \begin{subequations}
     \begin{align}
@@ -661,7 +664,7 @@ From this expression it is easy to see that the surface tension measures the exc
 
 
 
-Using the definition of the osmotic pressure \(\Pi^{(i)} = \sum_j \mu_j^{(i)} \phi_j^{(i)} - f(\phi_1^{(i)},\phi_2^{(i)})\), the surface tension can be simplified to
+Using the definition of the osmotic pressure in Eq.~\eqref{eq:osmotic_pressure}, the surface tension can be simplified to
 \begin{equation}
 \gamma
 =
@@ -1240,6 +1243,7 @@ defining
 we obtain, to leading order,
 \begin{equation}
     \boldsymbol{H}\,\Delta \boldsymbol{\phi} = 0 .
+    \label{eq:hessian_null_space}
 \end{equation}
 This shows that the difference between the bulk compositions of the coexisting
 phases lies in the null space of the Hessian at the critical point.
@@ -1709,7 +1713,7 @@ After accounting for interfacial adsorption, the remaining deviation from the tr
 In the previous chapter, we examined interfacial profiles in ternary systems. 
 To accelerate convergence to equilibrium, the interface was initialized as a sharp step between coexisting bulk phases. 
 These bulk compositions were computed using the \texttt{flory} Python package \cite{Yicheng2025flory}, which initially provided a practical solution. 
-However, after optimizing the numerical scheme for the interfacial profile calculations, this precomputation became the dominant computational bottleneck.
+However, after optimizing the numerical scheme for the interfacial profile calculations, this precomputation became the dominant bottleneck.
 
 Because the system was explored by stepping along the binodal, successive coexistence points are close to one another (see Fig.~\ref{fig:workflow}).
 This suggests using the coexistence compositions from one step as an initial approximation for the next,
@@ -1759,22 +1763,22 @@ The algorithm described in the following sections starts from such a coexistence
 
 \subsubsection{Tangential step along the binodal}
 
-Suppose that a coexistence state \(\boldsymbol{\phi}\) on the binodal is known. We ask whether one can take a small step away from this point while remaining on the binodal.
+Suppose that a coexistence state \(\boldsymbol{\phi}\) on the binodal is known. We can then ask whether one can take a small step away from this point while remaining on the binodal.
 For a sufficiently small displacement
 \[
-\delta\boldsymbol{\phi}
+\delta\boldsymbol{\phi}_t
 =
 (\delta\phi_1^{(1)}, \delta\phi_2^{(1)}, \delta\phi_1^{(2)}, \delta\phi_2^{(2)})^T,
 \]
 linearizing the coexistence conditions gives
 \begin{equation}
-\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi})
+\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi}_t)
 =
 \boldsymbol{E}(\boldsymbol{\phi})
 +
-\boldsymbol{J}\,\delta\boldsymbol{\phi}
+\boldsymbol{J}\,\delta\boldsymbol{\phi}_t
 +
-\mathcal{O}(\delta\boldsymbol{\phi}^2)
+\mathcal{O}(\delta\boldsymbol{\phi}_t^2)
 =
 \boldsymbol{0},
 \label{eq:binodal_step}
@@ -1791,18 +1795,18 @@ where \(\boldsymbol{J}\) is the Jacobian matrix defined as
 
 Since \(\boldsymbol{\phi}\) already lies on the binodal, we have \(\boldsymbol{E}(\boldsymbol{\phi})=\boldsymbol{0}\). Remaining on the binodal to first order therefore requires
 \[
-\boldsymbol{J}\,\delta\boldsymbol{\phi} = \boldsymbol{0}.
+\boldsymbol{J}\,\delta\boldsymbol{\phi}_t = \boldsymbol{0}.
 \]
 In other words, the local direction along the binodal is given by the null space of the Jacobian,
 \[
-\delta\boldsymbol{\phi_t} \in \operatorname{null}(\boldsymbol{J}).
+\delta\boldsymbol{\phi}_t \in \operatorname{null}(\boldsymbol{J}).
 \]
 
 
 \subsubsection{Projecting back onto the coexistence manifold}
 
 The tangential step derived above follows the local direction of the binodal, but it is only accurate to first order.
-As a result, the predicted point generally deviates from the coexistence manifold by an error of order \(\|\delta\boldsymbol{\phi}\|^2\).
+As a result, the predicted point generally deviates from the coexistence manifold by an error of order \(\|\delta\boldsymbol{\phi}_t\|^2\).
 If left uncorrected, this error accumulates over many steps and can eventually lead to a noticeable drift away from the binodal.
 
 One way to reduce this drift is to take smaller tangential steps, but this also increases the number of iterations required to trace out the curve.
@@ -1810,14 +1814,21 @@ A more efficient approach is therefore to add a correction step that projects th
 
 Suppose that \(\boldsymbol{\phi}\) is close to, but not exactly on, the binodal.
 Linearizing the coexistence conditions as in Eq.~\ref{eq:binodal_step} gives
-\[
-\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi})
-\approx
-\boldsymbol{E}(\boldsymbol{\phi}) + \boldsymbol{J}\,\delta\boldsymbol{\phi}.
-\]
+\begin{equation}
+\boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi}_t)
+=
+\underbrace{\boldsymbol{E}(\boldsymbol{\phi})}_{\neq 0}
++
+\boldsymbol{J}\,\delta\boldsymbol{\phi}_n
++
+\mathcal{O}(\delta\boldsymbol{\phi}_n^2)
+=
+\boldsymbol{0},
+\end{equation}
 We therefore seek a correction that cancels the residual coexistence error to first order, which leads to
+
 \[
-\boldsymbol{J}\,\delta\boldsymbol{\phi} + \boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}.
+\boldsymbol{J}\,\delta\boldsymbol{\phi}_n + \boldsymbol{E}(\boldsymbol{\phi}) = \boldsymbol{0}.
 \]
 
 Because \(\boldsymbol{J}\) has a nontrivial null space, this equation does not have a unique solution: one may always add a component along the tangent direction without changing the first-order satisfaction of the coexistence conditions. To keep the correction separate from motion along the binodal, we choose the minimum-norm solution,
@@ -1837,9 +1848,8 @@ which gives
 \[
 \boldsymbol{J}^+ = \boldsymbol{V}\,\boldsymbol{\Sigma}^+\,\boldsymbol{U}^T.
 \]
-Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the singular values that are sufficiently large, while setting the reciprocals of vanishing or very small singular values to zero.
-The singular value associated with the null space corresponds to the tangent direction along the binodal and should therefore not be inverted.
-We improve robustness by avoiding the inversion of both vanishing and near-vanishing singular values, where the latter are identified through a numerical threshold value.
+Here, \(\boldsymbol{\Sigma}^+\) is obtained by taking the reciprocal of the singular values that are sufficiently large, while setting the reciprocals of vanishing singular values to zero.
+In addition to vanishing values we avoid the inversion of near-vanishing singular values to improve robustness, where the latter are identified through a numerical threshold value.
 
 Because this projection is based on a first-order approximation, a single correction step does not in general place the system exactly on the binodal.
 The projection may therefore need to be applied repeatedly until the desired accuracy is reached.
@@ -1854,7 +1864,7 @@ Altogether, this predictor-corrector strategy allows one to take significantly l
 The stepping scheme requires an initial point on, or sufficiently close to, the binodal.
 In our implementation, we consider two qualitatively different types of starting points:
 the dilute limit of one species, in which the ternary system effectively reduces to a binary one,
-and the critical point, which represents a distinct thermodynamic state rather than a dilute-limit construction.
+and the critical point.
 For the Flory-Huggins free-energy density, both types of initial points can be determined analytically, making them well suited for initializing the algorithm.
 
 For illustrative purposes, we consider the dilute limit of species \(0\), although the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.
@@ -1883,16 +1893,17 @@ The critical point provides a second possible initialization.
 It can also be determined analytically by locating the critical composition in composition space at which the second and third derivatives of the free-energy density vanish (see Section~\ref{sss:critical_point}). The corresponding phase-space initialization is then obtained by assigning this critical composition to both phases.
 
 Near the critical point, several singular values of the Jacobian become small, which makes the tangential direction obtained from the Jacobian numerically less robust.
-Because the binodal and spinodal meet at the critical point, the tangent direction in composition space can instead be inferred from the null vector of the Hessian of the free-energy density. This direction is then mapped to the corresponding phase-space tangent as follows:
+Because the binodal and spinodal meet at the critical point, the tangent direction in composition space can instead be inferred from the null vector of the Hessian of the free-energy density (see Eq.~\ref{eq:hessian_null_space}).
+This direction is then mapped to the corresponding phase-space tangent as follows:
 
 \[
 \delta\boldsymbol{\phi}_t = (\delta\phi_1, \delta\phi_2, -\delta\phi_1, -\delta\phi_2)^T,
 \]
-where \((\delta\phi_1,\delta\phi_2)^T\) denotes the null vector of the Hessian at the critical composition. The overall sign and normalization are arbitrary.
+where \((\delta\phi_1,\delta\phi_2)^T\) denotes the null vector of the Hessian at the critical composition.
 
 \subsubsection{Handling binodal branching events}
 
-In the symmetric ternary system discussed in Section~\ref{sss:case_study_symmetric_ternary}, we encountered a case in which the spinodal appeared to cross the binodal.
+In the symmetric ternary system which will be discussed in Section~\ref{sss:case_study_symmetric_ternary}, we encountered a case in which the spinodal appeared to cross the binodal.
 This would imply that part of the binodal is locally unstable while remaining globally stable, which is not possible.
 The natural conclusion is therefore that additional binodal sections must exist and enclose the spinodal.
 
@@ -1907,7 +1918,7 @@ When such a degeneracy is detected, the continuation is split and both direction
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.98\textwidth]{figures/tracer_schematics.pdf}
-    \captionof{figure}{Schematic illustration of the main steps and characteristic events in the algorithm, shown in the \(\phi_1\)-\(\phi_2\) phase space. (A) Successive tangential (green arrow) and projection (red arrow) steps; the projection step may need to be repeated. (B) Branching event: an initial binodal section (blue) splits into a second section (orange) when the Jacobian becomes degenerate. (C) Duplicate binodal sections obtained when tracing is initiated either from the dilute limit (blue points) or from the critical point (orange points). The stars denote the initial points of the tracing processes. (D) The crossing of two binodal sections indicates a three-phase region (red triangle).}
+    \captionof{figure}{Schematic illustration of the main steps and characteristic events in the algorithm, shown in the \(\phi_1\)-\(\phi_2\) phase space. (A) Successive tangential (green arrow) and projection (red arrow) steps; the projection step may need to be repeated. (B) Branching event: an initial binodal section (blue) splits into a second section (orange) when the Jacobian becomes degenerate. (C) Duplicate binodal sections obtained when tracing is initiated either from the dilute limit (blue points) or from the critical point (orange points). The stars denote the initial points of the tracing processes. (D) The crossing of two binodal sections indicates a three-phase region (orange triangle).}
     \label{fig:tracer_schematics}
 \end{minipage}\\
 
@@ -1915,16 +1926,7 @@ When such a degeneracy is detected, the continuation is split and both direction
 Next we look for intersections of two sections of the binodal.
 Such intersections signal the presence of a composition at which two tie lines share a common endpoint.
 If one composition coexists with two others in this way, then all three compositions satisfy the same coexistence conditions and therefore represent three coexisting phases.
-Geometrically, the three-phase region is a triangle in composition space spanned by these three coexisting phases (see Fig.~\ref{fig:tracer_schematics}D).
-Any point inside this triangle can be written as a convex combination of the three coexisting compositions,
-\[
-\boldsymbol{\phi} = \sum_{i=1}^3 \lambda_i \boldsymbol{\phi}^{(i)},
-\qquad
-\sum_{i=1}^3 \lambda_i = 1,
-\qquad
-\lambda_i > 0.
-\]\\
-
+Geometrically, the three coexisting phases define a common tangent plane that touches the free energy surface at three distinct points (orange triangle in Fig.~\ref{fig:three_phase_intuition}).
 \noindent
 \begin{minipage}{0.1\textwidth}
 \end{minipage}\hfill
@@ -1932,22 +1934,44 @@ Any point inside this triangle can be written as a convex combination of the thr
 \begin{minipage}{0.8\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/three_phase_intuition.png}
-    \captionof{figure}{The three-phase region (red plane) provides a better convexification of the free energy surface (yellow surface) than the two-phase tie lines (black lines).\\}
+    \captionof{figure}{Free energy surface (gray contours) in composition space. The three-phase region (orange triangle) provides a better convexification of the free energy surface than the two-phase tie line (blue line).
+    Therefore a three-phase decomposition always yields a lower free energy \(f_3\) than a two-phase decomposition \(f_2\).\\}
     \label{fig:three_phase_intuition}
 \end{minipage}\hfill
 \\The key thermodynamic point is that the three-phase decomposition yields a lower free energy than any competing two-phase decomposition in this region.
-Geometrically, the three coexisting phases define a common tangent plane that touches the free energy surface at three distinct points (red triangle in Fig.~\ref{fig:three_phase_intuition}).
-This plane forms the convex envelope of the free energy, so the free-energy surface must lie above it throughout the interior of the three-phase region.
-By contrast, any two-phase decomposition provides only a partial convexification of the free energy surface (black lines in Fig.~\ref{fig:three_phase_intuition}).
-Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation, and the system will partition into three coexisting phases.
+To see this, we will first use the lever rule to decompose a composition \(\boldsymbol{\phi}\) into two \(N_p=2\) or three \(N_p=3\) coexisting phases, according to
+\[
+\boldsymbol{\phi} = \sum_{i=1}^{N_p} \lambda_{i,N_p} \boldsymbol{\phi}^{(i,N_p)},
+\qquad
+\sum_{i=1}^3 \lambda_{i,N_p} = 1,
+\qquad
+\lambda_{i,N_p} > 0.
+\]
+For the three-phase decomposition, any point inside of the triangle must adheres to the following relation:
+\begin{equation}
+f(\boldsymbol\phi) \geq \sum_{i=1}^3 \lambda_{i,3} f(\boldsymbol{\phi}^{(i,3)}) \eqcolon f_3,
+\label{eq:three_phase_free_energy}
+\end{equation}
+where the \(\lambda_{i,3}\) are the lever-rule coefficients for the three-phase decomposition.
+This means that the free energy of the original composition is higher than the free energy of the three-phase decomposition.
+By contrast, any two-phase decomposition yields a larger free energy, according to the following relation:
+\[
+f_2 \coloneq \sum_{i=1}^2 \lambda_{i,2} f(\boldsymbol{\phi}^{(i,2)}) \geq \sum_{i=1}^2 \lambda_{i,2}\sum_{j=1}^3 \bar\lambda_{ij,3} f(\boldsymbol{\phi}^{(j,3)}) = \sum_{j=1}^3 \lambda_{j,3} f(\boldsymbol{\phi}^{(j,3)}) = f_3.
+\]
+where in the second step applied the three-phase decomposition for each of the \(\boldsymbol\phi^{(i,2)}\) according to Eq.~\eqref{eq:three_phase_free_energy} and in the third step we defined use the relation
+\[
+\lambda_{j,3} = \sum_{i=1}^2 \lambda_{i,2} \bar\lambda_{ij,3}.
+\]
+Consequently, whenever a three-phase construction is available, it is energetically favored over any two-phase separation. A visual illustration of this point is provided in Fig.~\ref{fig:three_phase_intuition}
+where the three-phase region (orange triangle) lays below the two-phase tie line (blue line) in terms of free energy.
 
-Finally, we do not need to consider the possibility of four or more coexisting phases, because within the present ternary setting Gibbs phase rule permits at most three coexisting phases. 
+Finally, we do not need to consider the possibility of four or more coexisting phases, because within the present ternary setting Gibbs phase rule \cite{GibbsPhaseRule} permits at most three coexisting phases. 
 
 
 
 \subsection{Implementation}
 
-Within Flory-Huggins theory, the phase diagram of a ternary system is fully determined by the interaction parameters \(\chi_{ij}\).\footnote{Here, we restrict attention to the case of equal molecular sizes.}
+Within Flory-Huggins theory, the phase diagram of a ternary system is fully determined by the interaction parameters \(\chi_{ij}\) (we restrict attention to the case of equal molecular sizes).
 Accordingly, the only physical input required by our algorithm is the set of interaction parameters from which the phase diagram is constructed.
 All other parameters are numerical and control aspects of the implementation such as step sizes, tolerances and convergence behavior.
 When chosen appropriately, they do not change the underlying phase behavior, but they do affect how robustly and completely the phase diagram is reconstructed.
