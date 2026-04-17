@@ -31,12 +31,12 @@ phi2_exact = phi2_exact[mask]
 phi0_exact = phi0_exact[mask]
 
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 10), sharex=True)
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 8), sharex=True)
 
 # First subplot: original plot
 ax1.plot(phi0_exact, phi1_exact, color="black", linestyle="--")
 ax1.plot(phi0_exact, phi2_exact, color="black", linestyle="--")
-s = 70
+s = 150
 
 num_points = 10
 scattered_phi0 = []

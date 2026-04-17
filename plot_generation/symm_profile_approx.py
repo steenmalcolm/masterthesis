@@ -34,7 +34,7 @@ def get_mu_and_pi(dp, pb, pc, ps):
     return mu, pi
 
 
-def load_symmetric(path="chapter_two_data/symmetric_extended.h5"):
+def load_symmetric(path="chapter_two_data/symmetric.h5"):
     results = []
     with h5py.File(path, "r") as f:
         for uid in f.keys():
@@ -122,7 +122,7 @@ def main():
                 w = dp / dpg
                 w *= LMD
 
-                x = np.linspace(-6 * w, 6 * w, N // 2)
+                x = np.linspace(-10 * w, 10 * w, N // 2)
                 dx = x[1] - x[0]
                 phi_mn_approx = -dp * np.tanh(x / w)
                 phi_pl_approx = pb + dpl * (1 - np.tanh(x / w) ** 2)
@@ -155,17 +155,17 @@ def main():
         (l1,) = ax.plot(
             x,
             phi_mn_approx,
-            linewidth=3.0,
-            label=r"$\phi_-^{\mathrm{approx}}$",
+            linewidth=5.5,
+            label=r"$\phi^{\mathrm{approx}}$",
             color="blue",
         )
         ax.plot(
             x,
             phi_mn_exact,
             "--",
-            linewidth=2.0,
+            linewidth=4.5,
             color="red",
-            label=r"$\phi_-^{\mathrm{exact}}$",
+            label=r"$\phi^{\mathrm{exact}}$",
         )
         ax.set_xlim(x[0], x[-1])
         ax.set_ylabel(r"$\phi_-(x)$")
@@ -180,12 +180,13 @@ def main():
         ax.set_xticks([-L, 0, L])
         ax.set_xticklabels([r"", r"", r""])
         ax.set_xlim(-L, L)
+        ax.legend(loc="upper right", fontsize=22)
 
         ax = axes[1]
         (l2,) = ax.plot(
             x,
             phi_pl_approx,
-            linewidth=3.0,
+            linewidth=5.5,
             label=r"$\phi_+^{\mathrm{approx}}$",
             color="blue",
         )
@@ -193,7 +194,7 @@ def main():
             x,
             phi_pl_exact,
             "--",
-            linewidth=2.0,
+            linewidth=4.5,
             color="red",
             label=r"$\phi_+^{\mathrm{exact}}$",
         )
@@ -211,8 +212,7 @@ def main():
         ax.set_xticklabels([r"$L/2$", r"$0$", r"$L/2$"])
         ax.set_xlim(-L, L)
 
-        plt.show()
-        # fig.savefig("figures/symm_profile_approx.png", dpi=300)
+        fig.savefig("figures/symm_profile_approx.png", dpi=300)
 
 
 if __name__ == "__main__":

@@ -91,12 +91,49 @@ def compute_all_results():
                 )
             dp_exact[i] = phi_mn.max()
             dpl_exact[i] = phi_pl.min() - pb
+
+        # High-resolution del_phi_pl between min and max pb
+        pb_values = (phis[:, 0, 0] + phis[:, 1, 0]) / 2
+        pb_hr = np.linspace(pb_values.min(), pb_values.max(), 500)
+        del_phi_pl_hr = np.zeros(len(pb_hr))
+        mus_hr = np.zeros(len(pb_hr))
+        for j, pb_j in enumerate(pb_hr):
+            sol = root_scalar(
+                del_phi_implicit,
+                args=(pb_j, phi_c),
+                bracket=[1e-10, 1 / 2],
+                method="bisect",
+            )
+            if not sol.converged:
+                raise ValueError(
+                    f"del_phi root finding did not converge for eta={eta:.2f} at pb={pb_j:.4f}"
+                )
+            dp_j = sol.root
+            sol = root_scalar(
+                del_phi_pl_implicit,
+                args=(dp_j, pb_j, phi_c, phi_s),
+                bracket=[-0.1, 0],
+                method="bisect",
+            )
+            if not sol.converged:
+                raise ValueError(
+                    f"del_phi_pl root finding did not converge for eta={eta:.2f} at pb={pb_j:.4f}"
+                )
+            del_phi_pl_hr[j] = sol.root
+            phi1_j = pb_j - dp_j
+            phi2_j = pb_j + dp_j
+            phi0_j = 1 - phi1_j - phi2_j
+            mu_j = chi_d * phi1_j + chi_o * phi2_j + np.log(phi1_j / phi0_j)
+            mus_hr[j] = mu_j - mu_c
+
         results.append(
             {
                 "mus": mus,
                 "del_phi": del_phi,
                 "dp_exact": dp_exact,
                 "del_phi_pl": del_phi_pl,
+                "del_phi_pl_hr": del_phi_pl_hr,
+                "mus_hr": mus_hr,
                 "dpl_exact": dpl_exact,
                 "ratio": eta,
             }
@@ -125,28 +162,51 @@ cmap = plt.get_cmap("Blues")
 ratios = np.array([r["ratio"] for r in results])
 ratio_min, ratio_max = ratios.min(), ratios.max()
 
+
 for r in results:
     mus = r["mus"]
     del_phi_pl = r["del_phi_pl"]
+    del_phi_pl_hr = r["del_phi_pl_hr"]
+    mus_hr = r["mus_hr"]
     dpl_exact = r["dpl_exact"]
     ratio = r["ratio"]
     norm = (
         (ratio - ratio_min) / (ratio_max - ratio_min) if ratio_max > ratio_min else 0.5
     )
+    is_plot = ratio == 1.0
     c = cmap(0.3 + 0.7 * norm)
-    axes[0].plot(mus, np.abs(del_phi_pl), "-", color=c, linewidth=2)
-    axes[0].plot(mus, np.abs(dpl_exact), "--", color=c, linewidth=2)
+    axes[0].plot(
+        mus_hr,
+        np.abs(del_phi_pl_hr),
+        "-",
+        color=c,
+        linewidth=3,
+        label="analytical" if is_plot else None,
+    )
+    axes[0].plot(
+        mus,
+        np.abs(dpl_exact),
+        "--",
+        color=c,
+        linewidth=3,
+        marker="o",
+        markersize=4,
+        label="numerical" if is_plot else None,
+    )
     rel_diff = 100 * np.abs(del_phi_pl - dpl_exact) / np.abs(dpl_exact)
-    axes[1].plot(mus, rel_diff, "-", color=c, linewidth=2)
+    axes[1].plot(mus, rel_diff, "-", color=c, linewidth=3, marker="o", markersize=4)
+    is_plot = False
 
 sm = plt.cm.ScalarMappable(
     cmap=cmap, norm=plt.Normalize(vmin=ratio_min, vmax=ratio_max)
 )
 sm.set_array([])
+axes[0].legend(loc="upper left")
 
 plt.tight_layout()
 fig.subplots_adjust(right=0.85)
 cbar = fig.colorbar(sm, ax=axes.tolist(), pad=0.05)
 cbar.set_label(r"$\eta$")
 
+# plt.show()
 plt.savefig("figures/absorption.png", dpi=300)

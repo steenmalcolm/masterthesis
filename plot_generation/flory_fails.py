@@ -71,6 +71,7 @@ ax.fill(
     zorder=1,
     edgecolor="black",
     linewidth=1,
+    label="3-phase region",
 )
 phi1, phi2 = (
     phi1[:-1],
@@ -85,6 +86,7 @@ ax.plot(phi0, np.array(phi1), np.array(phi2), color="black", linewidth=1)
 
 failed_count = 0
 count = 0
+success_label, failed_label = True, True
 if os.path.exists("plot_generation/tpp_cache.json"):
     with open("plot_generation/tpp_cache.json", "r") as f:
         tpp_cache = json.load(f)
@@ -102,9 +104,20 @@ if os.path.exists("plot_generation/tpp_cache.json"):
                 marker="o",
                 s=100,
                 edgecolor="black",
+                label="3 phases found" if success_label else None,
             )
+            success_label = False
         else:
-            ax.scatter(tpp0, tpp[0], tpp[1], color="red", marker="x", s=100)
+            ax.scatter(
+                tpp0,
+                tpp[0],
+                tpp[1],
+                color="red",
+                marker="x",
+                s=100,
+                label="2 phases found" if failed_label else None,
+            )
+            failed_label = False
 
 
 else:
@@ -176,6 +189,13 @@ ax.set_llabel(r"$\phi_1$", fontsize=20)
 ax.set_rlabel(r"$\phi_2$", fontsize=20)
 
 
+# ax.legend(
+#     loc="upper left",
+#     bbox_to_anchor=(1.05, 1.1),
+#     bbox_transform=ax.transAxes,
+#     frameon=False,
+# )
 fig.tight_layout()
 plt.savefig("figures/flory_fails.png", dpi=300)
+
 plt.show()

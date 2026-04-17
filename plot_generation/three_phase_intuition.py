@@ -59,15 +59,24 @@ F_masked = np.ma.masked_where(~valid, F)
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection="3d")
 
+cutoff = -0.10
 surf = ax.plot_surface(
     PHI1,
     PHI2,
     F_masked,
-    cmap=mpl.cm.cividis,
+    cmap="Grays_r",
     linewidth=0,
     antialiased=True,
-    alpha=0.9,
-    label="Free energy surface",
+    alpha=0.0,
+)
+cs = ax.contour(
+    PHI1,
+    PHI2,
+    F_masked,
+    levels=np.linspace(np.nanmin(F_masked), cutoff, 100),
+    linewidths=0.5,
+    cmap="Grays_r",
+    zorder=0,
 )
 
 
@@ -95,42 +104,51 @@ verts3d = [list(zip(triangle_xy[:, 0], triangle_xy[:, 1], triangle_z))]
 # Add transparent triangular patch
 triangle_patch = Poly3DCollection(
     verts3d,
-    facecolors="red",
+    facecolors="orange",
     edgecolors="black",  # or 'black' if you want an outline
-    linewidths=0.5,
-    linestyle="--",
+    linewidths=3.0,
+    linestyle="-",
     alpha=0.5,
-    label="Three-phase construction",
+    label="3-phase region",
 )
 
 ax.add_collection3d(triangle_patch)
+ax.scatter(
+    triangle_xy[:, 0],
+    triangle_xy[:, 1],
+    triangle_z,
+    color="orange",
+    s=300,
+    zorder=6,
+    edgecolor="black",
+)
 x = np.linspace(1 / chi, 0.99, 1001)
-for i, x0 in enumerate(np.linspace(v + 0.02, 1 / chi - 0.02, 17)):
-    f = np.log(x / x0) - chi * (x - x0)
-    root_idx = np.where(np.diff(np.sign(f)))[0][0]
-    x1 = x[root_idx]
-    y = 1 - x0 - x1
+x0 = 0.18
+f = np.log(x / x0) - chi * (x - x0)
+root_idx = np.where(np.diff(np.sign(f)))[0][0]
+x1 = x[root_idx]
+y = 1 - x0 - x1
 
-    edge = np.array([[x0, x1], [y, y]])
-    # Plot an edge line
-    z = fh_free_energy(
-        edge[0],
-        edge[1],
-        N1=N1,
-        N2=N2,
-        N3=N3,
-        chi12=chi12,
-        chi13=chi13,
-        chi23=chi23,
-    )
-    if i == 0:
-        ax.plot(edge[0], edge[1], z, color="black", linewidth=1, label="Tie lines")
-    else:
-        ax.plot(edge[0], edge[1], z, color="black", linewidth=1)
+edge = np.array([[x0, x1], [y, y]])
+# Plot an edge line
+z = fh_free_energy(
+    edge[0],
+    edge[1],
+    N1=N1,
+    N2=N2,
+    N3=N3,
+    chi12=chi12,
+    chi13=chi13,
+    chi23=chi23,
+)
+ax.plot(
+    edge[0], edge[1], z, color="blue", linewidth=4, label="2-phase tie-line", zorder=3
+)
+ax.scatter(edge[0], edge[1], z, color="blue", s=300, zorder=4, edgecolor="black")
 
 
 # Set viewing angle
-ax.view_init(elev=10, azim=-96)
+ax.view_init(elev=10, azim=-102)
 
 # Remove panes (the gray background planes)
 ax.xaxis.pane.fill = False
@@ -149,23 +167,39 @@ ax.grid(False)
 # ax.xaxis.line.set_color((1, 1, 1, 0))
 # ax.yaxis.line.set_color((1, 1, 1, 0))
 # ax.zaxis.line.set_color((1, 1, 1, 0))
+print(F_masked.min(), F_masked.max())
+ax.set_zlim(np.nanmin(F_masked), cutoff)
 
 # Remove ticks
 ax.set_xticks([0, 1])
-ax.set_yticks([0, 1])
-ax.set_zticks([])
+ax.set_yticks([0])
+_tri_z = np.round(triangle_z, 8)
+_tie_z = np.round(z, 8)
+_z_ticks = np.unique(np.concatenate([_tri_z, _tie_z]))
+ax.set_zticks(_z_ticks)
+ax.set_zticklabels([r"$f_3$", r"$f_2$"])
+_tick_colors = ["orange" if v in _tri_z else "blue" for v in _z_ticks]
+for tick, color in zip(ax.zaxis.get_major_ticks(), _tick_colors):
+    tick.label1.set_color(color)
+    tick.tick1line.set_color(color)
 
 # Optional: remove labels too
 ax.set_xlabel(r"$\phi_1$", labelpad=10)
 ax.set_ylabel(r"$\phi_2$", labelpad=10)
+ax.set_zlabel(r"$f$", labelpad=10)
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
 # ax.set_ylabel(r"$f(\phi)$", labelpad=10)
 
 # Make background fully transparent
 fig.patch.set_alpha(0)
 ax.set_facecolor((1, 1, 1, 0))
 plt.tight_layout()
+from matplotlib.lines import Line2D
+
 # Optionally, further reduce margins:
 plt.subplots_adjust(top=0.98, bottom=0.02)
-# plt.legend(loc="upper right", frameon=False)
+_contour_proxy = Line2D([0], [0], color="gray", label="free-energy surface")
+_handles, _labels = ax.get_legend_handles_labels()
+plt.legend(handles=[_contour_proxy] + _handles, loc="upper right", frameon=False)
 plt.savefig("figures/three_phase_intuition.png", bbox_inches="tight", dpi=300)
-plt.show()

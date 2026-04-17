@@ -16,7 +16,7 @@ fig, axes = plt.subplots(
     2,
     len(delta_ops) // 2,
     figsize=(12, 8),
-    subplot_kw={"projection": "ternary"},
+    # subplot_kw={"projection": "ternary"},
 )
 
 for j, delta in enumerate(delta_ops):
@@ -43,12 +43,11 @@ for j, delta in enumerate(delta_ops):
         for phis in section.phis:
             phi1, phi2 = phis
             phi0 = 1 - phi1 - phi2
-            ax.plot(phi0, phi1, phi2, color="blue", zorder=2, linewidth=2)
+            ax.plot(phi1, phi2, color="blue", zorder=2, linewidth=2)
 
     for phi1_sp, phi2_sp in zip(*s.get_spinodal_coords()):
         phi0_sp = 1 - phi1_sp - phi2_sp
         ax.plot(
-            phi0_sp,
             phi1_sp,
             phi2_sp,
             color="black",
@@ -60,7 +59,6 @@ for j, delta in enumerate(delta_ops):
         phi1, phi2 = cp.phi1, cp.phi2
         phi0 = 1 - phi1 - phi2
         ax.scatter(
-            phi0,
             phi1,
             phi2,
             marker="*",
@@ -82,7 +80,6 @@ for j, delta in enumerate(delta_ops):
             phi2_pair = section.phis[:, 1, idx]
             phi0_pair = 1 - phi1_pair - phi2_pair
             ax.plot(
-                phi0_pair,
                 phi1_pair,
                 phi2_pair,
                 linestyle="--",
@@ -100,17 +97,19 @@ for j, delta in enumerate(delta_ops):
         va="top",
     )
 
-    ax.taxis.set_ticks([0, 1])
-    ax.laxis.set_ticks([0, 1])
-    ax.raxis.set_ticks([0, 1])
-    ax.taxis.set_ticks([])
-    ax.laxis.set_ticks([])
-    ax.raxis.set_ticks([])
+    # ax.taxis.set_ticks([0, 1])
+    # ax.laxis.set_ticks([0, 1])
+    # ax.raxis.set_ticks([0, 1])
+    # ax.taxis.set_ticks([])
+    # ax.laxis.set_ticks([])
+    # ax.raxis.set_ticks([])
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
 
-    ax.set_tlabel(r"$\phi_0$", fontsize=18)
-    ax.set_llabel(r"$\phi_1$", fontsize=18)
-    ax.set_rlabel(r"$\phi_2$", fontsize=18)
+    # ax.set_tlabel(r"$\phi_0$", fontsize=18)
+    # ax.set_llabel(r"$\phi_1$", fontsize=18)
+    # ax.set_rlabel(r"$\phi_2$", fontsize=18)
 
 fig.tight_layout()
-fig.savefig("figures/interesting_case.png", dpi=300)
-# plt.show()
+# fig.savefig("figures/interesting_case.png", dpi=300)
+plt.show()

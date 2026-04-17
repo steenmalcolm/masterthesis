@@ -86,6 +86,7 @@ def main():
             box_size = r_sample["box_size"]
             if chi < 2.5:
                 continue
+            is_plot = abs(eta - 0.9) < 1e-4
             phis = r_sample["phis"]
             mus = r_sample["mus"]
             N = phis.shape[-1]
@@ -212,21 +213,27 @@ def main():
 
             ax.plot(
                 mus,
-                errs * 100,
-                "-",
-                color=cmap((eta - ratio_min) / (ratio_max - ratio_min)),
-                linewidth=3.5,
-            )
-            ax.plot(
-                mus,
                 errs_bad * 100,
                 "--",
                 color=cmap((eta - ratio_min) / (ratio_max - ratio_min)),
                 linewidth=3.5,
+                label=r"$\epsilon(\bar\phi)$" if is_plot else None,
             )
+            ax.plot(
+                mus,
+                errs * 100,
+                "-",
+                color=cmap((eta - ratio_min) / (ratio_max - ratio_min)),
+                linewidth=3.5,
+                label=r"$\epsilon(\bar\phi+\delta\phi_+)$" if is_plot else None,
+            )
+
+            is_plot = False
+
         ax.set_xscale("log")
         ax.set_xlabel(r"$\mu - \mu_c$")
         ax.set_ylabel(r"$\epsilon_{\mathrm{approx.}}$ (%)")
+        ax.legend(loc="upper right")
 
         # # axes[0].set_ylim(1e-6, 5e-1)
         # axes[0].text(1e-6, 1.4e-2, "A", color="black", fontsize=36)
