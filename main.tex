@@ -50,15 +50,23 @@
 
 
 \section{Introduction}
-There has been theoretical work on ternary systems \cite{Demarchi2023EnzymeEnriched}
-There has been work on reconstructing the binodal from an interaction matrix including genetic models \cite{Milani2007,WEI200691} analytical approaches \cite{WEI200691} and convexification of the energy landscape \cite{Mao2019}
-Phase separation in multicomponent fluids provides a general physical framework for understanding how a homogeneous mixture can spontaneously demix into coexisting phases with distinct compositions. At its core, this phenomenon emerges from the competition between entropy, which favors mixing and intermolecular interactions, which can favor segregation. In biological and soft-matter systems, this balance underlies liquid-liquid phase separation and the formation of condensed phases with well-defined interfaces and characteristic dynamical behavior. A theoretical description of such systems therefore requires linking equilibrium thermodynamics, interfacial physics and diffusive transport within a unified framework.
+Phase separation in multicomponent fluids provides a general physical framework for understanding how a homogeneous mixture can spontaneously demix into coexisting phases with distinct compositions. At its core, this phenomenon emerges from the competition between entropy, which favors mixing, and intermolecular interactions, which can favor segregation. In biological and soft-matter systems, this balance underlies liquid-liquid phase separation and the formation of condensed phases with well-defined interfaces and characteristic dynamical behavior. A theoretical description of such systems therefore requires linking equilibrium thermodynamics, interfacial physics, and diffusive transport within a unified framework.
+
+Compared with binary mixtures, ternary systems already display a much richer phenomenology. Their phase diagrams are two-dimensional, tie-lines can vary across composition space, three-phase coexistence can occur, and interfaces may exhibit preferential adsorption of one component. These features make ternary mixtures a natural minimal setting in which to study genuinely multicomponent effects. They are also of practical interest, since many biological and synthetic mixtures contain multiple species whose interactions cannot be reduced to an effectively binary description. Ternary phase separation has therefore attracted considerable theoretical attention, for example in the context of chemically regulated condensates and enzyme-enriched phases \cite{Demarchi2023EnzymeEnriched}.
+
+Two complementary questions are central to the study of ternary phase separation. First, which bulk states can the system realize? This is the role of the phase diagram: it identifies coexistence regions, critical points, tie-lines, and possible three-phase equilibria, and thereby provides the global map needed to predict how a mixture responds to changes in composition or interaction strength. On the equilibrium side, several methods have therefore been developed to reconstruct binodals directly from interaction matrices, including analytic approaches, genetic algorithms, and constructions based on convexification of the free-energy landscape \cite{Milani2007,WEI200691,Mao2019}.
+
+Second, how are coexisting phases connected in space? This is the role of interfacial physics. The structure and free-energy cost of an interface influence nucleation barriers, domain morphology, relaxation dynamics, and the stability of phase-separated states. In biological systems, surface tension is important because it helps control droplet shape, fusion, and coarsening, and because composition-dependent surface tension can drive Marangoni flows along interfaces, leading to interfacial transport and condensate reorganization. In ternary mixtures, interfaces are particularly interesting because one component can adsorb preferentially at the interface and thereby alter the surface tension and the profile shape. Classic studies of symmetric ternary mixtures showed that these interfacial properties can differ qualitatively from their binary counterparts \cite{Huang1996,Huang1996AnalyticInterface,Huang1999}.
+
+These two perspectives, global phase behavior and local interfacial structure, are naturally linked. Phase diagrams identify the relevant coexisting bulk phases, while interfacial calculations characterize the boundaries between them. This thesis focuses on these two complementary aspects within ternary Flory-Huggins theory. First, we investigate the structure and energetics of diffuse interfaces, with particular emphasis on the role of interfacial adsorption and on analytical approximations for the surface tension. Second, we develop a continuation-based numerical method for the rapid construction of ternary binodals and phase diagrams directly from the coexistence conditions. Together, these results connect local interfacial physics with the global organization of phase space.
+
+The remainder of this thesis is organized as follows. In Chapter 2, we develop the theoretical framework for incompressible ternary mixtures, including the thermodynamics of phase coexistence, the Flory-Huggins free-energy functional, the coupled Cahn-Hilliard dynamics, the thermodynamic definition of surface tension, and the numerical methods used to compute equilibrium profiles. In Chapter~\ref{s:surface_tension}, we then study the surface tension of ternary interfaces numerically and analytically, and show that preferential interfacial adsorption is a key correction to simple profile approximations. Finally, in Chapter~\ref{s:binodal_tracing}, we introduce a fast continuation-based algorithm for tracing ternary binodals and demonstrate that it accurately captures a wide range of phase-diagram topologies.
 
 
 \section{Liquid-liquid phase separation}
 In this chapter, we develop the theoretical basis for the ternary phase-separating system studied in this thesis. We begin with the thermodynamics of incompressible mixtures and derive the conditions for local and global stability, which define the spinodal, binodal and critical point. We then introduce a mean-field lattice description that leads to a Flory-Huggins free-energy functional with gradient terms, allowing spatially heterogeneous states and diffuse interfaces to be described on a continuum level. Building on this free-energy framework, we formulate the diffusive dynamics of phase separation in terms of coupled Cahn-Hilliard equations for the conserved volume fractions. We further discuss the thermodynamic definition of surface tension in ternary systems and, finally, outline the numerical methods used to compute equilibrium profiles and interfacial properties. Together, these results establish the theoretical framework that will be used throughout the remainder of this thesis to analyze phase behavior, interface formation and relaxation dynamics in ternary mixtures.
 \subsection{Thermodynamics of a ternary mixture}\label{ss:thermodynamics}
-We begin by considering the a complex mixture of three components at constant temperature \(T\), Volume \(V\) and particle numbers \(N_0, N_1, N_2\). This system is best described by the Helmholtz free-energy,
+We begin by considering the a complex mixture of three components at constant temperature \(T\), volume \(V\) and particle numbers \(N_0, N_1, N_2\). This system is best described by the Helmholtz free-energy,
 \(F=U-TS\).
 For simplicity, we only consider an incompressible fluid with constant volume and molecular volume \(\nu\).
 We also enforce the null-void condition meaning that vacancies caused by removing one particle must be filled by another particle.
@@ -118,7 +126,7 @@ and
      V_1 + V_2 = V,
 \]
 where \(\bar\phi_i\) is the mean volume fraction of species \(i\). Therefore the six variables reduce to three independent variables, which can be chosen as \(\phi_1^{(1)}, \phi_2^{(1)}, V_1\).
-Minimizing the free-energy in Eq.~\ref{eq:free_energy_two_phase} with respect to these three variables yields the coexistence conditions
+Minimizing the free-energy in Eq.~\eqref{eq:free_energy_two_phase} with respect to these three variables yields the coexistence conditions
 \begin{equation}
     \begin{aligned}
         \frac{\partial f}{\partial \phi_1}(\phi_1^{(1)},\phi_2^{(1)}) &= \frac{\partial f}{\partial \phi_1}(\phi_1^{(2)},\phi_2^{(2)}) \\
@@ -169,7 +177,7 @@ In general the spinodal lies inside the binodal, since local instability implies
     \centering
     \includegraphics[width=0.98\textwidth]{figures/metastable.png}
     \captionof{figure}{Phase diagram of ternary system showing the binodal (solid black line), spinodal (dashed black line),
-    and the regions of stability, metastability and instability of the homogenous state as well as the critical point (gold star).  }
+    and the regions of stability, metastability and instability of the homogeneous state as well as the critical point (gold star).  }
     \label{fig:metastable}
 \end{minipage}\\
 
@@ -214,7 +222,7 @@ The emergence of two minima from a single minimum is illustrated in Fig.~\ref{fi
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=0.98\textwidth]{figures/critical_point_schematic.png}
-    \captionof{figure}{5hree cross-sections of the free-energy landscape of the ternary system in Fig.~\ref{fig:metastable}.
+    \captionof{figure}{Three cross-sections of the free-energy landscape of the ternary system in Fig.~\ref{fig:metastable}.
     For $\phi_2 > \phi_{2,c}$ (A) the free-energy has a single minimum corresponding to a homogeneous phase.
     For $\phi_2 < \phi_{2,c}$ (C) the free-energy has two minima corresponding to two coexisting phases.
     At the critical point $\phi_2 = \phi_{2,c}$ (B) the two minima merge into a single minimum, marking the onset of phase separation.}
@@ -234,7 +242,7 @@ These scaling relations will be of interest later on.
 \subsection{Mean-field approximation of lattice interactions}
 In the previous sections we have discussed properties of the free-energy and how these properties can drive phase separation. In this section we will focus on the exact form of the free-energy.
 \subsubsection{Lattice model}
-We start by considering a one dimensional lattice model with \(N\) lattice sites and three possible states at each lattice site \(0, 1, 2\) where the total number of each state is conserved.
+We start by considering a one-dimensional lattice model with \(N\) lattice sites and three possible states at each lattice site \(0, 1, 2\) where the total number of each state is conserved.
 The lattice sites all have equal lattice spacing \(a\) regardless of their state.
 In the null-void case which we are investigating, vacant lattice sites are not allowed and thus the number of independent variables reduces from three to two
 \[
@@ -277,7 +285,7 @@ Using the continuum correspondence
 \[
 \sum_n \rightarrow \frac{1}{a}\int dx,
 \]
-the interaction energy in Eq.~\ref{eq:ising_hamiltonian} takes the form \textcolor{red}{Perhaps add the full calculations in the appendix?}
+the interaction energy in Eq.~\eqref{eq:ising_hamiltonian} takes the form \textcolor{red}{Perhaps add the full calculations in the appendix?}
 \[
 E
 =
@@ -399,7 +407,7 @@ In this derivation, the reduced Flory-Huggins interaction parameters and the red
 In the literature one often encounters species-dependent molecular sizes \(\nu_i\) \cite{Luo2025ChargeAsymmetry,Kirschbaum2021Controlling,zwicker2025physicsdropletregulationbiological}. Differences in molecular size modify the combinatorics and hence the entropic contribution to the free-energy. We do not consider this generalization here, since all components are assumed to occupy the same lattice volume.
 \subsubsection{Interface stability}
 
-The free-energy functional in Eq.~\ref{eq:fh_free_energy} contains gradient terms, that penalize sharp spatial variations and thereby stabilize smooth interfaces between coexisting phases. For this penalty to be non-negative, the gradient matrix of the reduced system
+The free-energy functional in Eq.~\eqref{eq:fh_free_energy} contains gradient terms, that penalize sharp spatial variations and thereby stabilize smooth interfaces between coexisting phases. For this penalty to be non-negative, the gradient matrix of the reduced system
 \[
 \tilde{\kappa}=
 \begin{pmatrix}
@@ -497,7 +505,7 @@ where \(\boldsymbol{v}\) is the center-of-mass velocity field and \(\boldsymbol{
 \label{eq:continuity_equation}
 \end{equation}
 
-In the following, we restrict ourselves to systems in which diffusion dominates over advection, so that the advective term in Eq.~\ref{eq:continuity_equation} can be neglected. This approximation is valid for systems with a small Péclet number,
+In the following, we restrict ourselves to systems in which diffusion dominates over advection, so that the advective term in Eq.~\eqref{eq:continuity_equation} can be neglected. This approximation is valid for systems with a small Péclet number,
 \[
 Pe=\frac{Lv}{D}\ll 1,
 \]
@@ -555,7 +563,7 @@ where \(\Lambda_{ij}\) is a symmetric positive semidefinite mobility matrix of t
 \Lambda_{ij}=\Lambda_{ji}.
 \]
 
-Substituting Eq.~\ref{eq:flux_mobility} into Eq.~\ref{eq:continuity_equation} yields the general form of the Cahn-Hilliard equations for a ternary mixture in the absence of hydrodynamics and thermal fluctuations:
+Substituting Eq.~\eqref{eq:flux_mobility} into Eq.~\eqref{eq:continuity_equation} yields the general form of the Cahn-Hilliard equations for a ternary mixture in the absence of hydrodynamics and thermal fluctuations:
 \begin{equation}
 \frac{\partial \phi_i}{\partial t}
 =
@@ -600,11 +608,11 @@ where \(A\) is the cross-sectional area and \(L\) is the system size in the dire
 
 In a ternary system, however, the situation is more subtle. Since there are multiple independent composition fields, there is in general no unique choice of interface location for which all interfacial excesses vanish simultaneously. It is therefore more natural to regard the surface tension as a thermodynamic property of the entire interfacial region rather than as a purely geometric quantity tied to a specific interface position.
 
-In the following, we present a thermodynamic approaches for deriving the surface tension of a ternary system and then showcase the explicit form for our model.
+In the following, we present a thermodynamic approach for deriving the surface tension of a ternary system and then showcase the explicit form for our model.
 
 \subsubsection{Thermodynamic derivation}
-\textcolor{red}{TODO: Find reference which derives the surface tension similarly to the following and check if surface excess is defined in the same way.}
 
+In this section, we derive the surface tension of a ternary system from thermodynamic principles. A more detailed derivation can be found in \cite{Ip1994}.
 We begin by dividing the system into two bulk regions and one interfacial region. The free-energy, entropy and particle numbers are then decomposed as
 \[
 \begin{aligned}
@@ -648,8 +656,8 @@ all be eliminated simultaneously by a suitable choice of dividing surface. In a 
 dividing surface such that the excess vanishes yielding the familiar expression \(\gamma = F^s/A\).
 \subsubsection{Surface tension of the Flory-Huggins model}
 
-We now apply the thermodynamic definition of the surface tension to our particular model. A more detailed derivation can be found in \cite{Ip1994}.
-For a planar interface, the surface tension is given by Eq.~\ref{eq:surface_tension_thermodynamic}.
+We now apply the thermodynamic definition of the surface tension to our particular model. 
+For a planar interface, the surface tension is given by Eq.~\eqref{eq:surface_tension_thermodynamic}.
 
 To make this expression explicit, we consider a one-dimensional system of length \(L\) with cross-sectional area \(A\) and an interface located at \(x=0\). The two coexisting bulk phases are characterized by constant compositions \((\phi_1^{(1)},\phi_2^{(1)})\) and \((\phi_1^{(2)},\phi_2^{(2)})\), which are approached far from the interface for \(x\to -L/2\) and \(x\to L/2\), respectively. The excess free-energy is then obtained by subtracting the bulk contributions from the full free-energy,
 \[
@@ -734,7 +742,7 @@ For a one-dimensional system, the Euler-Lagrange equations take the form
 =0,
 \qquad i\in\{1,2\}.
 \]
-Inserting the Flory-Huggins free-energy density from Eq.~\ref{eq:fh_free_energy_density} yields the coupled second-order equations
+Inserting the Flory-Huggins free-energy density from Eq.~\eqref{eq:fh_free_energy_density} yields the coupled second-order equations
 \[
 \begin{aligned}
 \ln \phi_1 - \ln(1-\phi_1-\phi_2)
@@ -810,7 +818,7 @@ This dynamical system is artificial and does not represent the physical evolutio
 
 \subsubsection{Pseudo-spectral method}
 
-To solve the fixed-point iteration in Eq.~\ref{eq:fixed_point_iteration}, we employ a pseudo-spectral method.
+To solve the fixed-point iteration in Eq.~\eqref{eq:fixed_point_iteration}, we employ a pseudo-spectral method.
 This method is well suited because the second-derivative terms appearing in the Euler-Lagrange equations can be evaluated efficiently in Fourier space, while the nonlinear terms are treated in real space.
 Compared with finite-difference or finite-element approaches, spectral methods typically yield much smaller discretization errors for smooth periodic fields and therefore achieve high accuracy with relatively few grid points \cite[Chs.~1.1--1.4]{Boyd2000Chebyshev}
 
@@ -849,7 +857,7 @@ we apply the modified operator
 \]
 where \(\lambda>0\) is a stabilization parameter. 
 
-Inserting this into the fixed-point iteration scheme from Eq.~\ref{eq:fixed_point_iteration} and rearranging yields
+Inserting this into the fixed-point iteration scheme from Eq.~\eqref{eq:fixed_point_iteration} and rearranging yields
 \begin{equation}
     \phi_i^{n+1}
 =
@@ -926,10 +934,11 @@ their bulk values well between the two interfaces.
 Starting from the initial step profile, we relax the system to equilibrium using the fixed-point iteration in Eq.~\eqref{eq:fixed_point_iteration}. Because we are only interested in the equilibrium profiles, the step size \(h\) is chosen as large as numerical stability permits. The semi-implicit update strongly suppresses high-wavenumber modes, allowing us to use \(h=\mathcal{O}(10^{-1})\), typically one to two orders of magnitude larger than in a fully explicit scheme.
 Close to the boundary of composition space (\(\bar\phi_2 \sim 0\)), smaller step sizes are required because the logarithmic terms in the free-energy become large and can lead to numerical instabilities.
 
-We declare convergence when the maximum change of the two-phase compositions \(\boldsymbol\phi =(\phi_1^{(1)}\,\phi_2^{(1)},\phi_1^{(2)}\,\phi_2^{(2)})^T\) between two iterations satisfies
+We declare convergence when the maximum change of the fields \(\boldsymbol\phi^n(x) =(\phi_1^n(x)\,\phi_2^n(x))^T\) between two iterations satisfies
 \[
 \max_x\, \lVert \boldsymbol{\phi}^{n+1}(x)-\boldsymbol{\phi}^{n}(x)\rVert < 10^{-10}.
 \]
+where \(n\) denotes the iteration number.
 Depending on the interaction parameters and initialization, this criterion is reached after \(10^4\)-\(10^5\) iterations.
 Repeating this equilibration for increasing \(\bar\phi_2\) allows us to track the interfacial profiles up to the critical point,
 beyond which two-phase coexistence is no longer possible (Fig.~\ref{fig:workflow}).
@@ -954,8 +963,8 @@ This trend is consistent with the symmetric case \(\chi_{02} = \chi_{12}\) studi
 \subsubsection{Critical scaling of the surface tension}
 \textcolor{red}{Perhaps add a figure in supplement showing numerical fit of simulation data to power law and resulting critical exponent.}
 After obtaining the equilibrium profiles, we compute the surface tension using the derived expression in Eq.~\eqref{eq:surfacetension_flory}.
-In this way, we collect surface-tension values along the binodal for different mean volume fraction of species 2.
-In the following we will display the surface-tension as a function of the distance to the critical chemical potential \(\mu_{2,c}-\mu_2\) of species 2.
+In this way, we collect surface tension values along the binodal for different mean volume fraction of species 2.
+In the following we will display the surface tension as a function of the distance to the critical chemical potential \(\mu_{2,c}-\mu_2\) of species 2.
 The chemical potential relates to the volume fraction \(\phi_2\) through Eq.~\eqref{eq:chemical_potential_and_pressure}.
 The critical point is then located at \(\mu_{2,c}=\mu_2(\phi_{2,c})\).
 The results for the surface tensions are shown in Fig.~\ref{fig:surface_tension_numerical}.
@@ -988,7 +997,7 @@ To quantify this behavior, we fit the numerical data close to criticality to the
 where \(A\) is a prefactor and \(\delta\) is the critical exponent. These fits yield \(\delta \approx 3/2\) within numerical uncertainty.
 \footnote{The fitted critical exponent typically deviates by more than \(0.1\) from \(3/2\) if points farther than \(10^{-2}\) from the critical point are included in the fit.}
 
-Additionally, the critical exponent is consistent with previous work \cite{Huang1996AnalyticInterface}. In contrast, the prefactor of the power law
+Additionally, the critical exponent is consistent with previous work \cite{Huang1996AnalyticInterface,Anisimov2024CriticalFluctuations}. In contrast, the prefactor of the power law
 is not universal and varies substantially with the choice of interaction
 parameters (nearly an order of magnitude in Fig.~\ref{fig:surface_tension_numerical}).
 
@@ -1210,7 +1219,7 @@ results is shown in Fig.~\ref{fig:approximation_compare}.\\
 \begin{minipage}{\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{figures/approximation_compare.png}
-    \captionof{figure}{(A) Exact (red) and approximate (blue) surface tension for \(\chi_{01}=1.4\), \(\chi_{02}=1.5\), \(\chi_{12}=2.5\)
+    \captionof{figure}{(A) Exact (red) and approximate (blue) surface tension for \(\chi_{12}=1.4\), \(\chi_{02}=1.5\), \(\chi_{01}=2.5\)
     as a function of the chemical potential.
     (B) Relative error \(\epsilon_\mathrm{approx} =(\gamma_{\mathrm{approx}}-\gamma_{\mathrm{exact}})/\gamma_{\mathrm{exact}}\), where the blue data points correspond to the same parameters as in (A) and the gray area indicates the range of errors obtained for the other interaction parameters in Eq.~\eqref{eq:interaction_parameters}.\\}
 
@@ -1361,7 +1370,7 @@ Consequently, the leading-order contribution to the chemical potential deviation
 
 This relation is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}A, where $\lvert \Delta \boldsymbol{\phi} \rvert^2$ is plotted against the chemical potential difference $\lvert \boldsymbol{\mu}_c-\boldsymbol{\mu} \rvert$ on a log-log scale.\\
 
-We now turn to the second factor in the surface-tension approximation. To determine its scaling, we first rewrite it in a convenient form, then expand the free-energy and chemical-potential contributions separately, and finally collect the leading terms.
+We now turn to the second factor in the surface tension approximation. To determine its scaling, we first rewrite it in a convenient form, then expand the free-energy and chemical-potential contributions separately, and finally collect the leading terms.
 
 The second factor can be rewritten as
 
@@ -1446,7 +1455,7 @@ The dot product of the chemical potential with the phase-composition difference 
 Where the third-order term is equal to the third derivative of the free-energy, which vanishes at criticality along the coexistence direction.
 The leading nonzero contribution therefore comes from the fourth-order term.
 
-Collecting terms, we find that the second factor of the surface-tension approximation is equal to
+Collecting terms, we find that the second factor of the surface tension approximation is equal to
 \begin{equation} 
     \begin{aligned}
        &f(\bar{\boldsymbol{\phi}}) - f(\boldsymbol{\phi}^{(1)})
@@ -1485,7 +1494,7 @@ This scaling is consistent with the numerical results shown in Fig.~\ref{fig:fac
     \centering
     \includegraphics[width=0.95\textwidth]{figures/factor_scaling.png}
     \captionof{figure}{(A) Scaling of the quantity \(|\Delta \boldsymbol{\phi}|^2\), which is proportional to the first factor, and (B) the second factor \(|f(\bar{\boldsymbol{\phi}}) - \sum_i \mu_i \bar{\phi}_i + \Pi|\)
-    in the surface-tension approximation, obtained from the numerical results (different colors) as functions of the chemical potential difference \(|\boldsymbol\mu-\boldsymbol\mu_{c}|\)
+    in the surface tension approximation, obtained from the numerical results (different colors) as functions of the chemical potential difference \(|\boldsymbol\mu-\boldsymbol\mu_{c}|\)
     for interaction parameters in the domain defined in Eq.~\eqref{eq:interaction_parameters}. The dashed lines indicate the expected scaling with exponents \(1\) and \(2\) respectively.\\\newline}
     \label{fig:factor_scaling}
 \end{minipage}
@@ -1544,7 +1553,7 @@ For \(\Delta x_0 = 0\), the profile of component 2 remains constant across the i
 In contrast, when \(\Delta x_0 \gg w\), a third phase develops in the interfacial region, corresponding to strong interfacial adsorption.\\
 
 The results of the fits are shown in Fig.~\ref{fig:fit_profiles}B, together with the relative error
-of the surface-tension approximation. A clear correlation is observed between the
+of the surface tension approximation. A clear correlation is observed between the
 relative error and the displacement between the centers of the profiles of components 0 and 1.\\
 
     
@@ -1554,7 +1563,7 @@ relative error and the displacement between the centers of the profiles of compo
     \centering
     \includegraphics[width=\textwidth]{figures/fit_profiles.png}
     \captionof{figure}{(A) Hyperbolic tangent fits (solid lines) to the numerical equilibrium profiles for the symmetric case \(\chi_{02}=\chi_{12}\), used to extract the interface positions \(x_{0,i}\) (dashed vertical lines) for components 0 and 1.
-    (B) Relative error of the surface-tension approximation (blue) and the displacement between the centers of the fitted profiles (green) as functions of \(|\boldsymbol\mu_c - \boldsymbol{\mu}|\).\\}
+    (B) Relative error of the surface tension approximation (blue) and the displacement between the centers of the fitted profiles (green) as functions of \(|\boldsymbol\mu_c - \boldsymbol{\mu}|\).\\}
     \label{fig:fit_profiles}
     
 \end{minipage}
@@ -1571,7 +1580,7 @@ piecewise-linear model.\\
 To further analyze interfacial adsorption, we now derive analytical expressions for several interfacial properties.
 
 \subsection{Analytical expressions for interfacial profiles in symmetric ternary mixtures}\label{sec:symmetric_case}
-In this section, we consider the symmetric case, defined by \(\chi_{01}=\chi_{02}\).
+In this section, we consider the symmetric case, defined by \(\chi_{02}=\chi_{12}\).
 In contrast to the general case, this symmetry can be exploited to derive analytical expressions for key interfacial properties.
 This, in turn, provides deeper insight into the interfacial behavior and the origin of the errors in the piecewise-linear approximation.\\
 The symmetric interaction matrix can be written as
@@ -1590,7 +1599,7 @@ We adopt this notation to match earlier work \cite{Huang1996,Huang1996AnalyticIn
 
 
 \subsubsection{Implicit expression for the bulk phase compositions}
-The interaction matrix of the reduced two-component system can be obtained from the original three-component interaction matrix according to Eq.~\ref{eq:reduced_chi}, which for the symmetric case reduces to\\
+The interaction matrix of the reduced two-component system can be obtained from the original three-component interaction matrix according to Eq.~\eqref{eq:reduced_chi}, which for the symmetric case reduces to\\
 
 \[
     \begin{pmatrix}
@@ -1605,7 +1614,7 @@ The profiles are then determined by the variational principle \(\delta F/\delta 
 \[
 \begin{aligned}
     &-\chi_d \phi_0''(x) - \chi_o \phi_1''(x) = \chi_d \phi_0 + \chi_o \phi_1 + \ln(\phi_0) - \ln(1-\phi_0-\phi_1)-\mu_0\\
-    &-\chi_o \phi_0''(x) - \chi_d  \phi_1''(x) = \chi_o \phi_0 + \chi_d \phi_1 + \ln(\phi_0) - \ln(1-\phi_0-\phi_1)-\mu_1\\
+    &-\chi_o \phi_0''(x) - \chi_d  \phi_1''(x) = \chi_o \phi_0 + \chi_d \phi_1 + \ln(\phi_1) - \ln(1-\phi_0-\phi_1)-\mu_1\\
 \end{aligned}
 \]
 Here \(\mu_0=\mu_1=\mu=\chi_d\phi_0^{(1)} + \chi_o \phi_1^{(1)} + \ln(\phi_0^{(1)}) - \ln(\phi_2^{(1)})\) is the exchange chemical potential.
@@ -1763,16 +1772,16 @@ As shown in Fig.~\ref{fig:symm_profile_approx}, the approximation matches the nu
 Finally we can use the analytical expressions for the interfacial properties to improve the surface tension approximation.
 The surface tension approximation in Eq.~\eqref{eq:surface_tension_approximation} can be rewritten as
 \[
-\gamma \approx \sqrt{(\Delta \phi_i\kappa_{ij} \Delta \phi_j)\,(f(\bar\phi+\delta\phi_+) -2\mu_i( \bar{\phi} + \delta\phi_+)+ \Pi)}
+\gamma_\mathrm{approx}= \sqrt{(\Delta \phi_i\kappa_{ij} \Delta \phi_j)\,(f(\phi_+(0)) -2\mu \phi_+(0)+ \Pi)}
 \]
-Where now instead of using the mean composition \(\bar\phi\) we use the composition at the interface \(\bar\phi + \delta\phi_+\) including the effect of interfacial adsorption.
+where now instead of using the mean composition \(\bar\phi\) we use the composition at the interface \(\phi_+(0)\) including the effect of interfacial adsorption.
 The results of this improved approximation can be seen in Fig.~\ref{fig:st_symmetric_approx}.\\
 
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/st_symmetric_approx.png}
     \captionof{figure}{Relative error of the surface tension approximation for the symmetric ternary system with (solid) and without (dashed) interfacial adsorption effects included, as a function of the chemical potential difference \(\mu_c-\mu\).
-    With \(\chi=2.5\), the colorscale indicates the interaction strength \(\eta\).\\}
+    With \(\chi=2.5\), the color scale indicates the interaction strength \(\eta\).\\}
     \label{fig:st_symmetric_approx}
 \end{minipage}
 
@@ -1887,7 +1896,7 @@ One way to reduce this drift is to take smaller tangential steps, but this also 
 A more efficient approach is therefore to add a correction step that projects the predicted point back onto the coexistence manifold.
 
 Suppose that \(\boldsymbol{\phi}\) is close to, but not exactly on, the binodal.
-Linearizing the coexistence conditions as in Eq.~\ref{eq:binodal_step} gives
+Linearizing the coexistence conditions as in Eq.~\eqref{eq:binodal_step} gives
 \begin{equation}
 \boldsymbol{E}(\boldsymbol{\phi}+\delta\boldsymbol{\phi}_t)
 =
@@ -1955,7 +1964,7 @@ This binary coexistence pair then provides an approximate ternary initialization
 \]
 for which \(\phi_0^{(1)} = \phi_0^{(2)} = 2\epsilon\) is small.
 This places the system sufficiently close to the ternary binodal for the projection step to bring it onto the coexistence manifold and thus initialize the stepping scheme.
-Because the initial point lies very close to the boundary of the composition space, applying the full projection step can occasionally move the system outside of the admissable domain.
+Because the initial point lies very close to the boundary of the composition space, applying the full projection step can occasionally move the system outside of the physically admissible domain.
 To avoid this, we damp the projection step and update the phase-space point according to
 \[
 \boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \alpha\,\delta\boldsymbol{\phi},
@@ -1967,7 +1976,7 @@ The critical point provides a second possible initialization.
 It can also be determined analytically by locating the critical composition in composition space at which the second and third derivatives of the free-energy density vanish (see Section~\ref{sss:critical_point}). The corresponding phase-space initialization is then obtained by assigning this critical composition to both phases.
 
 Near the critical point, several singular values of the Jacobian become small, which makes the tangential direction obtained from the Jacobian numerically less robust.
-Because the binodal and spinodal meet at the critical point, the tangent direction in composition space can instead be inferred from the null vector of the Hessian of the free-energy density (see Eq.~\ref{eq:hessian_null_space}).
+Because the binodal and spinodal meet at the critical point, the tangent direction in composition space can instead be inferred from the null vector of the Hessian of the free-energy density (see Eq.~\eqref{eq:hessian_null_space}).
 This direction is then mapped to the corresponding phase-space tangent as follows:
 
 \[
@@ -2194,17 +2203,17 @@ We also sampled $2500$ points in the one-phase region, where no phase separation
 Of course, this is not a proof that the algorithm will work for all possible interaction parameters, but it does provide strong empirical evidence that the algorithm is robust and suitable for exploring representative ternary phase behavior.
 
 \subsubsection{Case study: symmetric ternary system}\label{sss:case_study_symmetric_ternary}
-The symmetric ternary case is defined by equal interactions of one species with the other two, \(\chi_{01}=\chi_{02}\), while the interaction between the remaining two species is given by \(\chi_{12}\).
-For the purpose of this example, we assume species 0 to interact equally with species 1 and 2. Of course, the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.
+The symmetric ternary case is defined by equal interactions of one species with the other two, \(\chi_{02}=\chi_{12}\), while the interaction between the remaining two species is given by \(\chi_{01}\).
+For the purpose of this example, we assume species 2 to interact equally with species 0 and 1. Of course, the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.
 
 An advantage of this case is that the binodals can be computed analytically using a simple ansatz.
 We assume that one species has the same composition in both phases, while the remaining two species exchange their volume fractions between phases.
 We can write this ansatz as
 \[
 \begin{aligned}
-\phi_0^{(1)}& = \phi_0^{(2)},\\
-\phi_1^{(1)}&= \phi_2^{(2)}\eqcolon \phi^{(1)},\\
-\phi_1^{(2)}&= \phi_2^{(1)}\eqcolon \phi^{(2)}
+\phi_2^{(1)}& = \phi_2^{(2)},\\
+\phi_0^{(1)}&= \phi_1^{(2)}\eqcolon \phi^{(1)},\\
+\phi_0^{(2)}&= \phi_1^{(1)}\eqcolon \phi^{(2)}
 \end{aligned}
 \]
 
@@ -2215,10 +2224,10 @@ For this case the coexistence condition for the exchange chemical potential simp
 \ln\left(\frac{\phi^{(1)}}{\phi^{(2)}}\right) + \chi_{12} (\phi^{(2)}-\phi^{(1)}) = 0
 \label{eq:symmetric_implicit}
 \end{equation}\\
-Thus, for a given \(\phi^{(1)}\), we can find \(\phi^{(2)}\) by solving the implicit equation Eq.~\ref{eq:symmetric_implicit}.
+Thus, for a given \(\phi^{(1)}\), we can find \(\phi^{(2)}\) by solving the implicit equation Eq.~\eqref{eq:symmetric_implicit}.
 The comparison between our algorithm and the analytical solution is shown in Fig.~\ref{fig:verify_symmetric}.
 In the bottom panel, the difference between the exact coexistence compositions and our algorithmic results is nearly zero, with a maximum absolute error of order \(10^{-8}\), 
-The figure is shown for a particular choice of \(\chi_{12}\), but the same level of agreement was obtained for other values of \(\chi_{12}\in[2,3]\).
+The figure is shown for a particular choice of \(\chi_{01}\), but the same level of agreement was obtained for other values of \(\chi_{01}\in[2,3]\).
 It is therefore safe to conclude that the algorithm is able to accurately capture the binodal curve for this symmetric ternary system.\\
 
 \end{minipage}
@@ -2226,13 +2235,13 @@ It is therefore safe to conclude that the algorithm is able to accurately captur
 \begin{minipage}{0.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/verify_symmetric.png}
-    \captionof{figure}{Top: Binodal curve for the symmetric ternary system with \(\chi_{01}=\chi_{02}=1.5\) and \(\chi_{12}=2.5\). The dashed line shows the analytical solution from Eq.~\ref{eq:symmetric_implicit}, while the blue and orange points show the results obtained with our algorithm. Bottom: The residual between the analytical and numerical results is negligible.\\}
+    \captionof{figure}{Top: Binodal curve for the symmetric ternary system with \(\chi_{02}=\chi_{12}=1.5\) and \(\chi_{01}=2.5\). The dashed line shows the analytical solution from Eq.~\eqref{eq:symmetric_implicit}, while the blue and orange points show the results obtained with our algorithm. Bottom: The residual between the analytical and numerical results is negligible.\\}
 
     \label{fig:verify_symmetric}
 \end{minipage}\\
 Next we turn to the special case in which all interactions are equal, \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\).
 For this fully symmetric system, previous work \cite{Huang1995PhaseSeparation} provides results that can be used to verify our algorithm, at least qualitatively, since the results are only shown in figures.
-In their work, the authors consider several interaction regimes and find a rich variety of phase-diagram topologies for \(\chi \in [2, 3]\) which the present in figure 1 of \cite{Huang1995PhaseSeparation}.
+In their work, the authors consider several interaction regimes and find a rich variety of phase-diagram topologies for \(\chi \in [2, 3]\) which they present in the first figure of \cite{Huang1995PhaseSeparation}.
 Here we reproduced those figures using our algorithm and find good qualitative agreement, for the different regimes as we will describe now.\\
 
 For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig.~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\), one of the binodal sections intersects the spinodal.
@@ -2242,7 +2251,7 @@ At \(\chi = 8/3\) the spinodal sections collide and $6$ of the $9$ critical poin
 For \(\chi > 8/3\) there are only three critical points left (Fig.~\ref{fig:symmetric_chis}D).
 Finally at \(\chi=2.746\) the three three-phase regions join to a single three-phase region (Fig.~\ref{fig:symmetric_chis}E)
 As one increases \(\chi\) further, the single three-phase region grows in size (Fig.~\ref{fig:symmetric_chis}F).
-Overall, the sequence of topological changes obtained from our algorithm matches the changes descibed in \cite{Huang1995PhaseSeparation} exactly.\\
+Overall, the sequence of topological changes obtained from our algorithm matches \cite{Huang1995PhaseSeparation} exactly.\\
 \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/symmetric_chis.png}
@@ -2263,12 +2272,12 @@ Here, we turn to  the reduced interaction matrix for components \(1\) and \(2\):
 \end{pmatrix}
 \]
 where we fix $\chi<-4$ and vary $\delta$.
-The particular upper limit for \(\chi<\) ensures that the system phase separates at the boundary of the phase diagram.
+The particular upper limit for \(\chi\) ensures that the system phase separates at the boundary of the phase diagram.
 The reason we are interested in this type of interaction matrix is that two different classes of phase diagrams emerge as the interaction asymmetry parameter \(\delta\) is varied.\\
 
 The first class of phase diagrams is characterized by the absence of critical points, with both the spinodal and the binodal connecting opposite parts of the boundary of the phase diagram (Fig.~\ref{fig:interesting_case}A-C).
 For $\delta<0$, the binodal is concave (Fig.~\ref{fig:interesting_case}A).
-For $\delta=0$, the diagonal and off diagonal of the reduced interaction matrix are equal, and both the binodal and the spinodal become straight (Fig.~\ref{fig:interesting_case}B).
+For $\delta=0$, the diagonal and off-diagonal of the reduced interaction matrix are equal, and both the binodal and the spinodal become straight (Fig.~\ref{fig:interesting_case}B).
 For $\delta>0$, the binodal becomes convex (Fig.~\ref{fig:interesting_case}C).\\
 When $\delta$ exceeds $-4-\chi$, the topology changes and phase separation no longer reaches the boundary. We then obtain a second class of phase diagrams in which both the binodal and the spinodal are fully contained within the physically admissible domain.
 In this second class, two critical points appear on opposite ends of the phase diagram (see Fig.~\ref{fig:interesting_case}D-F). For $\delta\gg|\chi|$, the overall shape of the phase diagram changes only weakly (Fig.~\ref{fig:interesting_case}E \& F).
@@ -2320,9 +2329,9 @@ The idea of a local stepping scheme is not new and has previously been proposed 
 Validation against the \texttt{flory} package \cite{Yicheng2025flory} and against analytical results for symmetric cases showed very good agreement. The algorithm also reproduced the rich topological changes of the fully symmetric ternary phase diagram studied in previous work \cite{Huang1995PhaseSeparation}, and revealed interesting classes of phase diagrams for a particular family of interaction matrices.
 
 
-Although the two chapters treat different aspects of ternary phase separation, together they follow the natural order in which ternary systems are usually analyzed. The phase-diagram algorithm enables the rapid exploration of the phase behavior of a wide range of ternary systems. It can therefore be used to identify promising candidates for the subsequent study of interfacial phenomena.\\
+Although the two chapters treat different aspects of ternary phase separation, together they follow the natural order in which ternary systems are usually analyzed. The phase-diagram algorithm enables the rapid exploration of the phase behavior over a wide range of ternary systems. It can therefore be used to identify promising candidates for the subsequent study of interfacial phenomena.\\
 
-Several natural directions for future work follow from these results. For the interfacial system, we begin with a number of smaller problems that would serve more as extensions of the present thesis than as independent projects. First, it would be interesting to derive the critical exponent of \(3/2\) directly from the exact definition of the surface tension given in Eq.~\ref{eq:surfacetension_flory}, in order to corroborate the results of the simplified approximation. Second, it would be interesting to validate the ans\"atze in Section~\ref{sss:profile_approximation} for the profiles in the symmetric ternary case. For \(\phi_-\), this would likely involve expanding the Euler-Lagrange equation~\eqref{eq:el_symmetric} around the critical point and showing that the resulting equations are solved by the hyperbolic-function ansatz (following a procedure similar to that used in \cite{Getzinger2026}). For \(\phi_+\), one would neglect the second-derivative term in the Euler-Lagrange equation, as was done for the implicit Eq.~\eqref{eq:delta_phi_plus}, and show that the resulting equation is solved by the hyperbolic-function ansatz with the adsorption peak amplitude given by Eq.~\ref{eq:delta_phi_plus}.
+Several natural directions for future work follow from these results. For the interfacial system, we begin with a number of smaller problems that would serve more as extensions of the present thesis. First, it would be interesting to derive the critical exponent of \(3/2\) directly from the exact definition of the surface tension given in Eq.~\eqref{eq:surfacetension_flory}, in order to corroborate the results of the simplified approximation. Second, it would be interesting to validate the ans\"atze in Section~\ref{sss:profile_approximation} for the profiles in the symmetric ternary case. For \(\phi_-\), this would likely involve expanding the Euler-Lagrange equation in Eq.~\eqref{eq:el_symmetric} around the critical point and showing that the resulting equations are solved by the hyperbolic-function ansatz (following a procedure similar to that used in \cite{Getzinger2026}). For \(\phi_+\), one would neglect the second-derivative term in the Euler-Lagrange equation, as was done for the implicit Eq.~\eqref{eq:delta_phi_plus}, and show that the resulting equation is solved by the hyperbolic-function ansatz with the adsorption peak amplitude given by Eq.~\eqref{eq:delta_phi_plus}.
 
 A more elaborate project would be to extend the analytical treatment of Section~\ref{sec:symmetric_case} beyond the symmetric case to the general case. One could begin with a perturbative expansion around symmetry. This may reveal ans\"atze for the profiles of general ternary systems, something that has so far only been achieved in narrowly defined settings \cite{Getzinger2026}.\\
 
@@ -2330,7 +2339,7 @@ For Chapter~\ref{s:binodal_tracing}, several research directions are possible, g
 
 A more challenging endeavor would be to extend the method to systems with more than three components. The current algorithm relies on the coexistence manifold being one-dimensional, with its dimensionality determined by the number of degrees of freedom minus the number of coexistence conditions. Tracing higher-dimensional manifolds would be considerably more difficult. Therefore, the number of degrees of freedom and constraints should be balanced such that the coexistence manifold remains one-dimensional.
 
-A possible strategy would be to introduce additional constraints and trace lower-dimensional slices of the coexistence manifold. For example, suppose one is interested in the two-phase coexistence of a four-component incompressible system. In that case, there are \((N_c-1)\cdot 2 = 6\) degrees of freedom and \(N_c = 4\) coexistence conditions. If one then fixes the mean volume fraction of the solute, this introduces an additional constraint that reduces the coexistence manifold to a one-dimensional curve, which can be traced using the current implementation of the algorithm. Alternatively, one could focus on higher-phase coexistence problems for which the manifold becomes one-dimensional again. For instance, in a four-component system with three-phase coexistence, the manifold again is one-dimensional.
+A possible strategy would be to introduce additional constraints thereby tracing lower-dimensional slices of the coexistence manifold. For example, suppose one is interested in the two-phase coexistence of a four-component incompressible system. In that case, there are \((N_c-1)\cdot 2 = 6\) degrees of freedom and \(N_c = 4\) coexistence conditions. If one then fixes the mean volume fraction of the solute, this introduces an additional constraint that reduces the coexistence manifold to a one-dimensional curve, which can be resolved using the current implementation of the algorithm. Alternatively, one could focus on higher-phase coexistence problems for which the manifold becomes one-dimensional again. For instance, in a four-component system with three-phase coexistence, the manifold again is one-dimensional.
 
 However, having too many degrees of freedom may not necessarily be a disadvantage. A possible future project would be to investigate the binodal of higher-component systems while effectively treating them as ternary systems.
 This would be done by labeling three species as input species and the remaining species as hidden species. For a given two-phase coexistence composition, the null space of the Jacobian is higher-dimensional, due to the hidden species. This would make it possible to take a tangential step in an arbitrary direction within the subspace of the input species by expressing the step as a linear combination of the null-space vectors.
