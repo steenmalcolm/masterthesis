@@ -190,10 +190,32 @@ st = np.array(r0["st"])
 st_approx = np.array(r0["st_approx"])
 
 ax = axes[0]
-ax.plot(mu_r, st, color="red", zorder=1, linewidth=4.0)
-ax.scatter(mu_r, st, color="red", edgecolor="black", s=100, zorder=2, marker="^")
-ax.plot(mu_r, st_approx, "-", color="blue", zorder=1, linewidth=4)
+ax.plot(
+    mu_r,
+    st_approx,
+    "-",
+    color="blue",
+    zorder=1,
+    linewidth=4,
+    marker="o",
+    markersize=10,
+    markeredgecolor="black",
+    label=r"$\gamma^{\mathrm{approx}}$",
+)
 ax.scatter(mu_r, st_approx, color="blue", edgecolor="black", s=100, zorder=2, alpha=0.7)
+ax.plot(
+    mu_r,
+    st,
+    color="red",
+    zorder=1,
+    linewidth=4.0,
+    label=r"$\gamma$",
+    marker="^",
+    markersize=10,
+    markeredgecolor="black",
+)
+ax.scatter(mu_r, st, color="red", edgecolor="black", s=100, zorder=1, marker="^")
+ax.legend(loc="upper left")
 
 ax = axes[1]
 ax.plot(

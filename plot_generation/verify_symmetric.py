@@ -107,7 +107,9 @@ ax2.scatter(
 
 ax2.plot(scattered_phi0, np.zeros_like(scattered_phi0), color="black", linestyle="--")
 ax1.set_ylabel(r"$\phi_1$")
-ax2.set_xlabel(r"$\phi_0$")
+ax2.set_xlabel(r"$\phi_2$")
+ax2.set_xticks([0, scattered_phi0.max()])
+ax2.set_xticklabels([r"$0$", r"$\phi_{2,c}$"])
 ax2.set_ylabel(r"$\phi_1 - \phi_{1,\mathrm{exact}}$")
 ax1.set_xlim(-1e-2, 1 - 2 * phic + 1e-2)
 ax2.set_xlim(-1e-2, 1 - 2 * phic + 1e-2)

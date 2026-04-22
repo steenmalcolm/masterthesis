@@ -50,13 +50,16 @@
 
 
 \section{Introduction}
-Phase separation in multicomponent fluids provides a general physical framework for understanding how a homogeneous mixture can spontaneously demix into coexisting phases with distinct compositions. At its core, this phenomenon emerges from the competition between entropy, which favors mixing, and intermolecular interactions, which can favor segregation. In biological and soft-matter systems, this balance underlies liquid-liquid phase separation and the formation of condensed phases with well-defined interfaces and characteristic dynamical behavior. A theoretical description of such systems therefore requires linking equilibrium thermodynamics, interfacial physics, and diffusive transport within a unified framework.
+Phase separation in multicomponent fluids provides a general physical framework for understanding how a homogeneous mixture can spontaneously demix into coexisting phases with distinct compositions.
+In biological systems, this framework has become especially important because such demixing can give rise to biomolecular condensates that compartmentalise cellular matter without a surrounding membrane, thereby creating distinct biochemical environments \cite{Kilgore2023}.
+Such condensates are implicated in diverse biological contexts, including development \cite{So2021}, gene regulation \cite{Pei2025}, protein quality control \cite{Rajendran2025}, and signalling \cite{Jaqaman2021}, are linked to pathological states such as neurodegeneration \cite{Mathieu2020} and cancer \cite{Cai2021BiomolecularCA}, and are found from the nucleus \cite{Lafontaine2020} and cytosol \cite{Banani2017} to membranes \cite{Jaqaman2021}.
+A theoretical description of these systems must therefore bridge multiple length scales: microscopic molecular interactions \cite{Dignon2020}, which induce phase separation and macroscopic surface effects such as Marangoli flows \cite{Michelin2023} and wetting \cite{Cahn1977} that govern condensate behaviour at the cellular scale.
 
-Compared with binary mixtures, ternary systems already display a much richer phenomenology. Their phase diagrams are two-dimensional, tie-lines can vary across composition space, three-phase coexistence can occur, and interfaces may exhibit preferential adsorption of one component. These features make ternary mixtures a natural minimal setting in which to study genuinely multicomponent effects. They are also of practical interest, since many biological and synthetic mixtures contain multiple species whose interactions cannot be reduced to an effectively binary description. Ternary phase separation has therefore attracted considerable theoretical attention, for example in the context of chemically regulated condensates and enzyme-enriched phases \cite{Demarchi2023EnzymeEnriched}.
+Compared with binary mixtures, ternary systems already display a much richer phenomenology. Their phase diagrams are two-dimensional, tie-lines can vary across composition space, three-phase coexistence can occur \cite{Scott1949}, and interfaces may exhibit preferential adsorption of one component \cite{Huang1996AnalyticInterface}. These features make ternary mixtures a natural minimal setting in which to study genuinely multicomponent effects. They are also of practical interest, since many biological and synthetic mixtures contain multiple species whose interactions cannot be reduced to an effectively binary description \cite{VEATCH20033074,Kaur2021}. Ternary phase separation has therefore attracted considerable theoretical attention, for example in the context of chemically regulated condensates \cite{Kirschbaum2021Controlling} and self-propulsion in droplets \cite{Demarchi2023EnzymeEnriched}.
 
-Two complementary questions are central to the study of ternary phase separation. First, which bulk states can the system realize? This is the role of the phase diagram: it identifies coexistence regions, critical points, tie-lines, and possible three-phase equilibria, and thereby provides the global map needed to predict how a mixture responds to changes in composition or interaction strength. On the equilibrium side, several methods have therefore been developed to reconstruct binodals directly from interaction matrices, including analytic approaches, genetic algorithms, and constructions based on convexification of the free-energy landscape \cite{Milani2007,WEI200691,Mao2019}.
+Two complementary questions are central to the study of ternary phase separation. First, which bulk states can the system realize? This is the role of the phase diagram: it identifies coexistence regions, critical points, tie-lines, and possible three-phase equilibria, and thereby provides the global map needed to predict how a mixture responds to changes in composition or interaction strength. Several methods have been developed to reconstruct binodals directly from interaction matrices, including analytic approaches, genetic algorithms, and constructions based on convexification of the free-energy landscape \cite{Milani2007,WEI200691,Mao2019}.
 
-Second, how are coexisting phases connected in space? This is the role of interfacial physics. The structure and free-energy cost of an interface influence nucleation barriers, domain morphology, relaxation dynamics, and the stability of phase-separated states. In biological systems, surface tension is important because it helps control droplet shape, fusion, and coarsening, and because composition-dependent surface tension can drive Marangoni flows along interfaces, leading to interfacial transport and condensate reorganization. In ternary mixtures, interfaces are particularly interesting because one component can adsorb preferentially at the interface and thereby alter the surface tension and the profile shape. Classic studies of symmetric ternary mixtures showed that these interfacial properties can differ qualitatively from their binary counterparts \cite{Huang1996,Huang1996AnalyticInterface,Huang1999}.
+Second, how are coexisting phases connected in space? This is the role of interfacial physics. The structure and free-energy cost of an interface influence nucleation barriers, relaxation dynamics, and the stability of phase-separated states \cite{Philippe2015,zwicker2025physicsdropletregulationbiological}. Composition-dependent surface tension can drive Marangoni flows along interfaces, leading to spreading and contraction dynamics in ternary droplets \cite{Baumgartner2022}. In ternary mixtures, interfaces are particularly interesting because one component can adsorb preferentially at the interface and thereby alter the surface tension and the profile shape. Classic studies of symmetric ternary mixtures showed that these interfacial properties can differ qualitatively from their binary counterparts \cite{Huang1996,Huang1996AnalyticInterface,Huang1999}.
 
 These two perspectives, global phase behavior and local interfacial structure, are naturally linked. Phase diagrams identify the relevant coexisting bulk phases, while interfacial calculations characterize the boundaries between them. This thesis focuses on these two complementary aspects within ternary Flory-Huggins theory. First, we investigate the structure and energetics of diffuse interfaces, with particular emphasis on the role of interfacial adsorption and on analytical approximations for the surface tension. Second, we develop a continuation-based numerical method for the rapid construction of ternary binodals and phase diagrams directly from the coexistence conditions. Together, these results connect local interfacial physics with the global organization of phase space.
 
@@ -1489,10 +1492,9 @@ Using the scaling relation between the phase-composition difference and the chem
     + \Pi \propto |\Delta \boldsymbol{\phi}|^4 \;\propto\; |\boldsymbol{\mu}_c- \boldsymbol{\mu}|^2 .
 \]
 This scaling is consistent with the numerical results shown in Fig.~\ref{fig:factor_scaling}B, where the second factor of the surface tension approximation is again plotted against the chemical potential difference $\lvert \boldsymbol{\mu}_c-\boldsymbol{\mu}\rvert$ on a log-log scale.\\
-
-\begin{minipage}{0.95\textwidth}
+\begin{minipage}{0.85\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/factor_scaling.png}
+    \includegraphics[width=\textwidth]{figures/factor_scaling.png}
     \captionof{figure}{(A) Scaling of the quantity \(|\Delta \boldsymbol{\phi}|^2\), which is proportional to the first factor, and (B) the second factor \(|f(\bar{\boldsymbol{\phi}}) - \sum_i \mu_i \bar{\phi}_i + \Pi|\)
     in the surface tension approximation, obtained from the numerical results (different colors) as functions of the chemical potential difference \(|\boldsymbol\mu-\boldsymbol\mu_{c}|\)
     for interaction parameters in the domain defined in Eq.~\eqref{eq:interaction_parameters}. The dashed lines indicate the expected scaling with exponents \(1\) and \(2\) respectively.\\\newline}
@@ -1875,7 +1877,7 @@ where \(\boldsymbol{J}\) is the Jacobian matrix defined as
 \]
 where we have used the fact that the coexistence conditions involve differences of chemical potentials and osmotic pressure between the two phases, which leads to the minus signs in the last two columns of \(\boldsymbol{J}\).
 
-Since \(\boldsymbol{\phi}\) is assumed to already lie the binodal, we have \(\boldsymbol{E}(\boldsymbol{\phi})=\boldsymbol{0}\). Remaining on the binodal to first order therefore requires
+Since \(\boldsymbol{\phi}\) lies on the binodal, we have \(\boldsymbol{E}(\boldsymbol{\phi})=\boldsymbol{0}\). Remaining on the binodal to first order then requires
 \[
 \boldsymbol{J}\,\delta\boldsymbol{\phi}_t = \boldsymbol{0}.
 \]
@@ -1883,7 +1885,11 @@ In other words, the displacement in phase space that preserves the coexistence c
 \[
 \delta\boldsymbol{\phi}_t \in \operatorname{null}(\boldsymbol{J}).
 \]
-Because the Jacobian is a \(3 \times 4\) matrix, its null space is generically one-dimensional, so there is a unique local direction along which one can step.
+The dimension of the null space of the Jacobian is generally one-dimensional, since it is equal to number of columns minus the rank of the matrix
+\[
+\dim(\operatorname{null}(\boldsymbol{J})) = 4 - \operatorname{rank}(\boldsymbol{J}) = 1,
+\]
+so there is a unique local direction along which one can step.
 
 
 \subsubsection{Projecting back onto the coexistence manifold}
@@ -1938,7 +1944,11 @@ Because this projection is based on a first-order approximation, a single correc
 The projection may therefore need to be applied repeatedly until the desired accuracy is reached.
 Its convergence is only guaranteed when the starting point is sufficiently close to the binodal, which is ensured by choosing the tangential step small enough.
 
-Altogether, this predictor-corrector strategy allows one to take significantly larger tangential steps than the predictor strategy alone. At the same time, it still traces out the binodal both accurately and efficiently, as illustrated in Fig.~\ref{fig:tracer_schematics}A.
+The predictor step has previously been used for this purpose \cite{Shcherbakova2023}.
+In the present implementation, however, each tangential step is followed by a projection back onto the coexistence manifold.
+This predictor-corrector strategy permits larger step sizes while maintaining accuracy, enabling efficient and accurate tracing of the binodal (Fig.~\ref{fig:tracer_schematics}A).
+
+
 
 
 \subsection{Algorithm Considerations}
@@ -1948,7 +1958,7 @@ The stepping scheme requires an initial point on, or sufficiently close to, the 
 In our implementation, we consider two qualitatively different types of starting points:
 the dilute limit of one species, in which the ternary system effectively reduces to a binary one,
 and the critical point.
-For the Flory-Huggins free-energy density, both types of initial points can be determined analytically, making them well suited for initializing the algorithm.
+For the Flory-Huggins free-energy density, both types of initial points can be constructed efficiently, making them well suited for initializing the algorithm.
 
 For illustrative purposes, we consider the dilute limit of species \(0\), although the same construction applies to the other species after relabeling the species and the corresponding interaction parameters.
 If the repulsive interaction between the remaining two species is sufficiently strong, \(\chi_{12} > 2\), the coexisting phases of the corresponding binary system are determined by the coexistence condition
@@ -2006,9 +2016,11 @@ When such a degeneracy is detected, the continuation is split and both direction
 \end{minipage}\\
 
 \subsubsection{Identification of three-phase regions}
-We now identify three-phase regions by searching for intersections between distinct sections of the binodal.
-Such an intersection indicates the existence of a composition that serves as a common endpoint of two tie-lines.
-If one composition coexists with two others in this way, then all three compositions satisfy the same coexistence conditions and therefore represent three coexisting phases.
+We identify three-phase regions by searching for intersections between distinct binodal sections (see Fig.~\ref{fig:tracer_schematics}D). Concretely, we look for pairs of coexistence states, \(\boldsymbol\phi^{\,1} = (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(2)}, \phi_2^{(2)})^T\) and \(\boldsymbol\phi^{\,2} = (\phi_1^{(1)}, \phi_2^{(1)}, \phi_1^{(3)}, \phi_2^{(3)})^T\), that share one phase but differ in the second one, i.e. \(\phi_i^{(2)} \neq \phi_i^{(3)}\) for at least one \(i\). Such an intersection identifies a composition that coexists with two distinct phases and therefore forms the common endpoint of two tie-lines.
+This should be distinguished from a branching point, which corresponds to a single coexistence state from which two continuation directions emerge.
+
+If one phase coexists with two others in this way, then all three compositions satisfy the same coexistence conditions and therefore represent three coexisting phases.
+
 
 Geometrically, these three phases define a common tangent plane that touches the free-energy surface at three distinct points and forms the convex envelope of the free-energy surface in this region, shown by the orange triangle in Fig.~\ref{fig:three_phase_intuition}.
 \noindent
@@ -2157,7 +2169,7 @@ Figure~\ref{fig:algo_example_diagram}A serves as a guide to reading ternary phas
     \centering
     \includegraphics[width=\textwidth]{figures/algo_example_diagram.png}
     \captionof{figure}{(A) Ternary diagram, with axes \(\phi_0\) on the right diagonal, \(\phi_1\) on the left diagonal and \(\phi_2\) on the horizontal axis. The red star is at \((\phi_0\,\phi_1\,\phi_2)^T=(0.2\,0.5\,0.3)^T\) and the green star is at \((\phi_0\,\phi_1\,\phi_2)^T=(0.9\,0.1\,0.0)^T\). Note that the sum of the three volume fractions is always 1.\\
-     (B) Phase diagram for \((\chi_{01},\chi_{02},\chi_{12})=(2.6,2.9,2.7)\), showing the spinodal (thick dashed line), binodal (blue line), three-phase region (orange areas), critical point (gold stars) and tie-lines (gray dashed lines).}
+     (B) Phase diagram for \((\chi_{01},\chi_{02},\chi_{12})=(2.6,2.9,2.7)\), showing the spinodal (thick dashed line), binodal (blue line), three-phase region (orange areas), critical points (gold stars) and tie-lines (gray dashed lines).}
     \label{fig:algo_example_diagram}
 \end{minipage}
 
@@ -2242,7 +2254,7 @@ It is therefore safe to conclude that the algorithm is able to accurately captur
 Next we turn to the special case in which all interactions are equal, \(\chi_{01}=\chi_{02}=\chi_{12}\eqcolon \chi\).
 For this fully symmetric system, previous work \cite{Huang1995PhaseSeparation} provides results that can be used to verify our algorithm, at least qualitatively, since the results are only shown in figures.
 In their work, the authors consider several interaction regimes and find a rich variety of phase-diagram topologies for \(\chi \in [2, 3]\) which they present in the first figure of \cite{Huang1995PhaseSeparation}.
-Here we reproduced those figures using our algorithm and find good qualitative agreement, for the different regimes as we will describe now.\\
+Here we reproduced those figures using our algorithm and find good qualitative agreement for the different regimes as we will describe now.\\
 
 For \(2<\chi<2.575\) three binodal sections exist originating from the three dilute limits, which enclose the spinodal (see Fig.~\ref{fig:symmetric_chis}A). At \(\chi = 2.575\), one of the binodal sections intersects the spinodal.
 Beyond this point, additional binodal sections appear and enclose the spinodal again.

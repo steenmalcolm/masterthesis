@@ -225,7 +225,7 @@ def main():
                 "-",
                 color=cmap((eta - ratio_min) / (ratio_max - ratio_min)),
                 linewidth=3.5,
-                label=r"$\epsilon(\bar\phi+\delta\phi_+)$" if is_plot else None,
+                label=r"$\epsilon(\phi_+(0))$" if is_plot else None,
             )
 
             is_plot = False
