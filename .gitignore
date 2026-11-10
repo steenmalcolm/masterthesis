@@ -1,0 +1,10 @@
+
+**/__pycache__
+*.png
+!figures/*.png
+*.json
+main*
+!main.tex
+!main.pdf
+*.pdf
+*.fls
